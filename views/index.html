@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="GBK">
+        <title>Academi Search</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="Li Jia" content="">
+
+        <!-- Le styles -->
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+
+        <style>
+
+
+            div#div1{ 
+                position:fixed; 
+                top:0; 
+                left:0; 
+                bottom:0; 
+                right:0; 
+                z-index:-1; 
+            } 
+            div#div1 > img { 
+                height:100%; 
+                width:100%; 
+                border:0; 
+            } 
+
+            div#div2{
+                position:absolute;
+                top:20px;
+                left:25%;
+
+                right:0;
+                z-index:0;
+                color: #FFF;
+            } 
+            div#div5{
+                position:absolute;
+                top:90px;
+                left:25%;
+                ;
+                right:0;
+                z-index:0;
+                color: #FFF;
+            } 
+            div#div3{
+                position:absolute;
+                top:150px;
+                left:33%;
+
+                right:0;
+                z-index:0;
+                color: #FFF;
+            } 
+
+
+            div#div4{
+                position:absolute;
+                top:230px;
+                left:25%;
+                right:25%;
+                width:50%;
+                bottom:15%;
+                right:0;
+                z-index:1;
+                color: #FFF;	
+            } 
+
+        </style>
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/static/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="/static/img/favicon.ico">
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+        <style type="text/css">
+            body,td,th {
+                color: #FFF;
+            }
+            h1,h2,h3,h4,h5,h6 {
+                font-family: Verdana, Geneva, sans-serif;
+            }
+        </style>
+    </head>
+
+    <body bgcolor="#FFFFFF" text="#FFFFFF" style="filter:progid:dximagetransform.microsoft.alphaimageloader(src='/static/img/4cd5788acc6e70e3fd1f10b6.jpg',sizingmethod='scale')">
+
+
+
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <div class="brand" >海量非结构化数据管理系统示范应用</div>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div id="div1"><img src="/static/img/4cd5788acc6e70e3fd1f10b6.jpg" />
+            <div id="div5">
+
+                <img src="/static/img/logo.png" /></div>
+            <div id="div3">
+                <form method="POST" action="/paper/search/">
+                <div class="input-append">
+                    <input class="span5" id="appendedInputButton" type="text"  placeholder="">
+                    <button class="btn btn-inverse" type="submit"><i class="icon-search icon-white"> </i></button>
+                </div>
+                </formm>
+
+
+            </div>
+
+            <div id="div4" style="background-image:url(/static/img/%E4%BB%8B%E7%BB%8D%E9%83%A8%E5%88%86.png)">
+
+                <dl>
+                    <dt>&nbsp; </dt>
+                    <dt>&nbsp;&nbsp;网站功能介绍：</dt>
+                    <dt>&nbsp;</dt>
+                    <dd>  &nbsp;&nbsp;收录论文XX条；</dd>
+                    <dt>&nbsp; </dt>
+
+                    <dd>&nbsp;&nbsp;  收录学者信息XXX人；</dd>
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;&nbsp;  收录博客文章XXX</dd>
+                    <dt>&nbsp;</dt>
+                </dl>
+
+            </div>
+
+            <div style="clear:both;"></div> 
+
+
+            <div class="navbar navbar-inverse navbar-fixed-bottom">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+
+                        <div class="nav-collapse collapse">
+                            <ul class="nav" style="float:right">
+
+                                <li style="text-align:right"><a href="#">&nbsp; &nbsp; Copyright &nbsp;&nbsp;</a></li>
+                            </ul>
+
+                            <ul class="nav">
+
+                                <li><a href="cloudcomputing.ruc.edu.cn">云计算与大数据实验室</a></li>
+                                <li><a href="http://info.ruc.edu.cn">中国人民大学信息学院</a></li>
+                                <li>&nbsp;&nbsp;</li>
+                                <li style="float:right"><a href="#">关于</a></li>
+
+                            </ul>
+
+                        </div><!--/.nav-collapse -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </html>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap-transition.js"></script>
+    <script src="/static/js/bootstrap-alert.js"></script>
+    <script src="/static/js/bootstrap-modal.js"></script>
+    <script src="/static/js/bootstrap-dropdown.js"></script>
+    <script src="/static/js/bootstrap-scrollspy.js"></script>
+    <script src="/static/js/bootstrap-tab.js"></script>
+    <script src="/static/js/bootstrap-tooltip.js"></script>
+    <script src="/static/js/bootstrap-popover.js"></script>
+    <script src="/static/js/bootstrap-button.js"></script>
+    <script src="/static/js/bootstrap-collapse.js"></script>
+    <script src="/static/js/bootstrap-carousel.js"></script>
+    <script src="/static/js/bootstrap-typeahead.js"></script>
+    <script>
+        !function ($) {
+            $(function(){
+                // carousel demo
+                $('#myCarousel').carousel()
+            })
+        }(window.jQuery)
+    </script>
+</body>
+</html>

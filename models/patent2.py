@@ -1,0 +1,62 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+patent_list2=[
+{
+'num':u'申请号:',
+'numan':u'CN200510072339   ',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN100401288',
+'name':u'专利名称:',
+'namean':u'分布式数据源<strong class="text-error">数据集成</strong>系统及方法',
+'person':u'申请人:',
+'personan':u'北京慧讯信息技术有限公司',
+'invent':u'发明人:',
+'inventan':u'杨 肖;孙晓红',
+'explain':u'专利说明:',
+'explainan':u'本发明公开一种分布式数据源<strong class="text-error">数据集成</strong>系统及方法，该发明利用 管理器<strong class="text-error">数据集成</strong>应用动态管理；利用应用解析器实现将外部<strong class="text-error">数据集成</strong> 应用需求解析为内部<strong class="text-error">数据集成</strong>任务，并实现将最终<strong class="text-error">数据集成</strong>任务结果 集返回给外部<strong class="text-error">数据集成</strong>应用；利用数据源管理器实现系统中分布式数 据源管理，配制<strong class="text-error">数据集成</strong>任务；利用查询转换器实现<strong class="text-error">数据集成</strong>任务中 面向异构数据源的查询指令格式及函数转换；利用通信对话器实现系 统与数据源端采集器之间的网络通信；本发明提供数据集成低成本、 高效灵活的应用，也决定了网络数据交换、数据集成等数据应用的现 实可行性，具有重要的社会意义和经济效益。',
+},
+{
+'num':u'申请号:',
+'numan':u'CN200820024817',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN201226531',
+'name':u'专利名称:',
+'namean':u'多协议<strong class="text-error">数据集成</strong>控制通信网关',
+'person':u'申请人:',
+'personan':u'山东大学',
+'invent':u'发明人:',
+'inventan':u'邢建平;张传香;陈 岗;张德敬;李长庆',
+'explain':u'专利说明：',
+'explainan':u'多协议<strong class="text-error">数据集成</strong>通信网关，包括多协议接口、嵌入式微处理器、网络接口、继电器组和 用户接口，其中微处理器与多协议接口电连接；网络接口与微处理器电连接；用户接口由LCD 显示屏和矩阵按键组成，与微处理器电连接；多协议接口包括CAN总线接口、8路串口扩展 接口、2路485/422总线接口、A/D转换器、开关量输入装置；网络接口由网络多接口处理 器和备用网络接口组成；8路串口扩展接口与2路485/422总线接口电连接。多协议数据集 成通信网关集多协议接口、本地管理、远程管理等功能于一身，可以减少成本，提高数据的 现场处理速度和控制的可靠性。',
+},
+{
+'num':u'申请号:',
+'numan':u'	CN200510072339   ',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN1687922',
+'name':u'专利名称:',
+'namean':u'分布式数据源<strong class="text-error">数据集成</strong>系统及方法',
+'person':u'申请人:',
+'personan':u'北京慧讯信息技术有限公司',
+'invent':u'发明人:',
+'inventan':u'杨肖;孙晓红',
+'explain':u'专利说明：',
+'explainan':u'本发明公开一种分布式数据源<strong class="text-error">数据集成</strong>系统及 方法，该发明利用管理器<strong class="text-error">数据集成</strong>应用动态管理；利用应用解 析器实现将外部<strong class="text-error">数据集成</strong>应用需求解析为内部<strong class="text-error">数据集成</strong>任务， 并实现将最终<strong class="text-error">数据集成</strong>任务结果集返回给外部<strong class="text-error">数据集成</strong>应用； 利用数据源管理器实现系统中分布式数据源管理，配制<strong class="text-error">数据集成</strong>任务；利用查询转换器实现<strong class="text-error">数据集成</strong>任务中面向异构数据源 的查询指令格式及函数转换；利用通信对话器实现系统与数据 源端采集器之间的网络通信；本发明提供数据集成低成本、高 效灵活的应用，也决定了网络数据交换、数据集成等数据应用 的现实可行性，具有重要的社会意义和经济效益。 中，发送设备以分块方式向接收设备传输一个大数据对象；当所述传输过程发 生中断后，重新发起会话过程；判断中断前后所述大数据对象是否发生改变， 如果没有发生改变，则发送设备根据所述接收设备记录的已接收数据长度，将 所述大数据对象的剩余部分数据发送给所述接收设备。通过实施本发明的实施 例，可以在在数据同步(DS)会话流程中，对发生传输中断的大数据对象进行 续传，从而可以节省无线资源，减少流量。',
+},
+{
+'num':u'申请号:',
+'numan':u'CN201210479583  ',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN103020147',
+'name':u'专利名称:',
+'namean':u'<strong class="text-error">数据集成</strong>系统和<strong class="text-error">数据集成</strong>方法',
+'person':u'申请人:',
+'personan':u'用友软件股份有限公司',
+'invent':u'发明人:',
+'inventan':u'程操红',
+'explain':u'专利说明：',
+'explainan':u'本发明提供了一种<strong class="text-error">数据集成</strong>系统和<strong class="text-error">数据集成</strong>方法，<strong class="text-error">数据集成</strong>系统包括：第一事务适配器，用于在第一系统进行业务操作时，调用事务运行引擎装置和事务补偿装置；事务运行引擎装置，为业务操作建立业务流程，若业务流程被配置为支持全局事务，则为业务流程创建全局事务上下文；事务补偿装置，用于记录全局事务的状态，以及根据第二事务适配器捕获的调用情况更新全局事务的状态；第二事务适配器，针对每一个业务操作，提供第二系统的服务，捕获调用情况并根据调用情况在本地事务中记录调用结果。本发明通过事务适配器收集每一个事务型操作的事务状态和执行结果，及时发现不一致的数据记录，给予自动补偿，以保证多个系统集成时数据的一致性。'
+},
+
+]

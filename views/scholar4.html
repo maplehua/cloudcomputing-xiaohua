@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="span7">
+    <div class="container-fliud">
+        <!--标签页-->
+        <div class="tabbable tabs-below">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#1" data-toggle="tab">
+                        学者个人信息
+                    </a>
+                </li>
+                <!--<li><a href="#2" data-toggle="tab">研究领域简介</a></li>-->
+                <li>
+                    <a href="#3" data-toggle="tab">
+                        学者论文列表
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="1">
+                    <div class="row">
+                       
+                        <div class="span5">
+                            <div class="fliud">
+                                <div >
+                                    <h2>
+                                        金海
+                                    </h2>
+                                    <h5>
+                                        男
+                                    </h5>
+                                    <h5>
+                                        华中科技大学
+                                    </h5>
+                                    <h5>
+                                        简介：博士，教授，博士生导师。华中科技大学计算机学院院长，华中科技大学“服务计算技术与系统”教育部重点实验室＆“集群与网格计算”湖北省重点实验室主任。
+                                    </h5>
+                                    <p>
+国务院学位委员会学科评议组成员、第六届教育部科学技术委员会信息学部委员、国务院特殊津贴专家、中国计算机学会常务理事、湖北省计算机学会理事长、中国计算机学会对外联络部副主任、中国计算机学会高性能计算专委会委员和普适计算专委会委员。973计划“计算系统虚拟化基础理论与方法研究”首席科学家、教育部重大专项“中国教育科研网格计划ChinaGrid”专家组组长、863计划信息技术领域（高效能计算机及网格服务环境）重大/重点项目总体专家组成员、中国网格论坛执行委员及体系结构工作小组主席，教育部“长江学者和创新团队发展计划”创新团队学术带头人、湖北省自然科学基金创新团队学术带头人。 　　同时是国家杰出青年基金获得者、霍英东高等院校青年教师基金获得者、首批新世纪百千万人才工程国家级人选。2003年获留学回国人员成就奖，2004年获中国软件行业十大杰出青年称号，第五届湖北省青年科技奖获得者，湖北省第六届十大杰出青年获得者。　 1994年获华中理工大学计算机系统结构专业博士学位，1996年获德国DAAD交换学者奖学金并赴德国Chemnitz大学从事科研合作，1998年至2000年先后赴香港大学、美国南加州大学从事博士后研究。金海是IEEE及IEEE计算机学会高级会员、ACM会员，全球网格论坛指导委员会（GFSG）委员，是多个国际学术期刊的编委
+                                 </div>
+                             </div> 
+                        </div>
+						     <div class="span2">
+                                    <img src="\static\img\jin.jpg" class="img-rounded">
+                             </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="2">
+                    <p class="text-info">
+                        database including
+                    </p>
+                    <p class="text-info">
+                        information systems
+                    </p>
+                    <p class="text-info">
+                        XML query processing
+                    </p>
+                    <p class="text-info">
+                        data mining
+                    </p>
+                    <p class="text-info">
+                        XML keyword suggestion
+                    </p>
+                    <p>
+                        approximate string matching
+                    </p>
+                    <p>
+                        cloud data management
+                    </p>
+                </div>
+                <div class="tab-pane" id="3">
+                    <div class="pagination pagination-small">
+                        <ul>
+                            <p class="text-info">
+                                近两年论文:
+                            </p>
+                            <p>
+                              ...
+                            </p>
+                            <p>
+                              
+
+                            </p>
+                            <p>
+                               
+
+                            </p>
+                            
+                            <p>
+                                .....
+                            </p>
+                            <li>
+                                <a href="#">
+                                    前一页
+                                </a>
+                            </li>
+                            <li class="active" id="1">
+                                <a href="#">
+                                    1
+                                </a>
+                            </li>
+                            <li class="pagination">
+                                <a href="#">
+                                    2
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    3
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    4
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    后一页
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock %}
+{% block pagination %}
+{% endblock %}

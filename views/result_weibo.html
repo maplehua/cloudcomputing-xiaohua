@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<ul class="media-list">
+    {% for weibo in weibos %}
+    <li class="media">
+    <a class="pull-left" href="#">
+        <img class="media-object as-user-head" data-src="holder.js/64x64" src="/static/img/weibo_user.png">
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading">{{ weibo.name }}</h4>
+        <div class="media">
+            {{ weibo.highlight }}
+        </div>
+    </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

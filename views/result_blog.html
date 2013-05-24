@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<ul class="unstyled">
+    {% for blog in blogs %}
+    <li>
+    <h3>{{ blog.title }}</h3>
+    <blockquote>
+        <p class="muted">{{ blog.source }}</p>
+        <p>{{ blog.highlight }}</p>
+        <a href="{{ blog.url }}">{{ blog.url }}</a>
+    </blockquote>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

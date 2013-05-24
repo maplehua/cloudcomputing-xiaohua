@@ -1,0 +1,62 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+patent_list1=[
+{
+'num':u'申请号:',
+'numan':u'CN201210480063  ',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN103020151',
+'name':u'专利名称:',
+'namean':u'<strong class="text-error">大数据</strong>量批处理系统和<strong class="text-error">大数据</strong>量批处理方法',
+'person':u'申请人:',
+'personan':u'用友软件股份有限公司',
+'invent':u'发明人:',
+'inventan':u'张成',
+'explain':u'专利说明:',
+'explainan':u'本发明提供了一种<strong class="text-error">大数据</strong>量批处理系统，包括：中间件单元用于向一级缓存装置发送查询请求，以及接收来自二级缓存装置的二级分页主键集合，根据二级分页主键集合向数据库查询待处理数据并在对待处理数据进行计算处理后，向数据库发送持久化数据请求；一级缓存装置用于向数据库查询符合查询请求的主键集合，以及根据主键集合生成一级分页主键集合并将一级分页主键集合返回至二级缓存装置；二级缓存装置用于根据一级分页主键集合生成二级分页主键集合并将二级分页主键集合返回至中间件单元。本发明还提供了一种大数据量批处理方法。根据本发明的技术方案，可大大提高系统海量数据的处理速度，降低系统处理时间，进而提升系统的综合性能。',
+},
+{
+'num':u'申请号:',
+'numan':u'CN201010511754',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN102456005',
+'name':u'专利名称:',
+'namean':u'<strong class="text-error">大数据</strong>量文件处理的方法及系统',
+'person':u'申请人:',
+'personan':u'深圳市金蝶友商电子商务服务有限公司',
+'invent':u'发明人:',
+'inventan':u'刘超',
+'explain':u'专利说明：',
+'explainan':u'本发明揭示了一种<strong class="text-error">大数据</strong>量文件处理的方法及系统。该方法包括步骤：接收<strong class="text-error">大数据</strong>量文件查询指令；根据所述查询指令，通过异步处理生成大数据量文件，并存放至指定目录。本发明<strong class="text-error">大数据</strong>量文件处理的方法及系统，在客户端提交查询<strong class="text-error">大数据</strong>量文件的任务后，通过应用服务器异步处理，提供所查询<strong class="text-error">大数据</strong>量文件的压缩文件给用户下载；如此，客户端可以同时提交多个大数据量文件任务，也无需等待可以使用系统做其他事情，文件下载完成后即时通知用户，提高了工作效率。',
+},
+{
+'num':u'申请号:',
+'numan':u'CN200810216201  ',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN101674263',
+'name':u'专利名称:',
+'namean':u'<strong class="text-error">大数据</strong>对象的传输方法、传输系统及发送设备和接收设备',
+'person':u'申请人:',
+'personan':u'华为技术有限公司',
+'invent':u'发明人:',
+'inventan':u'刘海涛;宋 悦',
+'explain':u'专利说明：',
+'explainan':u'本发明公开了一种<strong class="text-error">大数据</strong>对象的传输方法，包括：在设备管理的会话过程 中，发送设备以分块方式向接收设备传输一个大数据对象；当所述传输过程发 生中断后，重新发起会话过程；判断中断前后所述<strong class="text-error">大数据</strong>对象是否发生改变， 如果没有发生改变，则发送设备根据所述接收设备记录的已接收数据长度，将 所述<strong class="text-error">大数据</strong>对象的剩余部分数据发送给所述接收设备。通过实施本发明的实施 例，可以在在数据同步(DS)会话流程中，对发生传输中断的大数据对象进行 续传，从而可以节省无线资源，减少流量。',
+},
+{
+'num':u'申请号:',
+'numan':u'CN201010616453 ',  
+'pubnum':u'公开号:',
+'pubnuman':u'CN102054043',
+'name':u'专利名称:',
+'namean':u'<strong class="text-error">大数据</strong>生成方法和装置',
+'person':u'申请人:',
+'personan':u'畅捷通软件有限公司',
+'invent':u'发明人:',
+'inventan':u'黄海峰',
+'explain':u'专利说明：',
+'explainan':u'本发明提供了一种<strong class="text-error">大数据</strong>生成方法，包括：步骤102，在产品对数据库进行业务操作时，采集所述业务操作对应的sql语句；步骤104，解析出所述sql语句中的数据表、所述数据表中的字段、及字段值；步骤106，根据所述数据表、所述数据表中的字段、字段值，生成<strong class="text-error">大数据</strong>以用于所述产品的测试。本发明还提供一种大数据生成装置。通过本发明，对sql语句进行分析来生成大数据，可以保证大数据的有效性和生成效率。'
+},
+
+]

@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="span7">
+    <div class="container-fliud">
+        <!--标签页-->
+        <div class="tabbable tabs-below">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#1" data-toggle="tab">
+                        学者个人信息
+                    </a>
+                </li>
+                <!--<li><a href="#2" data-toggle="tab">研究领域简介</a></li>-->
+                <li>
+                    <a href="#3" data-toggle="tab">
+                        学者论文列表
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="1">
+                    <div class="row">
+                       
+                        <div class="span5">
+                            <div class="fliud">
+                                <div >
+                                    <h2>
+                                        钱德沛
+                                    </h2>
+                                    <h5>
+                                        男
+                                    </h5>
+                                    <h5>
+                                        北京航空航天大学；中德联合软件研究所所长
+                                    </h5>
+                                    <h5>
+                                        简介：钱德沛，现任国家“十一五”863计划信息技术领域专家组成员、863计划“高效能计算机及网格服务环境”重大项目总体组组长，中国计算机学会理事。
+                                    </h5>
+                                    <p>
+1952年8月出生，1977年毕业于西安交通大学计算机专业，1984年5月在美国德克萨斯州北德州立大学获硕士学位。1991年6月至92年3月作为高级访问学者，在德国汉诺威大学计算机学院统结构与操作系统研究所进修工作。1992年起任教授，1996年被聘为博士生导师。1996年起任国家863计划306主题专家组成员、副组长，现任国家“十一五”863计划信息技术领域专家组成员、863计划“高效能计算机及网格服务环境”重大项目总体组组长，中国计算机学会理事。
+　　近年来主持和参加的主要科研项目包括：国家973计划课题：海量信息系统概念性试验和验证平台研究（973课题）基于移动代理的主动网络的研究（国家自然科学基金项目）动态构造网管模型及其实现方法研究（国家自然科学基金项目）国家高性能计算环境战略与系统综合研究（国家863计划重大专项项目）主动网络若干关键问题的研究（高等学校博士学科点专项科研基金课题）智能网络安全产品的研究与开发（北京市教委产学研课题）基于CNGI的中国国家网格应用（国家发改委项目）　　目前承担项目：国家网络计算环境平台建设（国家科技基础条件平台项目）异质环境中拓扑自组织的overlay网络研究（国家自然科学基金项目）EUChinaGRID（欧盟第六框架计划项目）
+                                 </div>
+                             </div> 
+                        </div>
+						     <div class="span2">
+                                    <img src="\static\img\qian.jpg" class="img-rounded">
+                             </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="2">
+                    <p class="text-info">
+                        database including
+                    </p>
+                    <p class="text-info">
+                        information systems
+                    </p>
+                    <p class="text-info">
+                        XML query processing
+                    </p>
+                    <p class="text-info">
+                        data mining
+                    </p>
+                    <p class="text-info">
+                        XML keyword suggestion
+                    </p>
+                    <p>
+                        approximate string matching
+                    </p>
+                    <p>
+                        cloud data management
+                    </p>
+                </div>
+                <div class="tab-pane" id="3">
+                    <div class="pagination pagination-small">
+                        <ul>
+                            <p class="text-info">
+                                近两年论文:
+                            </p>
+                            <p>
+                               桂小林,钱德沛；元计算环境下的支持依赖任务的OGS算法研究,计算机学报,2002,25(6)：582 ~586,
+                            </p>
+                            <p>
+                               "Computing Unrestricted Synopses under Maximum Error Bound", C. Pang, Q. Zhang, X. Zhou, D. Hansen, S. Wang and A. Maeder, Algorithmica, 65(1):1-42, 2013,
+
+                            </p>
+                            <p>
+                               桂小林,钱德沛；元计算环境下的支持依赖任务的OGS算法研究,计算机学报,2002,25(6)：582 ~586
+
+                            </p>
+                            
+                            <p>
+                                .....
+                            </p>
+                            <li>
+                                <a href="#">
+                                    前一页
+                                </a>
+                            </li>
+                            <li class="active" id="1">
+                                <a href="#">
+                                    1
+                                </a>
+                            </li>
+                            <li class="pagination">
+                                <a href="#">
+                                    2
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    3
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    4
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    后一页
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+{% endblock %}
+{% block pagination %}
+{% endblock %}
