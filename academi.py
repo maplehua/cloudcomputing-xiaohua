@@ -73,7 +73,13 @@ def deco_get_keywords(func):
         if not keyword:
             keyword = request.forms.get('keyword')
             pos = int(request.forms.get('pos'))
-        ret = func(keyword, pos)
+
+        if settings.KEYWORD_EXPAND:
+            keywords = expand_keyword(keyword)
+        else:
+            keywords = [keyword]
+
+        ret = func(keywords, pos)
         return ret
     return _deco_func
 
@@ -82,17 +88,11 @@ def deco_get_keywords(func):
 @app.post('/paper/search')
 @view('result_paper')
 @deco_get_keywords
-def search_paper(keyword, pos):
+def search_paper(keywords, pos):
     (pre, cur, post) = gen_pos(pos)
-
-    if settings.KEYWORD_EXPAND:
-        keywords = expand_keyword(keyword)
-    else:
-        keywords = [keyword]
-
     s = PaperSearch()
     results = s.get_results(keywords, pos)
-    meta = dict(keyword = keyword, theme = 'paper', pre = pre, cur = cur, post = post)
+    meta = dict(keyword = keywords[0], theme = 'paper', pre = pre, cur = cur, post = post)
     return dict(papers = results, query = meta)
 
 @app.get('/patent/search/<keyword>/<pos:int>')
