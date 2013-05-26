@@ -79,7 +79,10 @@ def deco_get_keywords(func):
         else:
             keywords = [keyword]
 
-        ret = func(keywords, pos)
+        (pre, cur, post) = gen_pos(pos)
+        pos = dict(pre = pre, cur = cur, post = post)
+
+        ret = func(keywords, pre, cur, post)
         return ret
     return _deco_func
 
@@ -88,10 +91,9 @@ def deco_get_keywords(func):
 @app.post('/paper/search')
 @view('result_paper')
 @deco_get_keywords
-def search_paper(keywords, pos):
-    (pre, cur, post) = gen_pos(pos)
+def search_paper(keywords, pre, cur, post):
     s = PaperSearch()
-    results = s.get_results(keywords, pos)
+    results = s.get_results(keywords, cur)
     meta = dict(keyword = keywords[0], theme = 'paper', pre = pre, cur = cur, post = post)
     return dict(papers = results, query = meta)
 
