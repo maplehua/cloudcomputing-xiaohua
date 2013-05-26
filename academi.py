@@ -158,7 +158,11 @@ def error404(error):
 # [API]
 @app.get('/api/')
 def api():
-    return 'api'	
+    return 'api'
+
+@app.get('/api/stat/')
+def api_stat():
+    return 'api stat'
 
 
 if __name__ == '__main__':

@@ -7,10 +7,9 @@ if settings.LIB_PATH:
 
 import requests
 from pyes import *
-from models.mappings import paper_mapping
+from settings import paper_mapping
 
 es_server = settings.ES_SETTING['server']
-
 
 def init_index(es_server = '127.0.0.1:9200', index = 'test_index'):
     conn = ES(es_server)
@@ -53,6 +52,6 @@ def set_mongo_river(mongo_server = "127.0.0.1:27017",
     print r.json()
 
 if __name__=='__main__':
-    init_index(es_server = "10.77.20.50:9200", index = "mongo_index")
-    set_mapping(es_server = "10.77.20.50:9200", index = "mongo_index", doc_type = "test_type", mapping = paper_mapping)
-    set_mongo_river(mongo_server = "10.77.50.211:27017", mongo_db = "academi", mongo_collection = "paper", es_server = "10.77.20.50:9200", es_index = "mongo_index", es_type = "test_type")
+    init_index(es_server, index)
+    set_mapping(es_server, index, doc_type = "test_type", mapping = paper_mapping)
+    set_mongo_river(mongo_server, mongo_db = "academi", mongo_collection = "paper", es_server = "10.77.20.50:9200", es_index = "mongo_index", es_type = "test_type")
