@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import json
 from pprint import pprint
-from pyes import ES, BoolQuery, TermQuery, TextQuery, HighLighter, Search
+from pyes import ES, CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
 from pymongo import MongoClient
 
 from settings import ES_SETTING, RESULT_SIZE, DEBUG
@@ -34,6 +34,9 @@ class ESSearch(object):
         for k in keywords:
             for f in search_fields:
                 q = TextQuery(field = f, text = k, type = 'phrase', operator='and')
+                cq = CustomScoreQuery(query = q, script = "_score * 10")
+                query_list.append(cq)
+                q = TextQuery(field = f, text = k, operator='and')
                 query_list.append(q)
 
         q = BoolQuery(should = query_list)
