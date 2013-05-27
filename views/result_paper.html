@@ -3,12 +3,12 @@
 <ul class="unstyled">
     {% for paper in papers %}
     <li>
-    <h3>{{ paper.title }}</h3>
-    <blockquote>
-        <p class="muted">{{ paper.author }} | {{ paper.source }} | {{ paper.year }}</p>
-        <p>{{ paper.content }}</p>
-        <a href="{{ paper.url }}">external link <i class="icon-search"></i></a>
-    </blockquote>
+        <h3><score class="text-info">[{{ paper.score }}]</score> {{ paper.title }}</h3>
+        <blockquote>
+            <p class="muted">{{ paper.author }} | {{ paper.source }} | {{ paper.year }}</p>
+            <p>{{ paper.content }}</p>
+            <a href="{{ paper.url }}">external link <i class="icon-search"></i></a>
+        </blockquote>
     </li>
     {% endfor %}
 </ul>
