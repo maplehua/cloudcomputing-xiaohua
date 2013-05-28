@@ -10,6 +10,9 @@ from bottle import Bottle, request, route, run, static_file, error
 from bottle import PluginError, response
 from bottle import jinja2_view as view
 from bottle import jinja2_template as template
+from bottle_mongo import MongoPlugin
+from bottle_redis import RedisPlugin
+
 from models import jsonlist
 
 from core.BaseSearch import PaperSearch, DictionarySearch
@@ -18,11 +21,14 @@ from core.Dictionary import expand_keyword
 from utils.pagination import gen_pos
 from utils.about_mongo import about_readmongo
 from settings import RESULT_SIZE
-from bottle_mongo import MongoPlugin
 
 app = Bottle()
+
 plugin = MongoPlugin(uri="10.77.20.50:27017", db="academi", json_mongo=True)
 app.install(plugin)
+plugin = RedisPlugin(host=settings.REDIS_SERVER)
+app.install(plugin)
+
 @app.route('/show/:item')
 def show(item, mongodb):
     doc = mongodb['about_weibo'].find({item:"item"})
@@ -160,10 +166,12 @@ def error404(error):
 def api():
     return 'api'
 
-@app.get('/api/stat/')
-def api_stat():
-    return 'api stat'
-
+@app.route('/api/stat/net')
+def show(rdb):
+    net_stat = rdb.get('number')
+    if net_stat:
+        return net_stat
+    return 0
 
 if __name__ == '__main__':
     run(app, host='0.0.0.0', port=8080, debug=True, reloader=True)
