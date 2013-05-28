@@ -36,7 +36,7 @@ catch(e)
     return;  
     }
   }
-   var url="http://10.77.20.50:7379/GET/number.txt";
+   var url="/api/stat/net";
 xmlHttp.open("GET",url,false);
 xmlHttp.send(null);
                             var x = (new Date()).getTime(), // current time

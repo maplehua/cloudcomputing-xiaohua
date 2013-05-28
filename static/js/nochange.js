@@ -29,7 +29,7 @@
     }
    function Refresh(){
 	   	   xmlHttp1=ajaxFunction();
-   var url="http://10.77.20.50:7379/GET/number.txt";
+   var url="/api/stat/net";
 
                   //发送HTTP请求并获取HTTP响应 
 // document.getElementById("test").innerHTML=("收录论文：&nbsp"+parseInt(m)+"篇");
