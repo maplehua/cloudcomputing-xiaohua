@@ -4,11 +4,13 @@
     {% for paper in papers %}
     <li>
         <h3><score class="text-info">{{ paper.score }}</score> {{ paper.title }}</h3>
+        <p class="muted">{{ paper.author }} [{{ paper.source }} | {{ paper.year }}]</p>
+        {% for snippet in paper.content %}
         <blockquote>
-            <p class="muted">{{ paper.author }} [{{ paper.source }} | {{ paper.year }}]</p>
-            <p>{{ paper.content }}</p>
-            <a href="{{ paper.url }}">external link <i class="icon-search"></i></a>
+            <p>{{ snippet }}</p>
         </blockquote>
+        {% endfor %}
+        <a href="{{ paper.url }}">Get this paper by Google Scholar <i class="icon-search"></i></a>
     </li>
     {% endfor %}
 </ul>
