@@ -24,36 +24,6 @@ class ESSearch(object):
         self.index = index
         self.doc_type = doc_type
 
-    def _get_results(self, keywords, start, size, search_fields = None, rfields = None):
-        """
-        base search
-        sfields: search on these fields
-        rfields: show these fields in result without highlight
-        """
-        query_list = []
-        for k in keywords:
-            for f in search_fields:
-                q = TextQuery(field = f, text = k, type = 'phrase', operator='and')
-                cq = CustomScoreQuery(query = q, script = "_score * 10")
-                query_list.append(cq)
-                q = TextQuery(field = f, text = k, operator='and')
-                query_list.append(q)
-
-        q = BoolQuery(should = query_list)
-
-        h = HighLighter(pre_tags = [pre_tag], post_tags = [post_tag])
-        for f in search_fields:
-            h.add_field(name = f, fragment_size = 500, number_of_fragments = 1)
-
-        s = Search(query = q, fields = rfields, highlight = h, start=start, size=size)
-        if DEBUG:
-            print '=== Query DL ==='
-            pprint(json.loads(s.to_search_json()))
-            print '================'
-
-        results =  self.conn.search(s, indices = self.index)
-        return results
-
 class MongoSearch(object):
     def __init__(self, collection):
         self.conn = MongoClient(MONGO_SERVER)[MONGO_DB][collection]
@@ -73,10 +43,52 @@ class PaperSearch(ESSearch):
     def get_results(self, keywords, pos):
         results =  self._get_results(keywords, pos, RESULT_SIZE, self.search_field, self.result_field)
         papers = []
+        pprint(results[0]._meta)
         for r in results:
             paper = self._rebuild(r)
             papers.append(paper)
         return papers
+
+    def append_query(self, qlist, q, weight = None):
+        if weight:
+            qlist.append(CustomScoreQuery(query = q, script = "_score * %s" % weight))
+        else:
+            qlist.append(q)
+
+    def _get_results(self, keywords, start, size, search_fields = None, rfields = None):
+        query_list = []
+        for k in keywords:
+            q = TextQuery(field = 'title', text = k, type = 'phrase')
+            self.append_query(query_list, q, 10)
+            q = TextQuery(field = 'content', text = k, type = 'phrase')
+            self.append_query(query_list, q, 20)
+            q = TextQuery(field = 'author', text = k, type = 'phrase')
+            self.append_query(query_list, q)
+
+            q = TextQuery(field = 'title', text = k, operator='and')
+            self.append_query(query_list, q)
+            q = TextQuery(field = 'content', text = k, operator = 'and')
+            self.append_query(query_list, q)
+            q = TextQuery(field = 'author', text = k, operator = 'and')
+            self.append_query(query_list, q)
+
+
+        q = BoolQuery(should = query_list, disable_coord = True)
+
+        h = HighLighter(pre_tags = [pre_tag], post_tags = [post_tag])
+        for f in search_fields:
+            h.add_field(name = f, fragment_size = 500, number_of_fragments = 1)
+        if DEBUG:
+            explain = True
+        s = Search(query = q, fields = rfields, highlight = h, start=start, size=size, explain = explain)
+        if DEBUG:
+            print '=== Query DL ==='
+            pprint(json.loads(s.to_search_json()))
+            print s.to_search_json()
+            print '================'
+
+        results =  self.conn.search(s, indices = self.index)
+        return results
 
     def _rebuild(self, result):
         paper = dict(title = result.title,
