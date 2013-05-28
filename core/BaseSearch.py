@@ -43,7 +43,6 @@ class PaperSearch(ESSearch):
     def get_results(self, keywords, pos):
         results =  self._get_results(keywords, pos, RESULT_SIZE, self.search_field, self.result_field)
         papers = []
-        pprint(results[0]._meta)
         for r in results:
             paper = self._rebuild(r)
             papers.append(paper)
@@ -59,9 +58,9 @@ class PaperSearch(ESSearch):
         query_list = []
         for k in keywords:
             q = TextQuery(field = 'title', text = k, type = 'phrase')
-            self.append_query(query_list, q, 10)
+            self.append_query(query_list, q, 100)
             q = TextQuery(field = 'content', text = k, type = 'phrase')
-            self.append_query(query_list, q, 20)
+            self.append_query(query_list, q, 200)
             q = TextQuery(field = 'author', text = k, type = 'phrase')
             self.append_query(query_list, q)
 
@@ -77,7 +76,7 @@ class PaperSearch(ESSearch):
 
         h = HighLighter(pre_tags = [pre_tag], post_tags = [post_tag])
         for f in search_fields:
-            h.add_field(name = f, fragment_size = 500, number_of_fragments = 1)
+            h.add_field(name = f, fragment_size = 200, number_of_fragments = 3)
         if DEBUG:
             explain = True
         else:
@@ -98,8 +97,12 @@ class PaperSearch(ESSearch):
                 source = result.source,
                 year = result.year,
                 url = result.url,
-                content = result._meta.highlight.content[0],
-                score = result._meta.score)
+                content = result._meta.highlight.content)
+        if DEBUG:
+            paper['score'] = result._meta.score
+            print '=== %s ===' % paper['title']
+            pprint(result._meta.explanation)
+            print '========='
         return paper
 
 class DictionarySearch(MongoSearch):
