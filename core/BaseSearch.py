@@ -80,6 +80,8 @@ class PaperSearch(ESSearch):
             h.add_field(name = f, fragment_size = 500, number_of_fragments = 1)
         if DEBUG:
             explain = True
+        else:
+            explain = False
         s = Search(query = q, fields = rfields, highlight = h, start=start, size=size, explain = explain)
         if DEBUG:
             print '=== Query DL ==='
