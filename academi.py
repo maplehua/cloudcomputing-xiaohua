@@ -168,7 +168,7 @@ def api():
 
 @app.route('/api/stat/net')
 def show(rdb):
-    net_stat = rdb.get('number')
+    net_stat = rdb.get('about_number')
     if net_stat:
         return net_stat
     return 0
