@@ -24,7 +24,7 @@ from settings import RESULT_SIZE
 
 app = Bottle()
 
-plugin = MongoPlugin(uri="10.77.20.50:27017", db="academi", json_mongo=True)
+plugin = MongoPlugin(uri=settings.MONGO_SERVER, db="academi", json_mongo=True)
 app.install(plugin)
 plugin = RedisPlugin(host=settings.REDIS_SERVER)
 app.install(plugin)
