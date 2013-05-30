@@ -90,7 +90,7 @@ xmlHttp.send(null);
                         time = (new Date()).getTime(),
                         i;
     
-                    for (i = -19; i <= 0; i++) {
+                    for (i = -9; i <= 0; i++) {
                         data.push({
                             x: time + i * 1000,
                             y: Math.random()*1000+3000
