@@ -11,15 +11,14 @@
     </head>
     <body>
         {% block english %}
-        {% include 'navbar.html' %}
+        {% include 'navbar_english.html' %}
         {% endblock %}
         {% include 'header.html' %}
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span2">
-                    {% include 'leftsider.html' %}
-                </div>
-                <div class="span7">
+                <div class="span1">
+                    </div>
+                <div class="span10">
                     {% block content %}
                     <h1 class="as-text-center">Searching {{ keyword }} <i class="icon-spinner icon-spin"></i></h1>
                     {% endblock %}
@@ -33,7 +32,7 @@
                     </div>
                     {% endblock %}
                 </div>
-                <div class="span3">
+                <div class="span1">
                     {% include 'rightsider.html' %}
                 </div>
             </div>

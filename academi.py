@@ -74,6 +74,12 @@ def about():
     query = dict(keyword = keyword, theme = 'about')
     return dict(pages = pages, papers=papers, weibos=weibos, page_actived = True, query = query)
 
+@app.route('/english/')
+@view('homepage_english')
+def english():
+    return dict(theme = 'english')
+
+
 def deco_get_keywords(func):
     def _deco_func(keyword = None, pos = 0):
         if not keyword:
@@ -96,6 +102,16 @@ def deco_get_keywords(func):
 @app.get('/paper/search/<keyword>/<pos:int>')
 @app.post('/paper/search')
 @view('result_paper')
+@deco_get_keywords
+def search_paper(keywords, pre, cur, post):
+    s = PaperSearch()
+    results = s.get_results(keywords, cur)
+    meta = dict(keyword = keywords[0], theme = 'paper', pre = pre, cur = cur, post = post)
+    return dict(papers = results, query = meta)
+
+@app.get('/english/search/<keyword>/<pos:int>')
+@app.post('/english/search')
+@view('result_english')
 @deco_get_keywords
 def search_paper(keywords, pre, cur, post):
     s = PaperSearch()
