@@ -61,14 +61,10 @@ class PaperSearch(ESSearch):
             self.append_query(query_list, q, 100)
             q = TextQuery(field = 'content', text = k, type = 'phrase')
             self.append_query(query_list, q, 200)
-            q = TextQuery(field = 'author', text = k, type = 'phrase')
-            self.append_query(query_list, q)
 
             q = TextQuery(field = 'title', text = k, operator='and')
             self.append_query(query_list, q)
             q = TextQuery(field = 'content', text = k, operator = 'and')
-            self.append_query(query_list, q)
-            q = TextQuery(field = 'author', text = k, operator = 'and')
             self.append_query(query_list, q)
 
 
@@ -77,11 +73,7 @@ class PaperSearch(ESSearch):
         h = HighLighter(pre_tags = [pre_tag], post_tags = [post_tag])
         for f in search_fields:
             h.add_field(name = f, fragment_size = 200, number_of_fragments = 3)
-        if DEBUG:
-            explain = True
-        else:
-            explain = False
-        s = Search(query = q, fields = rfields, highlight = h, start=start, size=size, explain = explain)
+        s = Search(query = q, fields = rfields, highlight = h, start=start, size=size, explain = True)
         if DEBUG:
             print '=== Query DL ==='
             pprint(json.loads(s.to_search_json()))
@@ -101,7 +93,7 @@ class PaperSearch(ESSearch):
         if DEBUG:
             paper['score'] = result._meta.score
             print '=== %s ===' % paper['title']
-            pprint(result._meta.explanation)
+            #pprint(result._meta.explanation)
             print '========='
         return paper
 
