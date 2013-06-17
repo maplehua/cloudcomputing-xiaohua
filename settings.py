@@ -1,5 +1,5 @@
 DEBUG = True
-KEYWORD_EXPAND = False
+KEYWORD_EXPAND = True
 
 LIB_PATH = './lib'
 
