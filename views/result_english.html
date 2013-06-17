@@ -1,0 +1,22 @@
+{% extends "base_english.html" %}
+{% block english%}
+{% include "navbar_english.html" %}
+{% endblock%}
+{% block content %}
+<ul class="unstyled">
+    {% for paper in papers %}
+    <li>
+        <h3><score class="text-info">{{ paper.score }}</score> {{ paper.title }}</h3>
+        <p class="muted">{{ paper.author }} [{{ paper.source }} | {{ paper.year }}]</p>
+        {% if paper.content %}
+        {% for snippet in paper.content %}
+        <blockquote>
+            <p>{{ snippet }}</p>
+        </blockquote>
+        {% endfor %}
+        {% endif %}
+        <a href="{{ paper.url }}">Get this paper by Google Scholar <i class="icon-search"></i></a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

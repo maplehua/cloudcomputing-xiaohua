@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Academi Search</title>
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="/static/css/font-awesome.css" rel="stylesheet">
+        <link href="/static/css/academi.css" rel="stylesheet">
+    <script src="/static/js/jquery.js"></script>
+		 <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <!--jQuery动画暂停插件-->
+    <script type="text/javascript" src="/static/js/jquery.pause.min.js"></script>
+    <!--滚动效果js-->
+        <script src="/static/js/bootstrap.js"></script>
+		<script src="/static/js/nochange.js"></script>
+		<script type="text/javascript" src="/static/js/aboutcharts.js"></script>
+		<script type="text/javascript" src="/static/js/piechart.js"></script>
+			<script src="/static/js/highcharts.js"></script>
+    <script src="/static/js/modules/exporting.js"></script>
+	        <script src="/static/js/jquery.js"></script>
+
+    </head>
+    <body> 
+        {% include 'navbar_english.html' %}
+        <div class="as-cover as-cover-{{ theme }} as-padding hero-unit">
+            <h1>Academi</h1>
+            {% block headline %}
+            <p>Paper</p>
+            {% endblock %}
+            <div >
+                <form class="form-search" action="/{{ theme }}/search" method="POST">
+                    <div class="input-append">
+                        <input name="keyword" type="text" class="input-xxlarge search-query" placeholder="Type to search" />
+                        <input name="pos" type="hidden" value="0" />
+                        <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                {% block info %}
+                <div class="span4">
+                    <div class="well">
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="well">
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="well">
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+	
+        {% include 'footer.html' %}
+    
+
+
+
+    </body>
+</html>
