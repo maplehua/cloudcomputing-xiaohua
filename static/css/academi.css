@@ -30,6 +30,10 @@
 .as-cover-blog {
     background-image: url('/static/img/cover-3.jpg');
 }
+
+.as-cover-english {
+    background-image: url('/static/img/cover-3.jpg');
+}
 .as-cover h1{
     text-shadow: #000000 2px 2px 4px;
 }
