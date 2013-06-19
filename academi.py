@@ -15,7 +15,7 @@ from bottle_redis import RedisPlugin
 
 from models import jsonlist
 
-from core.BaseSearch import PaperSearch, DictionarySearch
+from core.BaseSearch import PaperSearchEN, PaperSearch, DictionarySearch
 from core.Dictionary import expand_keyword
 
 from utils.pagination import gen_pos
@@ -114,9 +114,9 @@ def search_paper(keywords, pre, cur, post):
 @view('result_english')
 @deco_get_keywords
 def search_paper(keywords, pre, cur, post):
-    s = PaperSearch()
+    s = PaperSearchEN()
     results = s.get_results(keywords, cur)
-    meta = dict(keyword = keywords[0], theme = 'paper', pre = pre, cur = cur, post = post)
+    meta = dict(keyword = keywords[0], theme = 'english', pre = pre, cur = cur, post = post)
     return dict(papers = results, query = meta)
 
 @app.get('/patent/search/<keyword>/<pos:int>')

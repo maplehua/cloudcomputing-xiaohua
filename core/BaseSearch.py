@@ -17,6 +17,9 @@ paper_index = ES_META['paper']['index']
 paper_type = ES_META['paper']['type']
 patent_index = ES_META['patent']['index']
 patent_type = ES_META['patent']['type']
+paper_index_en = 'paper_index_en'
+paper_type_en = 'paper_type_en'
+
 
 class ESSearch(object):
     def __init__(self, index, doc_type):
@@ -33,6 +36,7 @@ class MongoSearch(object):
 
     def _gets(self, query):
         return self.conn.find(query)
+
 
 class PaperSearch(ESSearch):
     def __init__(self):
@@ -96,6 +100,11 @@ class PaperSearch(ESSearch):
             #pprint(result._meta.explanation)
             print '========='
         return paper
+class PaperSearchEN(PaperSearch):
+    def __init__(self):
+        ESSearch.__init__(self, paper_index_en, paper_type_en)
+        self.search_field = ES_META['paper']['search']
+        self.result_field = ES_META['paper']['result']
 
 class DictionarySearch(MongoSearch):
     def __init__(self):
