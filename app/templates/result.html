@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid as-padding">
+    <div class="row-fluid">
+        <div class = "span2">
+            {% block search_logo_s %}
+            {% endblock %}
+        </div>
+        <div class = "span7">
+            {% include "_search_bar.html" %}
+        </div>
+    </div>
+ </div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            {% include "_left_sider.html"%}
+        </div>
+        <div class="span7">
+            {% block result_set %}
+            {% endblock %}
+            {% include "_pagination.html" %}
+        </div>
+        <div class="span3">
+            {% include '_right_sider.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

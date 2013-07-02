@@ -1,0 +1,64 @@
+.as-padding {
+    position: relative;
+    padding-top: 40px;
+}
+
+.as-center {
+    width: auto;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+.as-text-center {
+    text-align: center;
+}
+
+
+/* cover */
+.as-cover-paper {
+    background-image: url('/static/img/cover-1.jpg');
+}
+.as-cover-scholar {
+    background-image: url('/static/img/cover-2.jpg');
+}
+.as-cover-patent {
+    background-image: url('/static/img/cover-5.jpg');
+}
+.as-cover-weibo {
+    background-image: url('/static/img/cover-4.jpg');
+}
+.as-cover-blog {
+    background-image: url('/static/img/cover-3.jpg');
+}
+.as-cover h1{
+    text-shadow: #000000 2px 2px 4px;
+}
+.as-cover{
+    color: #ffffff;
+    text-shadow: #000000 1px 1px 3px;
+    text-align: center;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+/* userhead */
+.as-user-head{
+    width: 64px;
+    height: 64px;
+}
+
+/* searchbar */
+.as-searchbar{
+    padding-top: 20px
+}
+
+/* footer */
+.as-footer {
+    text-align: center;
+    padding: 30px 0;
+    border-top: 1px solid #e5e5e5;
+    background-color: #f5f5f5;
+}
+.as-footer-links li {
+    display: inline;
+}
