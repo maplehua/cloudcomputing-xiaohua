@@ -3,6 +3,7 @@ import json
 import pprint
 from pyes import ES, CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
 from app import es_conn, mongo_conn
+from translate import trans
 from config import *
 
 class AcademiSearch():
@@ -31,7 +32,8 @@ class AcademiSearch():
 
 # paper serach pipe line
 def expand(keyword):
-    return [keyword]
+    trans_keyword = trans(keyword)
+    return [keyword, trans_keyword]
 
 def paper_es_stat(keywords):
     qlist = []
@@ -75,6 +77,7 @@ def paper_es_search(keywords, start, size):
     query = BoolQuery(should = qlist, disable_coord = True)
     highlight = HighLighter(pre_tags = ['<strong class="text-error">'], post_tags = ['</strong>'])
     highlight.add_field(name = 'body', fragment_size = 200, number_of_fragments = 3)
+    highlight.add_field(name = 'title', fragment_size = 500, number_of_fragments = 1)
 
     s = Search(query = query, fields = fields, highlight = highlight, start=start, size=size, explain = EXPLAIN)
 
@@ -87,7 +90,9 @@ def paper_fetch_meta(uuid):
 def paper_rebuild(es_result, mongo_doc):
     uuid = es_result.uuid
     score = es_result._meta.score
-    highlight = es_result._meta.highlight['body']
+    highlight = []
+    if 'body' in es_result._meta.highlight:
+        highlight = es_result._meta.highlight['body']
 
     title = mongo_doc['title']
     authors = mongo_doc['authors']
