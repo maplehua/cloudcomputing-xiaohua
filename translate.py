@@ -1,19 +1,12 @@
 # -*- coding: utf-8 -*-
 import requests
+from config import TRANSLATOR
 
-TRANSLATOR = {
-        'youdao':{
-            'endpoint':'http://fanyi.youdao.com/openapi.do',
-            'username' :'academi',
-            'key' :'1179509028'
-            },
-        }
 def trans(src, service = 'youdao'):
     if service == 'youdao':
         result = yd_trans(src)['translation']
         if len(result) > 0:
             result = result[0]
-            print 'yd:', result
     return result
 
 def yd_trans(src):
