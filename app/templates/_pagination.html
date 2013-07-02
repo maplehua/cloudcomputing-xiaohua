@@ -1,0 +1,15 @@
+<div class="pagination pagination-centered pagination-small">
+    <ul>
+        {% if (meta.offset|int) == 0 %}
+        <li class="disabled"><span>&larr;</span></li>
+        {% else %}
+        <li><a href="/search?theme={{ meta.theme }}&keyword={{ meta.keyword }}&offset={{ meta.offset|int - 10 }}">&larr;</a></li>
+        {% endif %}
+        <li><span><strong>{{ meta.offset|int // 10 + 1 }}</strong></span></li>
+        {% if (meta.offset|int + 10) > result.total or (result.total < 10 )%}
+        <li class="disabled"><span>&rarr;</span></li>
+        {% else %}
+        <li><a href="/search?theme={{ meta.theme }}&keyword={{ meta.keyword }}&offset={{ meta.offset|int + 10 }}">&rarr;</a></li>
+        {% endif %}
+    </ul>
+</div>

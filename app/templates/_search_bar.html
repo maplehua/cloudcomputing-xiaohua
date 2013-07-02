@@ -1,0 +1,10 @@
+<div >
+    {% from "_formhelper.html" import render_search %}
+    <form class="form-search" action="/search" method="POST">
+        <div class="input-append">
+            {{ render_search(form.keyword, class="input-xxlarge search-query", placeholder="Type to search") }}
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Academi Search</title>
+        <link rel="shortcut icon" href="/static/img/favicon.ico" />
+        <link href="/static/css/bootstrap.css" rel="stylesheet">
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="/static/css/font-awesome.min.css" rel="stylesheet" >
+        <link href="/static/css/academi.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="/">academi</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="/paper/">论文</a></li>
+                            <li><a href="/scholar/">学者</a></li>
+                            <li><a href="/patent/">专利</a></li>
+                            <li><a href="/weibo/">微博</a></li>
+                            <li><a href="/blog/">博客</a></li>
+                            <li><a href="/about/">关于</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class = "as-padding">
+        {% block content %}
+        foo bar
+        {% endblock %}
+        </div>
+        <div class="as-footer">
+            <div class="container">
+                <p>Powered by <a href="http://twitter.github.com/bootstrap">Bootstrap</a></p>
+                <ul class="as-footer-links">
+                    <li><a href="http://info.ruc.edu.cn">中国人民大学信息学院</a></li>
+                    <li class="muted">·</li>
+                    <li><a href="http://www.863.gov.cn/">国家高技术研究发展计划（863计划）</a></li>
+                </ul>
+            </div>
+        </div>
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+    </body>
+</html>
