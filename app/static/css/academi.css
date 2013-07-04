@@ -16,29 +16,42 @@
 
 /* cover */
 .as-cover-paper {
-    background-image: url('/static/img/cover-1.jpg');
+    background-color: rgb(211, 85, 156);;
 }
 .as-cover-scholar {
-    background-image: url('/static/img/cover-2.jpg');
 }
 .as-cover-patent {
-    background-image: url('/static/img/cover-5.jpg');
 }
 .as-cover-weibo {
-    background-image: url('/static/img/cover-4.jpg');
 }
 .as-cover-blog {
-    background-image: url('/static/img/cover-3.jpg');
 }
 .as-cover h1{
+    padding: 50px;
+    font-size: 60px;
     text-shadow: #000000 2px 2px 4px;
+    color: #ffffff;
+}
+.as-cover h3{
+    text-shadow: #000000 1px 1px 3px;
+    color: #ffffff;
+}
+.as-cover p{
+    text-shadow: #000000 1px 1px 3px;
+    color: #ffffff;
 }
 .as-cover{
-    color: #ffffff;
-    text-shadow: #000000 1px 1px 3px;
+    padding: 50px 50px;
+    margin-bottom: 30px;
+    margin-top: -50px;
+    margin-right: -20px;
+    margin-left: -20px;
     text-align: center;
-    background-repeat:no-repeat;
-    background-size:cover;
+    background-repeat:repeat;
+    background-image: url('/static/img/pixels.png');
+}
+.jumbotron {
+    padding: 40px 0;
 }
 
 /* userhead */
