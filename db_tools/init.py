@@ -28,11 +28,16 @@ def es_put_mapping(index, doc_type, mapping):
     es_conn.indices.put_mapping(doc_type = doc_type, mapping = {'properties':mapping}, indices = index)
     print "elasticsearch [%s] create mapping '%r'" % (ES_SERVER, mapping)
 
-def init():
+def init_paper():
     mongo_init_db(db = MONGODB_DB, collection = PAPER_COLLECTION)
     es_init_index(index = PAPER_INDEX)
     es_put_mapping(index = PAPER_INDEX, doc_type = PAPER_TYPE, mapping = PAPER_MAPPING)
 
+def init_paper_en():
+    mongo_init_db(db = MONGODB_DB, collection = PAPER_EN_COLLECTION)
+    es_init_index(index = PAPER_EN_INDEX)
+    es_put_mapping(index = PAPER_EN_INDEX, doc_type = PAPER_EN_TYPE, mapping = PAPER_EN_MAPPING)
+
 if __name__ == '__main__':
-    init()
+    init_paper_en()
 

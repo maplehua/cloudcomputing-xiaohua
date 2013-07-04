@@ -25,7 +25,6 @@ class AcademiSearch():
         for result in result_list:
             meta_doc = paper_fetch_meta(result.uuid)
             papers.append(paper_rebuild(result, meta_doc))
-
         return dict(total = total,
                 papers = papers,
                 stat = stat)

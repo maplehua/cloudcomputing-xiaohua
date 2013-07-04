@@ -11,10 +11,10 @@ from config import *
 es_conn = ES(server = ES_SERVER)
 mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)[MONGODB_DB]
 
-def load_dir(path, parse_func, collection, index, doc_type):
+def load_dir(path, file_type,parse_func, collection, index, doc_type):
     for root, dirs, files in os.walk(path):
         for f in files:
-            if '.xml' == f[-4:]:
+            if file_type == f[-len(file_type):]:
                 print os.path.join(root, f)
                 (mongo_doc, es_doc) = parse_func(os.path.join(root, f))
                 print 'mongo - %r' % (import_mongo(mongo_doc, collection))
@@ -46,8 +46,7 @@ def import_mongo(doc, collection):
 def import_es(doc, index, doc_type):
     return es_conn.index(doc = doc, index = index, doc_type = doc_type)
 
-
 if __name__ == '__main__':
     path = sys.argv[1]
-    load_dir(path, paper_xml_to_doc, collection = PAPER_COLLECTION, index = PAPER_INDEX, doc_type = PAPER_TYPE)
+    load_dir(path, '.xml', paper_xml_to_doc, collection = PAPER_EN_COLLECTION, index = PAPER_EN_INDEX, doc_type = PAPER_EN_TYPE)
 

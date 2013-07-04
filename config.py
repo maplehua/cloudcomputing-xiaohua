@@ -1,6 +1,11 @@
-DEBUG = True
+DEBUG = False
 EXPLAIN = True
 RESULT_SIZE = 10
+
+if DEBUG:
+    HOST = '127.0.0.1'
+else:
+    HOST = '10.77.20.50'
 
 
 SRF_ENABLED = True
@@ -10,12 +15,12 @@ LANGUAGES = {
     'en': 'English'}
 
 # MongoDB
-MONGODB_HOST = '10.77.20.50'
+MONGODB_HOST = HOST
 MONGODB_PORT = 27017
 MONGODB_SERVER = '%s:%s' % (MONGODB_HOST, MONGODB_PORT)
 MONGODB_DB = 'academi_exp'
 PAPER_COLLECTION = 'paper'
-
+PAPER_EN_COLLECTION = 'paper_en'
 
 
 # Translate Service
@@ -29,7 +34,7 @@ TRANSLATE_SERVICE = {
         }
 
 # Elasticsearch
-ES_HOST = '10.77.20.50'
+ES_HOST = HOST
 ES_PORT = '9200'
 ES_SERVER = '%s:%s' % (ES_HOST, ES_PORT)
 PAPER_INDEX = 'paper_index_exp'
@@ -58,3 +63,28 @@ PAPER_MAPPING = {
             }
         }
 
+PAPER_EN_INDEX = 'paper_en_index_exp'
+PAPER_EN_TYPE = 'paper_en_type'
+PAPER_EN_MAPPING = {
+        'uuid': {
+            'index': 'not_analyzed',
+            'store': 'yes',
+            'type': 'string'
+            },
+        'title': {
+            'index': 'analyzed',
+            'indexAnalyzer': 'ik',
+            'searchAnalyzer': 'ik',
+            'store': 'yes',
+            'type': 'string',
+            'term_vector': 'with_positions_offsets'
+            },
+        'body': {
+            'index': 'analyzed',
+            'indexAnalyzer': 'ik',
+            'searchAnalyzer': 'ik',
+            'store': 'yes',
+            'type': 'string',
+            'term_vector': 'with_positions_offsets'
+            }
+        }
