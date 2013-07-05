@@ -1,23 +1,27 @@
 from flask import abort, render_template, flash, redirect, session, url_for, request, g
 from app import app
 from forms import SearchForm
-from models import Paper
 from search import AcademiSearch as Search
 from config import *
 
 @app.route('/')
 @app.route('/paper')
-@app.route('/index', methods = ['POST'])
-def index():
+@app.route('/index')
+def index_paper():
     form = SearchForm()
     form.theme.data = 'paper'
-    return render_template('index.html',theme = 'paper', form = form)
+    return render_template('index_paper.html',theme = 'paper', form = form)
+
+@app.route('/paper_en')
+def index_paper_en():
+    form = SearchForm()
+    form.theme.data = 'paper_en'
+    return render_template('index_paper_en.html', theme = 'paper_en', form = form)
 
 @app.route('/scholar')
 @app.route('/patent')
 @app.route('/weibo')
 @app.route('/blog')
-@app.route('/about')
 def to_implement():
     abort(404)
 
@@ -47,3 +51,7 @@ def search():
         meta = meta,
         form = form,
         result = result)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')

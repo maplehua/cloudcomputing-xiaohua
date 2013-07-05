@@ -16,16 +16,13 @@
 
 /* cover */
 .as-cover-paper {
-    background-color: rgb(211, 85, 156);;
+    background-color: rgb(211, 85, 156);
 }
-.as-cover-scholar {
+
+.as-cover-paper_en {
+    background-color: rgb(110, 85, 211);
 }
-.as-cover-patent {
-}
-.as-cover-weibo {
-}
-.as-cover-blog {
-}
+
 .as-cover h1{
     padding: 50px;
     font-size: 60px;

@@ -1,4 +1,4 @@
-DEBUG = False
+DEBUG = True
 EXPLAIN = True
 RESULT_SIZE = 10
 
@@ -21,6 +21,7 @@ MONGODB_SERVER = '%s:%s' % (MONGODB_HOST, MONGODB_PORT)
 MONGODB_DB = 'academi_exp'
 PAPER_COLLECTION = 'paper'
 PAPER_EN_COLLECTION = 'paper_en'
+SCHOLAR_COLLECTION = 'scholar'
 
 
 # Translate Service

@@ -12,7 +12,7 @@
                 <div class="input-append">
                     {{ render_search(form.keyword, class="input-xxlarge search-query", placeholder="Type to search") }}
                     {{ form.hidden_tag() }}
-                    <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> {{ theme }}</button>
+                    <button type="submit" class="btn btn-primary">{% block search_button_label %}{% endblock %}</button>
                 </div>
             </form>
         </div>
