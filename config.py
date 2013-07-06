@@ -15,6 +15,11 @@ SECRET_KEY = 'academi'
 LANGUAGES = {
     'en': 'English'}
 
+# Redis
+REDIS_HOST = HOST
+REDIS_PORT = 6379
+REDIS_DB = 0
+
 # MongoDB
 MONGODB_HOST = HOST
 MONGODB_PORT = 27017

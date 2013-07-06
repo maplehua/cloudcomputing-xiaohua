@@ -1,7 +1,8 @@
 from flask import abort, render_template, flash, redirect, session, url_for, request, g
-from app import app
+from app import app, redis_conn
 from forms import SearchForm
 from search import AcademiSearch as Search
+from about import about_readmongo
 from config import *
 
 @app.route('/')
@@ -54,4 +55,12 @@ def search():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    pages = about_readmongo("about_page")
+    papers = about_readmongo("about_paper")
+    weibos = about_readmongo("about_weibo")
+    return render_template('about.html', pages = pages, papers = papers, weibos = weibos)
+
+@app.route('/api/stat/net')
+def api():
+    print str(int(float(redis_conn.get('about_number'))))
+    return str(int(float(redis_conn.get('about_number'))))

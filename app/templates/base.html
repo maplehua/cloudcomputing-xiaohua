@@ -8,6 +8,7 @@
         <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
         <link href="/static/css/font-awesome.min.css" rel="stylesheet" >
         <link href="/static/css/academi.css" rel="stylesheet">
+        <>
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -50,5 +51,7 @@
         </div>
         <script src="/static/js/jquery.js"></script>
         <script src="/static/js/bootstrap.js"></script>
+        {% block js %}
+        {% endblock %}
     </body>
 </html>
