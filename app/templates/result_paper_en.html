@@ -1,0 +1,40 @@
+{% extends "result.html" %}
+{% block search_logo_s %}
+<h1>Academi</h1>
+{% endblock %}
+{% block result_set %}
+<ul class="unstyled">
+    {% for paper in result.papers %}
+    <li>
+        <h3>{{ paper.title }}</h3>
+        <div>
+        <p class="text-info">
+            <i class="icon-user"></i>
+            {% for author in paper.authors %}
+            <span class="label label-info">{{ author }}</span>
+            {% endfor %}
+        </p>
+        </div>
+        <div>
+            {% if paper.highlight %}
+            {% for snippet in paper.highlight %}
+            <div class="well well-small">
+                {{ snippet|safe }}
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            <a href="http://scholar.google.com/scholar?q={{ paper.title }}"><span class="badge badge-info">Google Scholar <i class="icon-search"></i></span></a>
+            <a href="http://academic.research.microsoft.com/Search?query={{ paper.title }}"><span class="badge badge-info">Microsoft Academi <i class="icon-search"></i></span></a>
+            <div class="pull-right">
+                <span class="badge badge-info">{{ paper.score }}</span>
+                <span class="label">{{ paper.publication }}</span>
+                <span class="label">{{ paper.year }}</span>
+            </div>
+        </div>
+        <hr>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 EXPLAIN = True
 RESULT_SIZE = 10
 
