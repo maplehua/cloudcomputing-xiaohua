@@ -48,5 +48,5 @@ def import_es(doc, index, doc_type):
 
 if __name__ == '__main__':
     path = sys.argv[1]
-    load_dir(path, '.xml', paper_xml_to_doc, collection = PAPER_EN_COLLECTION, index = PAPER_EN_INDEX, doc_type = PAPER_EN_TYPE)
+    load_dir(path, '.xml', paper_xml_to_doc, collection = PAPER_COLLECTION, index = PAPER_INDEX, doc_type = PAPER_TYPE)
 
