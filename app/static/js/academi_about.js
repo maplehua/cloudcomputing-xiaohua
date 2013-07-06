@@ -1,5 +1,4 @@
- var xmlHttp=null;
-
+var xmlHttp=null;
 $(function () {
     $(document).ready(function() {
         Highcharts.setOptions({
@@ -7,7 +6,7 @@ $(function () {
                 useUTC: false
             }
         });
-    
+
         var chart;
         chart = new Highcharts.Chart({
             chart: {
@@ -16,31 +15,30 @@ $(function () {
                 marginRight: 10,
                 events: {
                     load: function() {
-    
                         // set up the updating of the chart each second
                         var series = this.series[0];
                         setInterval(function() {
-							  try
-  {// Firefox, Opera 8.0+, Safari, IE7
-  xmlHttp=new XMLHttpRequest();
-  }
-catch(e)
-  {// Old IE
-  try
-    {
-    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-  catch(e)
-    {
-    alert ("Your browser does not support XMLHTTP!");
-    return;  
-    }
-  }
-   var url="/api/stat/net";
-xmlHttp.open("GET",url,false);
-xmlHttp.send(null);
+                            try
+                            {// Firefox, Opera 8.0+, Safari, IE7
+                                xmlHttp=new XMLHttpRequest();
+                            }
+                            catch(e)
+                            {// Old IE
+                                try
+                                {
+                                    xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+                                }
+                                catch(e)
+                                {
+                                    alert ("Your browser does not support XMLHTTP!");
+                                    return;  
+                                }
+                            }
+                            var url="/api/stat/net";
+                            xmlHttp.open("GET",url,false);
+                            xmlHttp.send(null);
                             var x = (new Date()).getTime(), // current time
-                                y = parseInt(xmlHttp.responseText);
+                            y = parseInt(xmlHttp.responseText);
                             series.addPoint([x, y], true, true);
                         }, 1000);
                     }
@@ -57,21 +55,21 @@ xmlHttp.send(null);
                 title: {
                     text: '流量'
                 },
-       labels: {
-        formatter: function() {
-            return this.value + ' KB/S';
-        }
-    },
+                labels: {
+                    formatter: function() {
+                        return this.value + ' KB/S';
+                    }
+                },
                 plotLines: [{
                     value: 0,
                     width: 1,
                     color: '#808080',
-                
+
                 }]
             },
             tooltip: {
                 formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
+                    return '<b>'+ this.series.name +'</b><br/>'+
                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
                         Highcharts.numberFormat(this.y, 2);
                 }
@@ -87,9 +85,9 @@ xmlHttp.send(null);
                 data: (function() {
                     // generate an array of random data
                     var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
+                    time = (new Date()).getTime(),
+                    i;
+
                     for (i = -19; i <= 0; i++) {
                         data.push({
                             x: time + i * 1000,
@@ -101,9 +99,6 @@ xmlHttp.send(null);
             }]
         });
     });
-    
+
 });
-/////////////////////////////////
-////////////////////////////////
-//////////////////////////////////
-//////////////////////////////////
+////////
