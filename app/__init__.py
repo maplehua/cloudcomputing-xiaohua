@@ -10,4 +10,4 @@ app.config.from_object('config')
 mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)[MONGODB_DB]
 es_conn = ES(ES_SERVER)
 
-from app import views, models
+from app import views
