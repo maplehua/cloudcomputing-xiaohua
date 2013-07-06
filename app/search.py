@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
-import pprint
-from pyes import ES, CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
+from pyes import CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
 from app import es_conn, mongo_conn
 from translate import trans
 from config import *
@@ -43,7 +41,7 @@ class AcademiSearch():
                 stat = stat)
 
 ### paper serach pipe line
-def psper_keyword_expand(keyword):
+def paper_keyword_expand(keyword):
     trans_keyword = trans(keyword)
     return [keyword, trans_keyword]
 

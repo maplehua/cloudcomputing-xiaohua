@@ -1,8 +1,9 @@
-DEBUG = False
+DEBUG = True
+DEV = False
 EXPLAIN = True
 RESULT_SIZE = 10
 
-if DEBUG:
+if DEV:
     HOST = '127.0.0.1'
 else:
     HOST = '10.77.20.50'
