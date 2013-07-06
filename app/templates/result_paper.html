@@ -3,17 +3,23 @@
 <h1>Academi</h1>
 {% endblock %}
 {% block result_set %}
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Hit <strong>{{ result.total }}</strong> answers.
+        <strong>{{ result.stat.title }}</strong> in TITLE.
+        <strong>{{ result.stat.body }}</strong> in BODY.
+    </div>
 <ul class="unstyled">
     {% for paper in result.papers %}
     <li>
         <h3>{{ paper.title }}</h3>
         <div>
-        <p class="text-info">
-            <i class="icon-user"></i>
-            {% for author in paper.authors %}
-            <span class="label label-info">{{ author }}</span>
-            {% endfor %}
-        </p>
+            <p class="text-info">
+                <i class="icon-user"></i>
+                {% for author in paper.authors %}
+                <span class="label label-info">{{ author }}</span>
+                {% endfor %}
+            </p>
         </div>
         <div>
             {% if paper.highlight %}

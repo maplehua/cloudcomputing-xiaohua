@@ -16,6 +16,10 @@ def mongo_init_db(db, collection):
     mongo_conn[db].create_collection(collection)
     print "mongodb [%s] create collection '%s.%s'" % (MONGODB_SERVER, db, collection)
 
+def mongo_create_index(db, collection, key_or_list):
+    mongo_conn[db][collection].create_index(key_or_list)
+    print "mongodb [%s] create index on '%s.%s - %s'" % (MONGODB_SERVER, db, collection, key_or_list)
+
 def es_init_index(index):
     es_conn.indices.delete_index_if_exists(index)
     print "elasticsearch [%s] drop index '%s'" % (ES_SERVER, index)
@@ -30,15 +34,16 @@ def es_put_mapping(index, doc_type, mapping):
 
 def init_paper():
     mongo_init_db(db = MONGODB_DB, collection = PAPER_COLLECTION)
+    mongo_create_index(db = MONGODB_DB, collection = PAPER_COLLECTION, key_or_list = 'uuid')
     es_init_index(index = PAPER_INDEX)
     es_put_mapping(index = PAPER_INDEX, doc_type = PAPER_TYPE, mapping = PAPER_MAPPING)
 
 def init_paper_en():
     mongo_init_db(db = MONGODB_DB, collection = PAPER_EN_COLLECTION)
+    mongo_create_index(db = MONGODB_DB, collection = PAPER_EN_COLLECTION, key_or_list = 'uuid')
     es_init_index(index = PAPER_EN_INDEX)
     es_put_mapping(index = PAPER_EN_INDEX, doc_type = PAPER_EN_TYPE, mapping = PAPER_EN_MAPPING)
 
 if __name__ == '__main__':
     #init_paper_en()
     init_paper()
-
