@@ -49,28 +49,25 @@ def paper_es_stat(keywords):
     qlist = []
     for k in keywords:
         qlist.append(TextQuery(field = 'title', text = k, type = 'phrase'))
-        qlist.append(TextQuery(field = 'body', text = k, type = 'phrase'))
         qlist.append(TextQuery(field = 'title', text = k, operator='and'))
-        qlist.append(TextQuery(field = 'body', text = k, operator = 'and'))
-
-    fields = ['title', 'uuid']
     query = BoolQuery(should = qlist, disable_coord = True)
-    highlight = HighLighter()
-    highlight.add_field(name = 'body')
-    highlight.add_field(name = 'title')
-
-    s = Search(query = query, fields = fields, highlight = highlight)
-
+    s = Search(query = query)
     results =  es_conn.search(s, indices = PAPER_INDEX)
-    stat_body = 0
-    stat_title = 0
-    for result in results:
-        if 'title' in result._meta.highlight:
-            stat_title += 1
-        if 'body' in result._meta.highlight:
-            stat_body += 1
+    stat_title = results.total
+
+    qlist = []
+    for k in keywords:
+        qlist.append(TextQuery(field = 'body', text = k, type = 'phrase'))
+        qlist.append(TextQuery(field = 'body', text = k, operator = 'and'))
+    query = BoolQuery(should = qlist, disable_coord = True)
+    s = Search(query = query)
+    results =  es_conn.search(s, indices = PAPER_INDEX)
+    stat_body = results.total
+
     return dict(title = stat_title,
-            body = stat_body)
+            body = stat_body,
+            first_paper = {'title':'TITLE','year':'2013'},
+            contribution = 'CONTRIBUTION')
 
 
 def paper_es_search(keywords, start, size):
