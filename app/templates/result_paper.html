@@ -2,13 +2,20 @@
 {% block search_logo_s %}
 <h1>Academi</h1>
 {% endblock %}
+{% block info %}
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    Hit <strong>{{ result.total }}</strong> answers.
+    <strong>{{ result.stat.title }}</strong> in TITLE.
+    <strong>{{ result.stat.body }}</strong> in BODY.
+</div>
+<div class="alert alert-block">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p>First public: {{ result.stat.first_paper.title }} in {{ result.stat.first_paper.year }}.</p>
+    <p>Contributions: {{ result.stat.contribution }}</p> 
+</div>
+{% endblock %}
 {% block result_set %}
-    <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Hit <strong>{{ result.total }}</strong> answers.
-        <strong>{{ result.stat.title }}</strong> in TITLE.
-        <strong>{{ result.stat.body }}</strong> in BODY.
-    </div>
 <ul class="unstyled">
     {% for paper in result.papers %}
     <li>
