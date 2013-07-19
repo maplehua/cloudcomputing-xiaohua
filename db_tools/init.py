@@ -45,5 +45,5 @@ def init_paper_en():
     es_put_mapping(index = PAPER_EN_INDEX, doc_type = PAPER_EN_TYPE, mapping = PAPER_EN_MAPPING)
 
 if __name__ == '__main__':
-    #init_paper_en()
+    init_paper_en()
     init_paper()
