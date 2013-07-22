@@ -1,9 +1,19 @@
 {% block info %}
-<div class="alert alert-info">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    Hit <a href="search?theme=paper&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.all }}</strong></a> answers.
-    <a href="search?theme=paper_title&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.title }}</strong></a> in TITLE.
-    <a href="search?theme=paper_body&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.body }}</strong></a> in BODY.
+<div>
+    <ul class="nav nav-tabs">
+        <li {% if meta.theme == 'paper' %}class="active"{% endif %}>
+            <a href="search?theme=paper&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.all }}</strong> Answers</a>
+        </li>
+        <li {% if meta.theme == 'paper_title' %}class="active"{% endif %}>
+            <a href="search?theme=paper_title&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.title }}</strong> in Title</a>
+        </li>
+        <li {% if meta.theme == 'paper_body' %}class="active"{% endif %}>
+            <a href="search?theme=paper_body&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.body }}</strong> in Body</a>
+        </li>
+        <li>
+            <a href="#">#</a>
+        </li>
+    </ul>
 </div>
 <div class="alert alert-block">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
