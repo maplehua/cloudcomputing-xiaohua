@@ -1,5 +1,5 @@
 DEBUG = True
-DEV = False
+DEV = True
 EXPLAIN = True
 RESULT_SIZE = 10
 
@@ -7,7 +7,6 @@ if DEV:
     HOST = '127.0.0.1'
 else:
     HOST = '10.77.20.50'
-
 
 SRF_ENABLED = True
 SECRET_KEY = 'academi'
