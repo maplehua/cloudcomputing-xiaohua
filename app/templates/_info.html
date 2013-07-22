@@ -1,6 +1,13 @@
+{% block info %}
 <div class="alert alert-info">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    Hit <strong>{{ result.total }}</strong> answers.
-    <a href=search?theme=paper_title&keyword=search&offset=0><strong>{{ result.stat.title }}</strong></a> in TITLE.
-    <a href=search?theme=paper_body&keyword=search&offset=0><strong>{{ result.stat.body }}</strong></a> in BODY.
+    Hit <a href=search?theme=paper&keyword={{ meta.keyword }}&offset=0><strong>{{ result.stat.all }}</strong></a> answers.
+    <a href=search?theme=paper_title&keyword={{ meta.keyword }}&offset=0><strong>{{ result.stat.title }}</strong></a> in TITLE.
+    <a href=search?theme=paper_body&keyword={{ meta.keyword }}&offset=0><strong>{{ result.stat.body }}</strong></a> in BODY.
 </div>
+<div class="alert alert-block">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p>First public: {{ result.stat.first_paper.title }} in {{ result.stat.first_paper.year }}.</p>
+    <p>Contributions: {{ result.stat.contribution }}</p> 
+</div>
+{% endblock %}
