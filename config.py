@@ -1,5 +1,5 @@
 DEBUG = True
-DEV = True
+DEV = False
 EXPLAIN = True
 RESULT_SIZE = 10
 
@@ -23,10 +23,13 @@ REDIS_DB = 0
 MONGODB_HOST = HOST
 MONGODB_PORT = 27017
 MONGODB_SERVER = '%s:%s' % (MONGODB_HOST, MONGODB_PORT)
-MONGODB_DB = 'academi_exp'
+
+PAPER_DB = 'academi_exp'
 PAPER_COLLECTION = 'paper'
 PAPER_EN_COLLECTION = 'paper_en'
-SCHOLAR_COLLECTION = 'scholar'
+
+SCHOLAR_DB = 'dblp'
+SCHOLAR_PAPER_COLLECTION = 'dblp_papers_all'
 
 
 # Translate Service

@@ -178,7 +178,7 @@ def paper_body_es_search(keywords, start, size):
     return results
 
 def paper_fetch_meta(uuid):
-    return mongo_conn[PAPER_COLLECTION].find_one(spec_or_id = {"uuid": uuid}, fields = ['title', 'authors', 'publication', 'year'])
+    return mongo_conn[PAPER_DB][PAPER_COLLECTION].find_one(spec_or_id = {"uuid": uuid}, fields = ['title', 'authors', 'publication', 'year'])
 
 def paper_rebuild(es_result, mongo_doc):
     uuid = es_result.uuid
@@ -239,7 +239,7 @@ def paper_en_es_search(keywords, start, size):
     results =  es_conn.search(s, indices = PAPER_EN_INDEX)
     return results
 def paper_en_fetch_meta(uuid):
-    return mongo_conn[PAPER_EN_COLLECTION].find_one(spec_or_id = {"uuid": uuid}, fields = ['title', 'authors', 'publication', 'year'])
+    return mongo_conn[PAPER_DB][PAPER_EN_COLLECTION].find_one(spec_or_id = {"uuid": uuid}, fields = ['title', 'authors', 'publication', 'year'])
 
 def paper_en_rebuild(es_result, mongo_doc):
     uuid = es_result.uuid

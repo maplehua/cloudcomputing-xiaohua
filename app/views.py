@@ -1,4 +1,4 @@
-from flask import abort, render_template, flash, redirect, session, url_for, request, g
+from flask import abort, render_template, flash, redirect, url_for, request
 from app import app, redis_conn
 from forms import SearchForm
 from search import AcademiSearch as Search
