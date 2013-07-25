@@ -11,7 +11,7 @@
             <p class="text-info">
                 <i class="icon-user"></i>
                 {% for author in paper.authors %}
-                <span class="label label-info">{{ author }}</span>
+                <a href="/search?theme=scholar&keyword={{ author }}&pos=0"><span class="label label-info">{{ author }}</span></a>
                 {% endfor %}
             </p>
         </div>

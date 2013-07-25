@@ -3,7 +3,9 @@ import requests
 from config import TRANSLATE_SERVICE, TRANSLATOR
 
 def trans(src, service = TRANSLATOR):
-    if service == 'youdao':
+    if service == 'none':
+        result = src
+    elif service == 'youdao':
         result = yd_trans(src)
     return result
 
