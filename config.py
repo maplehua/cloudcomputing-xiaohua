@@ -1,5 +1,6 @@
 DEBUG = True
-DEV = False
+DEV = True
+ADMIN = False
 EXPLAIN = True
 RESULT_SIZE = 10
 
