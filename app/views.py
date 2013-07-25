@@ -13,13 +13,18 @@ def index_paper():
     form.theme.data = 'paper'
     return render_template('index_paper.html',theme = 'paper', form = form)
 
+@app.route('/scholar')
+def index_scholar():
+    form = SearchForm()
+    form.theme.data = 'scholar'
+    return render_template('index_scholar.html',theme = 'scholar', form = form)
 @app.route('/paper_en')
 def index_paper_en():
     form = SearchForm()
     form.theme.data = 'paper_en'
     return render_template('index_paper_en.html', theme = 'paper_en', form = form)
 
-@app.route('/scholar')
+#@app.route('/scholar')
 @app.route('/patent')
 @app.route('/weibo')
 @app.route('/blog')

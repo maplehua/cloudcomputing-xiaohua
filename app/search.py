@@ -72,6 +72,21 @@ class AcademiSearch():
                 papers = papers,
                 stat = stat)
 
+    def _scholar_search(self):
+        keyword=self.keyword
+        scholar=get_scholar(keyword)
+        papers=get_papers(keyword)
+        #stat = paper_en_es_stat(keywords)
+        #result_list = paper_en_es_search(keywords, self.offset, RESULT_SIZE)
+        #total = result_list.total
+        #papers = []
+        #for result in result_list:
+        #    meta_doc = paper_en_fetch_meta(result.uuid)
+        #    papers.append(paper_en_rebuild(result, meta_doc))
+        return dict(scholar=scholar,
+                papers = papers)
+
+
 ### paper serach pipe line
 def paper_keyword_expand(keyword):
     '''
@@ -256,3 +271,14 @@ def paper_en_rebuild(es_result, mongo_doc):
         new_result['explain'] = es_result._meta.explanation
     return new_result
 
+def get_scholar(keyword):
+    scholar=mongo_conn.Microsoft_AS.AuthorInfo.find_one({u"Name":keyword})
+    scholar[u"Photo"]="data:image/gif;base64,"+scholar[u"Photo"]
+    return scholar
+
+def get_papers(keyword):
+    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors":keyword})
+    papers=[]
+    for p in mycursor:
+        papers.append(p)
+    return papers
