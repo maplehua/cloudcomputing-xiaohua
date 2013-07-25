@@ -1,7 +1,7 @@
 DEBUG = True
-DEV = True
+DEV = False
 ADMIN = False
-EXPLAIN = True
+EXPLAIN = False
 RESULT_SIZE = 10
 
 if DEV:
@@ -34,8 +34,9 @@ SCHOLAR_PAPER_COLLECTION = 'dblp_papers_all'
 
 
 # Translate Service
-TRANSLATOR = 'youdao'
+TRANSLATOR = 'none'
 TRANSLATE_SERVICE = {
+        'none':'using for disable translate',
         'youdao':{
             'endpoint':'http://fanyi.youdao.com/openapi.do',
             'username' :'academi',

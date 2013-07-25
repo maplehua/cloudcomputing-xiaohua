@@ -1,24 +1,15 @@
 <ul class="nav nav-pills nav-stacked">
     <li class="nav-header">Search Type</li>
-    <li {% if theme == 'paper' %} class="active" {% endif %}  >
-        <a href="/paper/"><i class="icon-file-alt"></i> Paper</a>
+    <li {% if meta.theme == 'paper' %} class="active" {% endif %}  >
+        <a href="/paper"><i class="icon-file-alt"></i> Paper</a>
     </li>
-    <li {% if scholar_actived %} class="active" {% endif %} >
-        <a href="/scholar/search/"><i class="icon-user"></i> Scholar</a>
-    </li>
-    <li {% if blog_actived %} class="active" {% endif %} >
-        <a href="/blog/search/"><i class="icon-rss"></i> Blog</a>
-    </li>
-    <li {% if weibo_actived %} class="active" {% endif %} >
-        <a href="/weibo/search/"><i class="icon-twitter"></i> Weibo</a>
-    </li>
-    <li {% if patent_actived %} class="active" {% endif %} >
-        <a href="/patent/search/"><i class="icon-legal"></i> Patent</a>
+    <li {% if meta.theme == 'scholar' %} class="active" {% endif %} >
+        <a href="/scholar"><i class="icon-user"></i> Scholar</a>
     </li>
     <hr>
     <li class="nav-header">Infos</li>
     <li>
-        <a href="/about/"><i class="icon-question-sign"></i> About</a>
+        <a href="/about"><i class="icon-question-sign"></i> About</a>
     </li>
 </ul>
 
