@@ -1,55 +1,57 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "result.html" %}
+{% block info %}{% endblock %}
+{% block pagination  %}{% endblock %}
+{% block result_set %}
 <div class="row">
-	<div class="span2 offset1">
-		<h4><i class="icon-user"></i> {{ result.scholar.Name }}</h4>
-	</div>
+    <div class="offset1">
+        <h4><i class="icon-user"></i> {{ result.scholar.Name }}</h4>
+    </div>
 </div>
-	<div class="row">
-	    <div class="span2 offset1">
-		<a href="www.baidu.com">
-			<img class="img-rounded" src={{result.scholar.Photo}}>
-		</a>
-	    </div>
-	    <div class="span6">
-		<p class="text-info">
-		{{result.scholar.NativeName}}
-		</p>
-		<p class="text-info">
-		{{result.scholar.Affiliation}}
-		</p>
-		<p class="text-info">
-		{{result.scholar.Email}}
-		</p>
-		<a href={{result.scholar.Homepage}}>
-		{{result.scholar.Homepage}}
-		</a>
-	    </div>
-	</div>
-        <hr>
+<div class="row">
+    <div class="span2 offset1">
+        <a href="www.baidu.com">
+            <img class="img-rounded" src={{result.scholar.Photo}}>
+        </a>
+    </div>
+    <div class="span6">
+        <p class="text-info">
+        {{result.scholar.NativeName}}
+        </p>
+        <p class="text-info">
+        {{result.scholar.Affiliation}}
+        </p>
+        <p class="text-info">
+        {{result.scholar.Email}}
+        </p>
+        <a href={{result.scholar.Homepage}}>
+            {{result.scholar.Homepage}}
+        </a>
+    </div>
+</div>
+<hr>
 
 <ul class="unstyled">
     {% for paper in result.papers %}
     <li>
-        <h3>{{ paper.title }}</h3>
-	<div>
-            <div class="pull-left">
-                <span class="label">{{ paper.journal }}</span>
-                <span class="label">{{ paper.booktitle }}</span>
-                <span class="label">{{ paper.year }}</span>
-            </div>
+    <h3>{{ paper.title }}</h3>
+    <div>
+        <div class="pull-left">
+            <span class="label">{{ paper.journal }}</span>
+            <span class="label">{{ paper.booktitle }}</span>
+            <span class="label">{{ paper.year }}</span>
         </div>
+    </div>
 
-        <div>
+    <div>
         <p class="text-info">
-            <i class="icon-user"></i>
-            {% for Author in paper.authors %}
-            <span class="label label-info">{{ Author }}</span>
-            {% endfor %}
+        <i class="icon-user"></i>
+        {% for Author in paper.authors %}
+        <span class="label label-info">{{ Author }}</span>
+        {% endfor %}
         </p>
-        </div>
-        
-        <hr>
+    </div>
+
+    <hr>
     </li>
     {% endfor %}
 </ul>
