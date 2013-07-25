@@ -1,7 +1,9 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "result.html" %}
+{% block info %}{% endblock %}
+{% block pagination  %}{% endblock %}
+{% block result_set %}
 <div class="row">
-    <div class="span2 offset1">
+    <div class="offset1">
         <h4><i class="icon-user"></i> {{ result.scholar.Name }}</h4>
     </div>
 </div>
