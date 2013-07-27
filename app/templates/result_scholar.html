@@ -2,6 +2,7 @@
 {% block info %}{% endblock %}
 {% block pagination  %}{% endblock %}
 {% block result_set %}
+{% if result.scholar %}
 <div class="row">
     <div class="offset1">
         <h4><i class="icon-user"></i> {{ result.scholar.Name }}</h4>
@@ -29,7 +30,6 @@
     </div>
 </div>
 <hr>
-
 <ul class="unstyled">
     {% for paper in result.papers %}
     <li>
@@ -55,4 +55,11 @@
     </li>
     {% endfor %}
 </ul>
+{%else%}
+<div class="row">
+    <div class="offset1 span7 ">
+        <p class="text-center"><strong>No Results Found.</strong></p>
+    </div>
+</div>
+{%endif%}
 {% endblock %}
