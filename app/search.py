@@ -273,8 +273,11 @@ def paper_en_rebuild(es_result, mongo_doc):
 
 def get_scholar(keyword):
     scholar=mongo_conn.Microsoft_AS.AuthorInfo.find_one({u"Name":keyword})
-    scholar[u"Photo"]="data:image/gif;base64,"+scholar[u"Photo"]
-    return scholar
+    if scholar:
+        scholar[u"Photo"]="data:image/gif;base64,"+scholar[u"Photo"]
+        return scholar
+    else:
+        return None
 
 def get_papers(keyword):
     mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors":keyword})
