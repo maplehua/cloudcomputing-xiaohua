@@ -20,7 +20,9 @@
             {% include "_info.html" %}
             {% block result_set %}
             {% endblock %}
+            {% block pagination %}
             {% include "_pagination.html" %}
+            {% endblock %}
         </div>
         <div class="span3">
             {% include '_right_sider.html' %}

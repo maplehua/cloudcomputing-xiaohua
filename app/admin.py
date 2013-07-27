@@ -22,5 +22,5 @@ class ScholarPaperForm(Form):
 
 class ScholarPaperView(ModelView):
     column_list = ('paper_id', 'title', 'type','year','authors')
-    column_searchable_list = ('title', 'authors')
+    column_searchable_list = ('authors')
     form = ScholarPaperForm
