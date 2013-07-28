@@ -5,65 +5,69 @@
 {% if result.scholar %}
 <div class="row">
     <div class="offset1">
-        <h4><i class="icon-user"></i> {{ result.scholar.Name }}</h4>
+        <h4><i class="icon-user"></i> {{ result.scholar.Name }}
+        {%if result.scholar.NativeName %}
+        ({{result.scholar.NativeName}})
+        {%endif%}</h4>
     </div>
 </div>
 <div class="row">
     <div class="span2 offset1">
         <a href="www.baidu.com">
             {% if result.scholar.Photo=="AAA"%}
-                <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
+            <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
             {%else%}
-                <img class="img-rounded" src="data:image/gif;base64,{{result.scholar.Photo}}">
+            <img class="img-rounded" src="data:image/gif;base64,{{result.scholar.Photo}}">
             {%endif%}
         </a>
     </div>
     <div class="span6">
+        {%if result.scholar.Affiliation %}
         <p class="text-info">
-        {{result.scholar.NativeName}}
-        </p>
-        <p class="text-info">
+        <i class="icon-building"></i>
         {{result.scholar.Affiliation}}
         </p>
+        {%endif%}
+        {%if result.scholar.Email%}
         <p class="text-info">
+        <i class="icon-envelope-alt"></i>
         {{result.scholar.Email}}
         </p>
+        {%endif%}
+        {%if result.scholar.Homepage%}
+        <p class="text-info">
+        <i class="icon-globe"></i>
         <a href={{result.scholar.Homepage}}>
             {{result.scholar.Homepage}}
         </a>
+        </p>
+        {%endif%}
     </div>
 </div>
 <hr>
-<ul class="unstyled">
+<table class="table table-striped">
     {% for paper in result.papers %}
-    <li>
-    <h3>{{ paper.title }}</h3>
-    <div>
-        <div class="pull-left">
-            <span class="label">{{ paper.journal }}</span>
-            <span class="label">{{ paper.booktitle }}</span>
-            <span class="label">{{ paper.year }}</span>
+    <tr>
+        <td>
+            <div><strong>{{ paper.title }}</strong></div>
+            <div>
+                <span class="label">{{ paper.year }}</span>
+                <span class="label">{{ paper.booktitle }}</span>
+                <span class="label">{{ paper.journal }}</span>
+            </div>
+            <div>
+                {% for Author in paper.authors %}
+                <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label label-info">{{ Author }}</span></a>
+                {% endfor %}
+            </div>
+        </tr>
+        {% endfor %}
+    </table>
+    {%else%}
+    <div class="row">
+        <div class="offset1 span7 ">
+            <h3 class="offset2"><strong>No Results Found.</strong></h3>
         </div>
     </div>
-
-    <div>
-        <p class="text-info">
-        <i class="icon-user"></i>
-        {% for Author in paper.authors %}
-        <span class="label label-info">{{ Author }}</span>
-        {% endfor %}
-        </p>
-    </div>
-
-    <hr>
-    </li>
-    {% endfor %}
-</ul>
-{%else%}
-<div class="row">
-    <div class="offset1 span7 ">
-        <p class="text-center"><strong>No Results Found.</strong></p>
-    </div>
-</div>
-{%endif%}
-{% endblock %}
+    {%endif%}
+    {% endblock %}
