@@ -11,7 +11,7 @@ from pyes import ES
 from config import *
 
 es_conn = ES(server = ES_SERVER)
-mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)[MONGODB_DB]
+mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)[PAPER_DB]
 
 def load_dir(path, file_type,parse_func, collection, index, doc_type):
     for root, dirs, files in os.walk(path):
@@ -27,15 +27,15 @@ def paper_html_to_doc(infile):
 
     uuid = unicode(uuid1())
 
-    title = paper.find('meta', attrs={'name':'DC.Title'})['content']
+    title = paper.find('meta', attrs={'name':'DC.Title'})['content'].strip().strip('\n')
     publication = '中国科学'
-    year = paper.find('meta', attrs={'name':'DC.Date'})['content'].strip()
-    body = paper.find('meta', attrs={'name':'DC.Description'})['content'].strip()
+    year = paper.find('meta', attrs={'name':'DC.Date'})['content'].strip().strip('\n')
+    body = paper.find('meta', attrs={'name':'DC.Description'})['content'].strip().strip('\n')
     authors = []
     author_list = paper.find('meta', attrs={'name':'citation_authors'})['content']
     authors_o = re.split(r",| *|;", author_list)
     for a in authors_o:
-        authors.append(a.strip())
+        authors.append(a.strip().strip('\n'))
 
 
     mongo_doc = dict(uuid = uuid, title = title, authors = authors, publication = publication, year = year, body = body)
@@ -51,18 +51,15 @@ def paper_html_to_doc(infile):
 
 def paper_xml_to_doc(infile):
     paper = BeautifulSoup(open(infile))
-
     uuid = unicode(uuid1())
-
-    title = paper.title.get_text().strip()
-    publication = paper.conference.get_text().strip()
-    year = paper.year.get_text().strip()
+    title = paper.title.get_text().strip().strip('\n')
+    publication = paper.conference.get_text().strip().strip('\n')
+    year = paper.year.get_text().strip().strip('\n')
     body = paper.body.get_text()
-
     authors = []
     author_list = paper.find_all('author')
     for a in author_list:
-        authors.append(a.get_text().strip())
+        authors.append(a.get_text().strip().strip('\n'))
 
     mongo_doc = dict(uuid = uuid, title = title, authors = authors, publication = publication, year = year, body = body)
     es_doc = dict(uuid = uuid, title = title, body = body)
@@ -81,7 +78,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.data_type == 'paper':
         print 'import paper', args.path
-        load_dir(args.path, '.xml2', paper_xml_to_doc, collection = PAPER_COLLECTION, index = PAPER_INDEX, doc_type = PAPER_TYPE)
+        load_dir(args.path, '.xml', paper_xml_to_doc, collection = PAPER_COLLECTION, index = PAPER_INDEX, doc_type = PAPER_TYPE)
     elif args.data_type == 'paper_en':
         print 'paper_en', args.path
         load_dir(args.path, '.xml', paper_xml_to_doc, collection = PAPER_EN_COLLECTION, index = PAPER_EN_INDEX, doc_type = PAPER_EN_TYPE)
@@ -89,6 +86,3 @@ if __name__ == '__main__':
         print 'paper_cn', args.path
         load_dir(args.path, '.html', paper_html_to_doc, collection = PAPER_COLLECTION, index = PAPER_INDEX, doc_type = PAPER_TYPE)
 
-
-
-#print(args.accumulate(args.integers))
