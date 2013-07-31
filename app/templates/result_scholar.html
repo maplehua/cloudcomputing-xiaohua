@@ -6,14 +6,14 @@
 <div class="row">
     <div class="offset1">
         <h4><i class="icon-user"></i> {{ result.scholar.Name }}
-        {%if result.scholar.NativeName %}
-        ({{result.scholar.NativeName}})
-        {%endif%}</h4>
+            {%if result.scholar.NativeName %}
+            ({{result.scholar.NativeName}})
+            {%endif%}</h4>
     </div>
 </div>
 <div class="row">
     <div class="span2 offset1">
-        <a href="www.baidu.com">
+        <a href="#">
             {% if result.scholar.Photo=="AAA"%}
             <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
             {%else%}
@@ -42,6 +42,20 @@
         </a>
         </p>
         {%endif%}
+    </div>
+</div>
+{%elif result.papers%}
+<div class="row">
+    <div class="offset1">
+        <h4><i class="icon-user"></i> {{ result.scholar.Name }}
+        </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="span2 offset1">
+        <a href="#">
+            <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
+        </a>
     </div>
 </div>
 <hr>
