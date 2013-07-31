@@ -84,7 +84,8 @@ class AcademiSearch():
         #    meta_doc = paper_en_fetch_meta(result.uuid)
         #    papers.append(paper_en_rebuild(result, meta_doc))
         return dict(scholar=scholar,
-                papers = papers)
+                papers = papers,
+                keyword= self.keyword)
 
 
 ### paper serach pipe line
