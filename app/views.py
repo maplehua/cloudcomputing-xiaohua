@@ -4,6 +4,7 @@ from forms import SearchForm
 from search import AcademiSearch as Search
 from about import about_readmongo
 from config import *
+from scholar_page import *
 
 @app.route('/')
 @app.route('/paper')
@@ -53,6 +54,13 @@ def search():
             'offset': offset,
             'keyword': keyword}
 
+    #deal with the scholar theme separately
+    if theme=='scholar':
+        if len(result["scholars"])<=1:
+            return render_template('result_1scholar.html',
+                                   meta=meta,
+                                   form=form,
+                                   result=result)
     return render_template('result_%s.html' % theme,
         meta = meta,
         form = form,
@@ -69,3 +77,12 @@ def about():
 def api():
     print str(int(float(redis_conn.get('about_number'))))
     return str(int(float(redis_conn.get('about_number'))))
+
+@app.route('/scholar/<scholar_id>')
+def scholar_home_page(scholar_id):
+    scholar= get_scholar_by_id(scholar_id) 
+    papers=get_papers_by_id(scholar_id)
+    theme='scholar'
+    form=SearchForm()
+    meta={'theme':"scholar",'offset':0,'keyword':'keyword'}
+    return render_template("%s_page.html" %theme,meta=meta,papers=papers,scholar=scholar,form=form)
