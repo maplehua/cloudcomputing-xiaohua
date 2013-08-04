@@ -17,3 +17,6 @@
 
 # macos
 .DS_Store
+
+# copy
+*.copy

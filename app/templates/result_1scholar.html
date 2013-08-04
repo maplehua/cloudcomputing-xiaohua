@@ -1,0 +1,89 @@
+{% extends "result.html" %}
+{% block info %}{% endblock %}
+{% block pagination  %}{% endblock %}
+{% block result_set %}
+{% if result.scholars %}
+    <div class="row">
+        <div class="offset1">
+            <h4><i class="icon-user"></i> {{ result.scholars[0].Name }}
+                {%if result.scholars[0].NativeName %}
+                ({{result.scholars[0].NativeName}})
+                {%endif%}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span2 offset1">
+            <a href="#">
+                {% if result.scholars[0].Photo=="AAA"%}
+                <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
+                {%else%}
+                <img class="img-rounded" src="data:image/gif;base64,{{result.scholars[0].Photo}}">
+                {%endif%}
+            </a>
+        </div>
+        <div class="span6">
+            {%if result.scholars[0].Affiliation %}
+            <p class="text-info">
+            <i class="icon-building"></i>
+            {{result.scholars[0].Affiliation}}
+            </p>
+            {%endif%}
+            {%if result.scholars[0].Email%}
+            <p class="text-info">
+            <i class="icon-envelope-alt"></i>
+            {{result.scholars[0].Email}}
+            </p>
+            {%endif%}
+            {%if result.scholars[0].Homepage%}
+            <p class="text-info">
+            <i class="icon-globe"></i>
+            <a href={{result.scholars[0].Homepage}}>
+                {{result.scholars[0].Homepage}}
+            </a>
+            </p>
+            {%endif%}
+        </div>
+    </div>
+{%elif result.papers%}
+    <div class="row">
+        <div class="offset1">
+            <h4><i class="icon-user"></i> {{ result.keyword }}
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span2 offset1">
+            <a href="#">
+                <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
+            </a>
+        </div>
+    </div>
+    <hr>
+{%endif%}
+{%if result.papers%}
+    <table class="table table-striped">
+        {% for paper in result.papers %}
+        <tr>
+            <td>
+                <div><strong>{{ paper.title }}</strong></div>
+                <div>
+                    <span class="label">{{ paper.year }}</span>
+                    <span class="label">{{ paper.booktitle }}</span>
+                    <span class="label">{{ paper.journal }}</span>
+                </div>
+                <div>
+                    {% for Author in paper.authors %}
+                    <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label label-info">{{ Author }}</span></a>
+                    {% endfor %}
+                </div>
+            </tr>
+            {% endfor %}
+    </table>
+{%else%}
+    <div class="row">
+        <div class="offset1 span7 ">
+            <h3 class="offset2"><strong>No Results Found.</strong></h3>
+        </div>
+    </div>
+{%endif%}
+{% endblock %}
