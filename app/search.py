@@ -74,15 +74,8 @@ class AcademiSearch():
 
     def _scholar_search(self):
         keyword=self.keyword
-        scholar=get_scholar(keyword)
-        papers=get_papers(keyword)
-        #stat = paper_en_es_stat(keywords)
-        #result_list = paper_en_es_search(keywords, self.offset, RESULT_SIZE)
-        #total = result_list.total
-        #papers = []
-        #for result in result_list:
-        #    meta_doc = paper_en_fetch_meta(result.uuid)
-        #    papers.append(paper_en_rebuild(result, meta_doc))
+        scholar=scholar_get_meta(keyword)
+        papers=scholar_get_papers(keyword)
         return dict(scholar=scholar,
                 papers = papers,
                 keyword= keyword)
@@ -272,18 +265,15 @@ def paper_en_rebuild(es_result, mongo_doc):
         new_result['explain'] = es_result._meta.explanation
     return new_result
 
-def get_scholar(keyword):
-    scholar=mongo_conn.Microsoft_AS.AuthorInfo.find_one({u"Name":keyword})
+def scholar_get_meta(keyword):
+    scholar=mongo_conn.Microsoft_AS.AuthorInfo.find_one({u"Name":keyword.lower()})
     if scholar:
-        #if scholar[u"Photo"]==u"AAA":
-        #    scholar[u"Photo"]=default_ph
-        #scholar[u"Photo"]="data:image/gif;base64,"+scholar[u"Photo"]
         return scholar
     else:
         return None
 
-def get_papers(keyword):
-    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors":keyword})
+def scholar_get_papers(keyword):
+    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors_low_case":keyword.lower()})
     papers=[]
     for p in mycursor:
         papers.append(p)
