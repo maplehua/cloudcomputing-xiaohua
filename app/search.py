@@ -74,9 +74,16 @@ class AcademiSearch():
 
     def _scholar_search(self):
         keyword=self.keyword
-        scholar=scholar_get_meta(keyword)
-        papers=scholar_get_papers(keyword)
-        return dict(scholar=scholar,
+        scholars=get_scholars(keyword)
+        papers=get_papers(keyword)
+        #stat = paper_en_es_stat(keywords)
+        #result_list = paper_en_es_search(keywords, self.offset, RESULT_SIZE)
+        #total = result_list.total
+        #papers = []
+        #for result in result_list:
+        #    meta_doc = paper_en_fetch_meta(result.uuid)
+        #    papers.append(paper_en_rebuild(result, meta_doc))
+        return dict(scholars = scholars,
                 papers = papers,
                 keyword= keyword)
 
@@ -265,14 +272,15 @@ def paper_en_rebuild(es_result, mongo_doc):
         new_result['explain'] = es_result._meta.explanation
     return new_result
 
-def scholar_get_meta(keyword):
-    scholar=mongo_conn.Microsoft_AS.AuthorInfo.find_one({u"Name":keyword.lower()})
-    if scholar:
-        return scholar
-    else:
-        return None
+def get_scholars(keyword):
+    sch_cur=mongo_conn.Microsoft_AS.AuthorInfo.find({u"NameLowCase":keyword.lower()})
+    scholars=[]
+    if sch_cur.count()>0:
+        for sch in sch_cur:
+            scholars.append(sch)
+    return scholars
 
-def scholar_get_papers(keyword):
+def get_papers(keyword):
     mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors_low_case":keyword.lower()})
     papers=[]
     for p in mycursor:
