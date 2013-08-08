@@ -55,13 +55,11 @@ def search():
             'keyword': keyword}
 
     #deal with the scholar theme separately
-    if theme=='scholar':
-        if len(result["scholars"])<=1:
-            return render_template('result_1scholar.html',
-                                   meta=meta,
-                                   form=form,
-                                   result=result)
-    return render_template('result_%s.html' % theme,
+    template = 'result_%s.html' % theme
+    if theme=='scholar' and len(result["scholars"])<=1:
+        template = 'result_scholar_single.html'
+
+    return render_template(template,
         meta = meta,
         form = form,
         result = result)
@@ -84,5 +82,6 @@ def scholar_home_page(scholar_id):
     papers=get_papers_by_id(scholar_id)
     theme='scholar'
     form=SearchForm()
+    form.theme.data = theme
     meta={'theme':"scholar",'offset':0,'keyword':'keyword'}
     return render_template("%s_page.html" %theme,meta=meta,papers=papers,scholar=scholar,form=form)
