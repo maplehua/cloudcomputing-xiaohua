@@ -73,7 +73,6 @@ def about():
 
 @app.route('/api/stat/net')
 def api():
-    print str(int(float(redis_conn.get('about_number'))))
     return str(int(float(redis_conn.get('about_number'))))
 
 @app.route('/scholar/<scholar_id>')
