@@ -273,7 +273,7 @@ def paper_en_rebuild(es_result, mongo_doc):
     return new_result
 
 def get_scholars(keyword):
-    sch_cur=mongo_conn.Microsoft_AS.AuthorInfo.find({u"Name":keyword})
+    sch_cur=mongo_conn.Microsoft_AS.AuthorInfo.find({u"NameLowCase":keyword.lower()})
     scholars=[]
     if sch_cur.count()>0:
         for sch in sch_cur:
@@ -281,7 +281,7 @@ def get_scholars(keyword):
     return scholars
 
 def get_papers(keyword):
-    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors":keyword})
+    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors_low_case":keyword.lower()})
     papers=[]
     for p in mycursor:
         papers.append(p)
