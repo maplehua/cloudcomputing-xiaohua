@@ -84,5 +84,6 @@ def scholar_home_page(scholar_id):
     papers=get_papers_by_id(scholar_id)
     theme='scholar'
     form=SearchForm()
+    form.theme.data = theme
     meta={'theme':"scholar",'offset':0,'keyword':'keyword'}
     return render_template("%s_page.html" %theme,meta=meta,papers=papers,scholar=scholar,form=form)
