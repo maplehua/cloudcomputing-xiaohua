@@ -76,13 +76,6 @@ class AcademiSearch():
         keyword=self.keyword
         scholars=get_scholars(keyword)
         papers=get_papers(keyword)
-        #stat = paper_en_es_stat(keywords)
-        #result_list = paper_en_es_search(keywords, self.offset, RESULT_SIZE)
-        #total = result_list.total
-        #papers = []
-        #for result in result_list:
-        #    meta_doc = paper_en_fetch_meta(result.uuid)
-        #    papers.append(paper_en_rebuild(result, meta_doc))
         return dict(scholars = scholars,
                 papers = papers,
                 keyword= keyword)
@@ -281,7 +274,8 @@ def get_scholars(keyword):
     return scholars
 
 def get_papers(keyword):
-    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors_low_case":keyword.lower()})
+    sort_field = [('ccf_rank', 1), ('year', -1)]
+    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors_low_case":keyword.lower()}).sort(sort_field)
     papers=[]
     for p in mycursor:
         papers.append(p)

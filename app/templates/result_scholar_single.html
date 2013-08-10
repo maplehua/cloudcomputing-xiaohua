@@ -67,6 +67,17 @@
             <td>
                 <div><strong>{{ paper.title }}</strong></div>
                 <div>
+                    {% if paper.ccf_rank %}
+                        {% if paper.ccf_rank == 'A' %}
+                        <span class="badge badge-success">A</span>
+                        {% elif paper.ccf_rank == 'B' %}
+                        <span class="badge badge-warning">B</span>
+                        {% elif paper.ccf_rank == 'C' %}
+                        <span class="badge badge-important">C</span>
+                        {% elif paper.ccf_rank == 'unknow' %}
+                        <span class="badge badge-inverse">N/A</span>
+                        {% endif %}
+                    {% endif %}
                     <span class="label">{{ paper.year }}</span>
                     <span class="label">{{ paper.booktitle }}</span>
                     <span class="label">{{ paper.journal }}</span>
