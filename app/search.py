@@ -73,13 +73,20 @@ class AcademiSearch():
                 stat = stat)
 
     def _scholar_search(self):
-        keyword=self.keyword
-        scholars=get_scholars(keyword)
-        papers=get_papers(keyword)
-        return dict(scholars = scholars,
-                papers = papers,
-                keyword= keyword)
+        keyword = self.keyword
+        scholars = scholar_get_scholars(keyword)
+        papers = []
+        total = len(scholars)
+        return dict(total = total,
+                scholars = scholars)
 
+    def _scholar_single_search(self):
+        user_id = self.offset
+        name = self.keyword
+        scholar = scholar_fetch_meta(user_id, name)
+        papers = scholar_get_papers(name)
+        return dict(scholar = scholar,
+                papers = papers)
 
 ### paper serach pipe line
 def paper_keyword_expand(keyword):
@@ -265,18 +272,32 @@ def paper_en_rebuild(es_result, mongo_doc):
         new_result['explain'] = es_result._meta.explanation
     return new_result
 
-def get_scholars(keyword):
-    sch_cur=mongo_conn.Microsoft_AS.AuthorInfo.find({u"NameLowCase":keyword.lower()})
+# scholar serach pipeline
+def scholar_get_scholars(keyword):
     scholars=[]
-    if sch_cur.count()>0:
+    sch_cur = mongo_conn.Microsoft_AS.AuthorInfo.find({u"NameLowCase": keyword.lower()})
+    if sch_cur.count() > 0:
         for sch in sch_cur:
             scholars.append(sch)
+    elif mongo_conn.dblp.dblp_papers_all.find({"authors_low_case": keyword.lower()}).count() > 0:
+        scholar = {'Name': keyword.title(), 'ID': '0'}
+        scholars.append(scholar)
     return scholars
 
-def get_papers(keyword):
+def scholar_fetch_meta(user_id, name):
+    '''
+    return a scholar's info by id
+    '''
+    if user_id == '0':
+        scholar = {'Name': name.title()}
+    else:
+        scholar = mongo_conn['Microsoft_AS']['AuthorInfo'].find_one(spec_or_id = {'ID': user_id}, fields = ['Name', 'NativeName', 'Photo', 'Affiliation', 'Homepage', 'Email'])
+    return scholar
+
+def scholar_get_papers(name):
     sort_field = [('ccf_rank', 1), ('year', -1)]
-    mycursor=mongo_conn.dblp.dblp_papers_all.find({"authors_low_case":keyword.lower()}).sort(sort_field)
-    papers=[]
-    for p in mycursor:
-        papers.append(p)
-    return papers
+    papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower()}).sort(sort_field)
+    paper_list=[]
+    for p in papers:
+        paper_list.append(p)
+    return paper_list

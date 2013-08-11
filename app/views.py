@@ -48,16 +48,22 @@ def search():
 
     s = Search(theme = theme, keyword = keyword, offset = offset)
     result = s.result()
+
     form = SearchForm()
     form.theme.data = theme
+
+    #deal with the scholar theme separately
+    if theme == 'scholar' and result['total'] == 1:
+        user_id = result['scholars'][0]['ID']
+        theme = 'scholar_single'
+        s = Search(theme = theme, keyword = keyword, offset = user_id)
+        result = s.result()
+
     meta = {'theme': theme,
             'offset': offset,
             'keyword': keyword}
 
-    #deal with the scholar theme separately
     template = 'result_%s.html' % theme
-    if theme=='scholar' and len(result["scholars"])<=1:
-        template = 'result_scholar_single.html'
 
     return render_template(template,
         meta = meta,
@@ -75,12 +81,3 @@ def about():
 def api():
     return str(int(float(redis_conn.get('about_number'))))
 
-@app.route('/scholar/<scholar_id>')
-def scholar_home_page(scholar_id):
-    scholar= get_scholar_by_id(scholar_id) 
-    papers=get_papers_by_id(scholar_id)
-    theme='scholar'
-    form=SearchForm()
-    form.theme.data = theme
-    meta={'theme':"scholar",'offset':0,'keyword':'keyword'}
-    return render_template("%s_page.html" %theme,meta=meta,papers=papers,scholar=scholar,form=form)
