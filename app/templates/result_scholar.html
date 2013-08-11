@@ -1,51 +1,51 @@
 {% extends "result.html" %}
 {% block info %}{% endblock %}
-{% block pagination  %}{% endblock %}
+{% block pagination %}{% endblock %}
 {% block result_set %}
 <table class="table table-hover">
     {% for scholar in result.scholars %}
     <tr>
-    <div class="row">
-        <div class="offset1">
-            <h4><i class="icon-user"></i> {{ scholar.Name }}
-                {%if scholar.NativeName %}
-                ({{scholar.NativeName}})
-                {%endif%}</h4>
+        <div class="row">
+            <div class="offset1">
+                <h4><i class="icon-user"></i> {{ scholar.Name }}
+                    {%if scholar.NativeName %}
+                    ({{scholar.NativeName}})
+                    {%endif%}</h4>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="span2 offset1">
-            <a href="/scholar/{{scholar.ID}}">
-                {% if scholar.Photo=="AAA"%}
-                <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
-                {%else%}
-                <img class="img-rounded" src="data:image/gif;base64,{{scholar.Photo}}">
+        <div class="row">
+            <div class="span2 offset1">
+                <a href="/search?theme=scholar_single&keyword={{scholar.Name}}&offset={{scholar.ID}}">
+                    {% if scholar.Photo=="AAA"%}
+                    <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
+                    {%else%}
+                    <img class="img-rounded" src="data:image/gif;base64,{{scholar.Photo}}">
+                    {%endif%}
+                </a>
+            </div>
+            <div class="span6">
+                {%if scholar.Affiliation %}
+                <p class="text-info">
+                    <i class="icon-building"></i>
+                    {{scholar.Affiliation}}
+                </p>
                 {%endif%}
-            </a>
+                {%if scholar.Email%}
+                <p class="text-info">
+                    <i class="icon-envelope-alt"></i>
+                    {{scholar.Email}}
+                </p>
+                {%endif%}
+                {%if scholar.Homepage%}
+                <p class="text-info">
+                    <i class="icon-globe"></i>
+                    <a href={{scholar.Homepage}}>
+                        {{scholar.Homepage}}
+                    </a>
+                </p>
+                {%endif%}
+            </div>
         </div>
-        <div class="span6">
-            {%if scholar.Affiliation %}
-            <p class="text-info">
-            <i class="icon-building"></i>
-            {{scholar.Affiliation}}
-            </p>
-            {%endif%}
-            {%if scholar.Email%}
-            <p class="text-info">
-            <i class="icon-envelope-alt"></i>
-            {{scholar.Email}}
-            </p>
-            {%endif%}
-            {%if scholar.Homepage%}
-            <p class="text-info">
-            <i class="icon-globe"></i>
-            <a href={{scholar.Homepage}}>
-                {{scholar.Homepage}}
-            </a>
-            </p>
-            {%endif%}
-        </div>
-    </div>
     </tr>
     {% endfor %}
 </table>
