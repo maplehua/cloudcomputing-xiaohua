@@ -85,8 +85,10 @@ class AcademiSearch():
         name = self.keyword
         scholar = scholar_fetch_meta(user_id, name)
         papers = scholar_get_papers(name)
+        stat = scholar_stat_papers(name)
         return dict(scholar = scholar,
-                papers = papers)
+                papers = papers,
+                stat = stat)
 
 ### paper serach pipe line
 def paper_keyword_expand(keyword):
@@ -297,7 +299,33 @@ def scholar_fetch_meta(user_id, name):
 def scholar_get_papers(name):
     sort_field = [('ccf_rank', 1), ('year', -1)]
     papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower()}).sort(sort_field)
-    paper_list=[]
+    paper_all = []
     for p in papers:
-        paper_list.append(p)
-    return paper_list
+        paper_all.append(p)
+
+    papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'A'}).sort(sort_field)
+    paper_rank_a = []
+    for p in papers:
+        paper_rank_a.append(p)
+
+    papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'B'}).sort(sort_field)
+    paper_rank_b = []
+    for p in papers:
+        paper_rank_b.append(p)
+
+    papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'C'}).sort(sort_field)
+    paper_rank_c = []
+    for p in papers:
+        paper_rank_c.append(p)
+
+    return {'paper_all': paper_all, 'paper_rank_a': paper_rank_a, 'paper_rank_b': paper_rank_b, 'paper_rank_c': paper_rank_c}
+
+def scholar_stat_papers(name):
+    count_all = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower()}).count()
+    count_rank_a = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'A'}).count()
+    count_rank_b = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'B'}).count()
+    count_rank_c = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'C'}).count()
+    return {'count_all': count_all,
+            'count_rank_a': count_rank_a,
+            'count_rank_b': count_rank_b,
+            'count_rank_c': count_rank_c}
