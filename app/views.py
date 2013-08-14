@@ -52,6 +52,10 @@ def search():
     form = SearchForm()
     form.theme.data = theme
 
+    # hack fix for scholar search
+    if theme == 'scholar_single':
+        form.theme.data = 'scholar'
+
     #deal with the scholar theme separately
     if theme == 'scholar' and result['total'] == 1:
         user_id = result['scholars'][0]['ID']

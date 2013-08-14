@@ -5,45 +5,41 @@
 <table class="table table-hover">
     {% for scholar in result.scholars %}
     <tr>
-        <div class="row">
-            <div class="offset1">
-                <h4><i class="icon-user"></i> {{ scholar.Name }}
-                    {%if scholar.NativeName %}
-                    ({{scholar.NativeName}})
-                    {%endif%}</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span2 offset1">
-                <a href="/search?theme=scholar_single&keyword={{scholar.Name}}&offset={{scholar.ID}}">
-                    {% if scholar.Photo=="AAA"%}
-                    <img class="img-rounded" src="../static/img/Default_Scholar_Photo.gif">
-                    {%else%}
-                    <img class="img-rounded" src="data:image/gif;base64,{{scholar.Photo}}">
+        <div class="media">
+            <a class="pull-left" href="/search?theme=scholar_single&keyword={{scholar.Name}}&offset={{scholar.ID}}">
+                {% if (not scholar.Photo) or (scholar.Photo == "AAA") %}
+                <img class="img-polaroid" src="../static/img/Default_Scholar_Photo.gif">
+                {%else%}
+                <img class="img-polaroid" src="data:image/gif;base64,{{scholar.Photo}}">
+                {%endif%}
+            </a>
+            <div class="media-body">
+                <h4 class = "media-heading">{{ scholar.Name|rm_end_num }} {%if scholar.NativeName %}({{scholar.NativeName}}){%endif%}</h4>
+                <address>
+                    <ul class="unstyled">
+                    <li>
+                    {% if scholar.Affiliation %}
+                    <i class="icon-building"></i> {{scholar.Affiliation}}<br>
+                    {% else %}
+                    <i class="icon-building"></i> <span class="label">Unknown</span><br>
+                    {% endif %}
+                    </li>
+                    <li>
+                    {% if scholar.Email %}
+                    <i class="icon-envelope"></i> {{scholar.Email}}<br>
+                    {% else %}
+                    <i class="icon-envelope"></i> <span class="label">Unknown</span><br>
                     {%endif%}
-                </a>
-            </div>
-            <div class="span6">
-                {%if scholar.Affiliation %}
-                <p class="text-info">
-                    <i class="icon-building"></i>
-                    {{scholar.Affiliation}}
-                </p>
-                {%endif%}
-                {%if scholar.Email%}
-                <p class="text-info">
-                    <i class="icon-envelope-alt"></i>
-                    {{scholar.Email}}
-                </p>
-                {%endif%}
-                {%if scholar.Homepage%}
-                <p class="text-info">
-                    <i class="icon-globe"></i>
-                    <a href={{scholar.Homepage}}>
-                        {{scholar.Homepage}}
-                    </a>
-                </p>
-                {%endif%}
+                    </li>
+                    <li>
+                    {% if scholar.Homepage %}
+                    <i class="icon-globe"></i> <a href={{scholar.Homepage}}>{{scholar.Homepage}}</a><br>
+                    {% else %}
+                    <i class="icon-globe"></i> <span class="label">Unknown</span><br>
+                    {%endif%}
+                    </li>
+                    <ul>
+                </address>
             </div>
         </div>
     </tr>

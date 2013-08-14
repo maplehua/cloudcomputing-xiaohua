@@ -297,12 +297,13 @@ def scholar_fetch_meta(user_id, name):
     return scholar
 
 def scholar_get_papers(name):
-    sort_field = [('ccf_rank', 1), ('year', -1)]
+    sort_field = [('year', -1)]
     papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower()}).sort(sort_field)
     paper_all = []
     for p in papers:
         paper_all.append(p)
 
+    sort_field = [('ccf_rank', 1), ('year', -1)]
     papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'A'}).sort(sort_field)
     paper_rank_a = []
     for p in papers:
@@ -328,4 +329,7 @@ def scholar_stat_papers(name):
     return {'count_all': count_all,
             'count_rank_a': count_rank_a,
             'count_rank_b': count_rank_b,
-            'count_rank_c': count_rank_c}
+            'count_rank_c': count_rank_c,
+            'prop_rank_a': (count_rank_a * 100 / count_all),
+            'prop_rank_b': (count_rank_b * 100 / count_all),
+            'prop_rank_c': (count_rank_c * 100 / count_all)}
