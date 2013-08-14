@@ -24,8 +24,8 @@ from app import views
 
 #costum filter
 import re
-env=app.jinja_env
 def rm_num_at_end(name):
     result=re.sub("\s\d+$","",name)
     return result
+env=app.jinja_env
 env.filters['rm_end_num'] = rm_num_at_end
