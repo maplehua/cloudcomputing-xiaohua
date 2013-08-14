@@ -21,3 +21,11 @@ if ADMIN:
     admin.add_view(ScholarPaperView(mongo_conn[SCHOLAR_DB][SCHOLAR_PAPER_COLLECTION], name = 'Scholar'))
 
 from app import views
+
+#costum filter
+import re
+env=app.jinja_env
+def rm_num_at_end(name):
+    result=re.sub("\s\d+$","",name)
+    return result
+env.filters['rm_end_num'] = rm_num_at_end

@@ -4,7 +4,7 @@
 {% block result_set %}
 <div class="row">
     <div class="offset1">
-        <h4><i class="icon-user"></i> {{ result.scholar.Name }}
+        <h4><i class="icon-user"></i> {{ result.scholar.Name|rm_end_num }}
             {%if result.scholar.NativeName %}
             ({{result.scholar.NativeName}})
             {%endif%}</h4>
@@ -68,7 +68,7 @@
             </div>
             <div>
                 {% for Author in paper.authors %}
-                <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label label-info">{{ Author }}</span></a>
+                <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label label-info">{{ Author|rm_end_num }}</span></a>
                 {% endfor %}
             </div>
         </td>
