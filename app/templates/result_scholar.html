@@ -6,7 +6,7 @@
     {% for scholar in result.scholars %}
     <tr>
         <div class="media">
-            <a class="pull-left" href="/search?theme=scholar_single&keyword={{scholar.Name}}&offset={{scholar.ID}}">
+            <a class="pull-left" href="/search?theme=scholar_single&keyword={{scholar.Name}}&offset={{scholar.user_id}}">
                 {% if (not scholar.Photo) or (scholar.Photo == "AAA") %}
                 <img class="img-polaroid" src="../static/img/Default_Scholar_Photo.gif">
                 {%else%}
