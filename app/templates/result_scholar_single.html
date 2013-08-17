@@ -45,13 +45,15 @@
     <div class="bar bar-danger" style="width: {{result.stat.prop_rank_a}}%;">{{result.stat.prop_rank_a}}%</div>
     <div class="bar bar-success" style="width: {{result.stat.prop_rank_b}}%;">{{result.stat.prop_rank_b}}%</div>
     <div class="bar bar-warning" style="width: {{result.stat.prop_rank_c}}%;">{{result.stat.prop_rank_c}}%</div>
+    <div class="bar" style="width: {{result.stat.prop_rank_unknow}}%">{{result.stat.prop_rank_unknow}}%</div>
 </div>
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">All {{result.stat.count_all}}</a></li>
+        <li class="active"><a href="#tab1" data-toggle="tab"><span class="badge">All</span> {{result.stat.count_all}}</a></li>
         <li><a href="#tab2" data-toggle="tab"><span class="badge badge-important">A</span> {{result.stat.count_rank_a}}</a></li>
         <li><a href="#tab3" data-toggle="tab"><span class="badge badge-success">B</span> {{result.stat.count_rank_b}}</a></li>
         <li><a href="#tab4" data-toggle="tab"><span class="badge badge-warning">C</span> {{result.stat.count_rank_c}}</a></li>
+        <li><a href="#tab5" data-toggle="tab"><span class="badge badge-info">Others</span> {{result.stat.count_rank_unknow}}</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab1">
@@ -84,6 +86,9 @@
                             <span class="label label-info">{{ paper.year }}</span>
                             <span class="label label-info">{{ paper.booktitle }}</span>
                             <span class="label label-info">{{ paper.journal }}</span>
+                            {% if paper.pages %}
+                            <span class="label label-info">p {{ paper.pages }}</span>
+                            {% endif %}
                         </div>
                         <div>
                             {% for Author in paper.authors %}
@@ -106,76 +111,114 @@
                             <span class="badge badge-important">A</span>
                             {% endif %}
                             {% endif %}
-                            <strong>{{ paper.title }}</strong></div>
-                    </div>
-                    <span class="label label-info">{{ paper.year }}</span>
-                    <span class="label label-info">{{ paper.booktitle }}</span>
-                    <span class="label label-info">{{ paper.journal }}</span>
-                </div>
-                <div>
-                    {% for Author in paper.authors %}
-                    <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                    {% endfor %}
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-<div class="tab-pane" id="tab3">
-    <table class="table table-striped">
-        {% for paper in result.papers.paper_rank_b %}
-        <tr>
-            <td>
-                <div>
-                    {% if paper.ccf_rank %}
-                    {% if paper.ccf_rank == 'B' %}
-                    <span class="badge badge-success">B</span>
-                    {% endif %}
-                    {% endif %}
-                    <strong>{{ paper.title }}</strong></div>
-                <div>
-                    <span class="label label-info">{{ paper.year }}</span>
-                    <span class="label label-info">{{ paper.booktitle }}</span>
-                    <span class="label label-info">{{ paper.journal }}</span>
-                </div>
-                <div>
-                    {% for Author in paper.authors %}
-                    <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                    {% endfor %}
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-<div class="tab-pane" id="tab4">
-    <table class="table table-striped">
-        {% for paper in result.papers.paper_rank_c %}
-        <tr>
-            <td>
-                <div>
-                    {% if paper.ccf_rank %}
-                    {% if paper.ccf_rank == 'C' %}
-                    <span class="badge badge-warning">C</span>
-                    {% endif %}
-                    {% endif %}
-                    <strong>{{ paper.title }}</strong></div>
-                <div>
-                    <span class="label label-info">{{ paper.year }}</span>
-                    <span class="label label-info">{{ paper.booktitle }}</span>
-                    <span class="label label-info">{{ paper.journal }}</span>
-                </div>
-                <div>
-                    {% for Author in paper.authors %}
-                    <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                    {% endfor %}
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+                            <strong>{{ paper.title }}</strong>
+                        </div>
+                        <div>
+                            <span class="label label-info">{{ paper.year }}</span>
+                            <span class="label label-info">{{ paper.booktitle }}</span>
+                            <span class="label label-info">{{ paper.journal }}</span>
+                            {% if paper.pages %}
+                            <span class="label label-info">p {{ paper.pages }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% for Author in paper.authors %}
+                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="tab-pane" id="tab3">
+            <table class="table table-striped">
+                {% for paper in result.papers.paper_rank_b %}
+                <tr>
+                    <td>
+                        <div>
+                            {% if paper.ccf_rank %}
+                            {% if paper.ccf_rank == 'B' %}
+                            <span class="badge badge-success">B</span>
+                            {% endif %}
+                            {% endif %}
+                            <strong>{{ paper.title }}</strong>
+                        </div>
+                        <div>
+                            <span class="label label-info">{{ paper.year }}</span>
+                            <span class="label label-info">{{ paper.booktitle }}</span>
+                            <span class="label label-info">{{ paper.journal }}</span>
+                            {% if paper.pages %}
+                            <span class="label label-info">p {{ paper.pages }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% for Author in paper.authors %}
+                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="tab-pane" id="tab4">
+            <table class="table table-striped">
+                {% for paper in result.papers.paper_rank_c %}
+                <tr>
+                    <td>
+                        <div>
+                            {% if paper.ccf_rank %}
+                            {% if paper.ccf_rank == 'C' %}
+                            <span class="badge badge-warning">C</span>
+                            {% endif %}
+                            {% endif %}
+                            <strong>{{ paper.title }}</strong>
+                        </div>
+                        <div>
+                            <span class="label label-info">{{ paper.year }}</span>
+                            <span class="label label-info">{{ paper.booktitle }}</span>
+                            <span class="label label-info">{{ paper.journal }}</span>
+                            {% if paper.pages %}
+                            <span class="label label-info">p {{ paper.pages }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% for Author in paper.authors %}
+                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="tab-pane" id="tab5">
+            <table class="table table-striped">
+                {% for paper in result.papers.paper_rank_unknow %}
+                <tr>
+                    <td>
+                        <div>
+                            <strong>{{ paper.title }}</strong>
+                        </div>
+                        <div>
+                            <span class="label label-info">{{ paper.year }}</span>
+                            <span class="label label-info">{{ paper.booktitle }}</span>
+                            <span class="label label-info">{{ paper.journal }}</span>
+                            {% if paper.pages %}
+                            <span class="label label-info">p {{ paper.pages }}</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% for Author in paper.authors %}
+                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
+                            {% endfor %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 </div>
 {%else%}
