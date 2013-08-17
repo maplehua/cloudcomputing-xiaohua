@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.admin import Admin
-from .admin import PaperView, ScholarPaperView
+from .admin import PaperView, ScholarPaperView, ScholarView
 from pymongo import MongoClient
 from pyes import ES
 from redis import StrictRedis
@@ -17,8 +17,9 @@ redis_conn = StrictRedis(host= REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
 
 if ADMIN:
     admin = Admin(app, name='Academi')
-    admin.add_view(PaperView(mongo_conn[PAPER_DB][PAPER_COLLECTION], name = 'Paper'))
-    admin.add_view(ScholarPaperView(mongo_conn[SCHOLAR_DB][SCHOLAR_PAPER_COLLECTION], name = 'Scholar'))
+    admin.add_view(PaperView(mongo_conn[PAPER_DB][PAPER_COLLECTION], name = 'PaperFulltext'))
+    admin.add_view(ScholarPaperView(mongo_conn[SCHOLAR_DB][SCHOLAR_PAPER_COLLECTION], name = 'ScholarPaper'))
+    admin.add_view(ScholarView(mongo_conn['Microsoft_AS']['AuthorInfo'], name = 'ScholarMeta'))
 
 from app import views
 

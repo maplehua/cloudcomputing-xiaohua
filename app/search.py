@@ -282,7 +282,7 @@ def scholar_get_scholars(keyword):
         for sch in sch_cur:
             scholars.append(sch)
     elif mongo_conn.dblp.dblp_papers_all.find({"authors_low_case": keyword.lower()}).count() > 0:
-        scholar = {'Name': keyword.title(), 'ID': '0'}
+        scholar = {'Name': keyword.title(), 'user_id': '0'}
         scholars.append(scholar)
     return scholars
 
@@ -293,7 +293,7 @@ def scholar_fetch_meta(user_id, name):
     if user_id == '0':
         scholar = {'Name': name.title()}
     else:
-        scholar = mongo_conn['Microsoft_AS']['AuthorInfo'].find_one(spec_or_id = {'ID': user_id}, fields = ['Name', 'NativeName', 'Photo', 'Affiliation', 'Homepage', 'Email'])
+        scholar = mongo_conn['Microsoft_AS']['AuthorInfo'].find_one(spec_or_id = {'user_id': user_id}, fields = ['Name', 'NativeName', 'Photo', 'Affiliation', 'Homepage', 'Email'])
     return scholar
 
 def scholar_get_papers(name):
