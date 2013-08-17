@@ -58,7 +58,7 @@ def search():
 
     #deal with the scholar theme separately
     if theme == 'scholar' and result['total'] == 1:
-        user_id = result['scholars'][0]['ID']
+        user_id = result['scholars'][0]['user_id']
         theme = 'scholar_single'
         s = Search(theme = theme, keyword = keyword, offset = user_id)
         result = s.result()

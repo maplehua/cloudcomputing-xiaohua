@@ -319,17 +319,30 @@ def scholar_get_papers(name):
     for p in papers:
         paper_rank_c.append(p)
 
-    return {'paper_all': paper_all, 'paper_rank_a': paper_rank_a, 'paper_rank_b': paper_rank_b, 'paper_rank_c': paper_rank_c}
+    papers = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'unknow'}).sort(sort_field)
+    paper_rank_unknow = []
+    for p in papers:
+        paper_rank_unknow.append(p)
+
+    return {'paper_all': paper_all, 'paper_rank_a': paper_rank_a, 'paper_rank_b': paper_rank_b, 'paper_rank_c': paper_rank_c, 'paper_rank_unknow': paper_rank_unknow}
 
 def scholar_stat_papers(name):
     count_all = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower()}).count()
     count_rank_a = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'A'}).count()
     count_rank_b = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'B'}).count()
     count_rank_c = mongo_conn.dblp.dblp_papers_all.find({'authors_low_case': name.lower(), 'ccf_rank': 'C'}).count()
+    count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
+    prop_rank_a = count_rank_a * 100 / count_all
+    prop_rank_b = count_rank_b * 100 / count_all
+    prop_rank_c = count_rank_c * 100 / count_all
+    prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
+    print prop_rank_unknow
     return {'count_all': count_all,
             'count_rank_a': count_rank_a,
             'count_rank_b': count_rank_b,
             'count_rank_c': count_rank_c,
-            'prop_rank_a': (count_rank_a * 100 / count_all),
-            'prop_rank_b': (count_rank_b * 100 / count_all),
-            'prop_rank_c': (count_rank_c * 100 / count_all)}
+            'count_rank_unknow': count_rank_unknow,
+            'prop_rank_a': prop_rank_a,
+            'prop_rank_b': prop_rank_b,
+            'prop_rank_c': prop_rank_c,
+            'prop_rank_unknow': prop_rank_unknow}
