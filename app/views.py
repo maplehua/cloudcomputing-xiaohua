@@ -6,15 +6,15 @@ from about import about_readmongo
 from config import *
 from scholar_page import *
 
-@app.route('/')
 @app.route('/paper')
-@app.route('/index')
 def index_paper():
     form = SearchForm()
     form.theme.data = 'paper'
     return render_template('index_paper.html',theme = 'paper', form = form)
 
+@app.route('/')
 @app.route('/scholar')
+@app.route('/index')
 def index_scholar():
     form = SearchForm()
     form.theme.data = 'scholar'
