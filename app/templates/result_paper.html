@@ -2,6 +2,9 @@
 {% block search_logo_s %}
 <h1>Academi</h1>
 {% endblock %}
+{% block info %}
+{% include "_info.html" %}
+{% endblock %}
 {% block result_set %}
 <ul class="unstyled">
     {% for paper in result.papers %}

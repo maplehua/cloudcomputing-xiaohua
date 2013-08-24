@@ -277,7 +277,7 @@ def paper_en_rebuild(es_result, mongo_doc):
 # scholar serach pipeline
 def scholar_get_scholars(keyword):
     scholars=[]
-    sch_cur = mongo_conn.Microsoft_AS.AuthorInfo.find({u"NameLowCase": keyword.lower()})
+    sch_cur = mongo_conn.Microsoft_AS.AuthorInfo.find({u"NameLowCase": keyword.lower(), 'invisible': 0})
     if sch_cur.count() > 0:
         for sch in sch_cur:
             scholars.append(sch)
