@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, TextField, widgets
+from flask.ext.wtf import Form, TextField, IntegerField, widgets
 from flask.ext.admin import Admin, BaseView, expose
 from flask.ext.admin.contrib.pymongo import ModelView, filters
 
@@ -37,6 +37,7 @@ class ScholarPaperView(ModelView):
 
 class ScholarForm(Form):
     user_id = TextField('user_id')
+    invisible = IntegerField('invisible')
     Name = TextField('Name')
     NameLowCase = TextField('NameLowCase')
     NativeName = TextField('NativeName')
@@ -49,7 +50,7 @@ class ScholarForm(Form):
     Photo = TextField('Photo')
 
 class ScholarView(ModelView):
-    column_list = ('user_id', 'Name', 'NativeName', 'Affiliation', 'Homepage', 'Email')
+    column_list = ('user_id', 'invisible', 'Name', 'NativeName', 'Affiliation', 'Homepage', 'Email')
     #column_searchable_list = ('user_id', 'NameLowCase')
     column_filters = (filters.FilterEqual('NameLowCase', 'NameLowCase'),
                 filters.FilterEqual('user_id', 'user_id'))

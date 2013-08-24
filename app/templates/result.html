@@ -18,7 +18,8 @@
             {% include "_left_sider.html"%}
         </div>
         <div class="span7">
-            {% include "_info.html" %}
+            {% block info %}
+            {% endblock  %}
             {% block result_set %}
             {% endblock %}
             {% block pagination %}
