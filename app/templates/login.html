@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h2>Academi <small>sign in</small></h2>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    <form class="form-horizontal" role="form" action="" method="post" name="login">
+            <div class="input-group">
+                {% from "_formhelper.html" import render_search %}
+                {{ render_search(form.username, class="form-control col-lg-6", placeholder="Username") }}
+                {{ render_search(form.password, class="form-control col-lg-6", placeholder="Password") }}
+                {{form.hidden_tag()}}
+                <button class="btn btn-default" type="submit">Sign in</button>
+            </div>
+    </form>
+</div>
+{% endblock %}

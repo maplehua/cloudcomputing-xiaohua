@@ -1,9 +1,10 @@
 from flask import Flask
+from flask.ext.mongoengine import MongoEngine
+from flask.ext.login import LoginManager
 from flask.ext.admin import Admin
-from .admin import PaperView, ScholarPaperView, ScholarView
+from .admin import config_admin
 from pymongo import MongoClient
 from pyes import ES
-from redis import StrictRedis
 
 from config import *
 
@@ -11,22 +12,31 @@ app = Flask(__name__)
 app.config.from_object('config')
 app.debug = DEBUG
 
+# database connection
 mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)
 es_conn = ES(ES_SERVER)
-redis_conn = StrictRedis(host= REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
+app.config['MONGODB_SETTINGS'] = {'DB': 'academi',
+        'HOST': '10.77.20.50',
+        'PORT': 27017}
+mongo_db = MongoEngine(app)
 
+# flask login
+login_manager = LoginManager()
+login_manager.setup_app(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Please login'
+
+# flask admin
 if ADMIN:
-    admin = Admin(app, name='Academi')
-    admin.add_view(PaperView(mongo_conn[PAPER_DB][PAPER_COLLECTION], name = 'PaperFulltext'))
-    admin.add_view(ScholarPaperView(mongo_conn[SCHOLAR_DB][SCHOLAR_PAPER_COLLECTION], name = 'ScholarPaper'))
-    admin.add_view(ScholarView(mongo_conn['Microsoft_AS']['AuthorInfo'], name = 'ScholarMeta'))
+    admin = config_admin()
+    admin.init_app(app)
 
 from app import views
 
-#costum filter
-import re
+# jinja costum filter
 def rm_num_at_end(name):
-    result=re.sub("\s\d+$","",name)
+    import re
+    result = re.sub("\s\d+$","",name)
     return result
-env=app.jinja_env
+env = app.jinja_env
 env.filters['rm_end_num'] = rm_num_at_end
