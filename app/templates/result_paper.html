@@ -1,41 +1,54 @@
 {% extends "result.html" %}
-{% block search_logo_s %}
-<h1>Academi</h1>
+{% block subtitle %}
+PAPER FULL-TEXT | 论文全文
 {% endblock %}
+
 {% block info %}
+{% include "_info.html" %}
 {% endblock %}
+
 {% block result_set %}
-<ul class="unstyled">
+<ul class="list-unstyled">
     {% for paper in result.papers %}
     <li>
-        <h3>{{ paper.title }}</h3>
-        <div>
-            <p class="text-info">
-                <i class="icon-user"></i>
-                {% for author in paper.authors %}
-                <a href="/search?theme=scholar&keyword={{ author }}&pos=0"><span class="label label-info">{{ author }}</span></a>
-                {% endfor %}
-            </p>
-        </div>
-        <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{ paper.title }}</h3>
+                <div>
+                    <p class="text-info">
+                        <ul class="list-inline">
+                            {% for author in paper.authors %}
+                            <li>
+                                <a href="/search?theme=scholar&keyword={{ author }}&pos=0">{{ author }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </p>
+                </div>
+            </div><!-- /.panel-heading -->
             {% if paper.highlight %}
-            {% for snippet in paper.highlight %}
-            <div class="well well-small">
-                {{ snippet|safe }}
-            </div>
-            {% endfor %}
+            <div class="panel-body">
+                {% for snippet in paper.highlight %}
+                <p>
+                    {{ snippet|safe }}
+                </p>
+                {% endfor %}
+            </div><!-- /.panel-body -->
             {% endif %}
-        </div>
-        <div>
-            <a href="http://scholar.google.com/scholar?q={{ paper.title }}"><span class="badge badge-info">Google Scholar <i class="icon-search"></i></span></a>
-            <a href="http://academic.research.microsoft.com/Search?query={{ paper.title }}"><span class="badge badge-info">Microsoft Academi <i class="icon-search"></i></span></a>
-            <div class="pull-right">
-                <span class="badge badge-info">{{ paper.score }}</span>
-                <span class="label">{{ paper.publication }}</span>
-                <span class="label">{{ paper.year }}</span>
-            </div>
-        </div>
-        <hr>
+            <div class="panel-footer">
+                <a href="http://scholar.google.com/scholar?q={{ paper.title }}">
+                    <span class="label label-primary">Google Scholar</span>
+                </a>
+                <a href="http://academic.research.microsoft.com/Search?query={{ paper.title }}">
+                    <span class="label label-danger">Microsoft Academi</span>
+                </a>
+                <div class="pull-right">
+                    <p>
+                        <em>{{ paper.year }} {{ paper.publication }}</em>
+                    </p>
+                </div>
+            </div><!-- /.panel-footer -->
+        </div><!-- /.panel -->
     </li>
     {% endfor %}
 </ul>

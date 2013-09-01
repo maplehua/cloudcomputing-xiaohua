@@ -1,63 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="as-cover as-cover-{{ theme }}">
+<div class="jumbotron">
     <div class="container">
-        <h1>Academi</h1>
-        <h3>863项目 - 海量web数据提取、集成、分析和管理系统平台</h3>
-        {% block headline %}
-        {% endblock %}
-        <div >
-            {% from "_formhelper.html" import render_search %}
-            <form class="form-search" action="/search" method="POST">
-                <div class="input-append">
-                    {{ render_search(form.keyword, class="input-xxlarge search-query", placeholder="Type to search") }}
-                    {{ form.hidden_tag() }}
-                    <button type="submit" class="btn btn-primary">{% block search_button_label %}{% endblock %}</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="container-fluid">
-    <div class="row-fluid">
-        {% block info %}
-        <ul class="thumbnails">
-            <li class="span3">
-                <div class="thumbnail">
-                    <script src="/static/js/highcharts.js"></script>
-                    <script src="/static/js/modules/exporting.js"></script>
-                    <div id="abc" style="min-width: 100px; height: 200px; margin: 0 auto"></div>
-                    <h5 id="m"></h5>
-                    <h5 id="q"></h5>
-                </div>
-            </li>
-            <li class="span3">
-                <div class="thumbnail">
-                    <img data-src="holder.js/300x200" alt="300x200">
-                    <h5 id="mm"></h5>
-                    <h5 id="m5"></h5>
-                </div>
-            </li>
-            <li class="span3">
-                <div class="thumbnail">
-                    <img data-src="holder.js/300x200" alt="300x200">
-                    <h5 id="mmm"></h5>
-                    <h5 id="m6"></h5>
-                </div>
-            </li>
-            <li class="span3">
-                <div class="thumbnail">
-                    <a href="/about/">
-                        <script src="/static/js/highcharts.js"></script>
-                        <script src="/static/js/modules/exporting.js"></script>
-                        <div id="containerchart" style="min-width: 100px; height: 240px; margin: 0 auto"></div>
-                    </a>
-                    <h5>网站下载流量展示</h5>
-                    <h5 id="test"></h5>
-                </div>
-            </li>
-        </ul>
-        {% endblock %}
-    </div>
-</div>
+        <h1 class="text-center">Academi</h1>
+        <h3 class="text-center">863项目 - 海量web数据提取、集成、分析和管理系统平台</h3>
+        <p class="text-center">
+            {% block headline %}
+            Theme
+            {% endblock %}
+        </p>
+        <form role="form" action="/search" method="POST">
+            <div class="input-group">
+                {% from "_formhelper.html" import render_search %}
+                {{ render_search(form.keyword, class="form-control", placeholder="Type to search") }}
+                {{ form.hidden_tag() }}
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </form>
+    </div><!-- /.container -->
+</div><!-- /.jumbotron -->
 {% endblock %}

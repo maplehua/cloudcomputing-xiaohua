@@ -1,36 +1,34 @@
-from flask import abort, render_template, flash, redirect, url_for, request
-from app import app, redis_conn
-from forms import SearchForm
+from flask import abort, render_template, flash, redirect, url_for, request, g
+from flask.ext.login import login_user, logout_user, current_user, login_required
+from app import app, login_manager
+from app.models import User
+from forms import SearchForm, LoginForm
 from search import AcademiSearch as Search
 from about import about_readmongo
 from config import *
 from scholar_page import *
+
+@app.before_request
+def before_request():
+    g.user = current_user
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.objects(id = userid).first()
+
+@app.route('/')
+@app.route('/index')
+@app.route('/scholar')
+def index_scholar():
+    form = SearchForm()
+    form.theme.data = 'scholar'
+    return render_template('index_scholar.html',theme = 'scholar', form = form)
 
 @app.route('/paper')
 def index_paper():
     form = SearchForm()
     form.theme.data = 'paper'
     return render_template('index_paper.html',theme = 'paper', form = form)
-
-@app.route('/')
-@app.route('/scholar')
-@app.route('/index')
-def index_scholar():
-    form = SearchForm()
-    form.theme.data = 'scholar'
-    return render_template('index_scholar.html',theme = 'scholar', form = form)
-@app.route('/paper_en')
-def index_paper_en():
-    form = SearchForm()
-    form.theme.data = 'paper_en'
-    return render_template('index_paper_en.html', theme = 'paper_en', form = form)
-
-#@app.route('/scholar')
-@app.route('/patent')
-@app.route('/weibo')
-@app.route('/blog')
-def to_implement():
-    abort(404)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -57,8 +55,8 @@ def search():
         form.theme.data = 'scholar'
 
     #deal with the scholar theme separately
-    if theme == 'scholar' and result['total'] == 1:
-        user_id = result['scholars'][0]['user_id']
+    if theme == 'scholar' and len(result) == 1:
+        user_id = result[0]['scholar_id']
         theme = 'scholar_single'
         s = Search(theme = theme, keyword = keyword, offset = user_id)
         result = s.result()
@@ -76,12 +74,26 @@ def search():
 
 @app.route('/about')
 def about():
-    pages = about_readmongo("about_page")
-    papers = about_readmongo("about_paper")
-    weibos = about_readmongo("about_weibo")
-    return render_template('about.html', pages = pages, papers = papers, weibos = weibos)
+    #pages = about_readmongo("about_page")
+    #papers = about_readmongo("about_paper")
+    #weibos = about_readmongo("about_weibo")
+    #return render_template('about.html', pages = pages, papers = papers, weibos = weibos)
+    abort(404)
 
-@app.route('/api/stat/net')
-def api():
-    return str(int(float(redis_conn.get('about_number'))))
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    if g.user is not None and g.user.is_authenticated():
+        return redirect('/')
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash('Success login.')
+        user = form.get_user()
+        login_user(user)
+        return redirect('/admin')
+    return render_template('login.html', form = form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
 

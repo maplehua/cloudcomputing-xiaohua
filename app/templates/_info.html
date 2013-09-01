@@ -1,5 +1,5 @@
 <div>
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-justified">
         <li {% if meta.theme == 'paper' %}class="active"{% endif %}>
             <a href="search?theme=paper&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.all }}</strong> Answers</a>
         </li>
@@ -9,13 +9,5 @@
         <li {% if meta.theme == 'paper_body' %}class="active"{% endif %}>
             <a href="search?theme=paper_body&keyword={{ meta.keyword }}&offset=0"><strong>{{ result.stat.body }}</strong> in Body</a>
         </li>
-        <li>
-            <a href="#">#</a>
-        </li>
     </ul>
-</div>
-<div class="alert alert-block">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <p>First public: {{ result.stat.first_paper.title }} in {{ result.stat.first_paper.year }}.</p>
-    <p>Contributions: {{ result.stat.contribution }}</p> 
 </div>

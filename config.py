@@ -1,6 +1,6 @@
 DEBUG = True
 DEV = False
-ADMIN = False
+ADMIN = True
 EXPLAIN = False
 RESULT_SIZE = 10
 
@@ -31,6 +31,8 @@ PAPER_EN_COLLECTION = 'paper_en'
 
 SCHOLAR_DB = 'dblp'
 SCHOLAR_PAPER_COLLECTION = 'dblp_papers_all'
+
+# MongoEngine
 
 
 # Translate Service

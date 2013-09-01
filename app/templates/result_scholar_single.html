@@ -1,231 +1,105 @@
 {% extends "result.html" %}
+{% block subtitle %}
+SCHOLAR | 学者
+{% endblock %}
 {% block info %}{% endblock %}
 {% block pagination  %}{% endblock %}
 {% block result_set %}
 <div class="media">
     <a class="pull-left" href="#">
-        {% if (not result.scholar.Photo) or (result.scholar.Photo == "AAA") %}
-        <img class="img-polaroid" src="../static/img/Default_Scholar_Photo.gif">
-        {%else%}
-        <img class="img-polaroid" src="data:image/gif;base64,{{result.scholar.Photo}}">
-        {%endif%}
+        {% if result.scholar.photo %}
+        <img class="media-object img-thumbnail" src="data:image/gif;base64,{{ result.scholar.photo }}">
+        {% else %}
+        <img class="media-object img-thumbnail" src="../static/img/Default_Scholar_Photo.gif">
+        {% endif %}
     </a>
     <div class="media-body">
-        <h4 class = "media-heading">{{ result.scholar.Name|rm_end_num }} {%if result.scholar.NativeName %}({{result.scholar.NativeName}}){%endif%}</h4>
-        <address>
-            <ul class="unstyled">
-                <li>
-                    {% if result.scholar.Affiliation %}
-                    <i class="icon-building"></i> {{result.scholar.Affiliation}}<br>
-                    {% else %}
-                    <i class="icon-building"></i> <span class="label">Unknown</span><br>
-                    {% endif %}
-                </li>
-                <li>
-                    {% if result.scholar.Email %}
-                    <i class="icon-envelope"></i> {{result.scholar.Email}}<br>
-                    {% else %}
-                    <i class="icon-envelope"></i> <span class="label">Unknown</span><br>
-                    {%endif%}
-                </li>
-                <li>
-                    {% if result.scholar.Homepage %}
-                    <i class="icon-globe"></i> <a href={{result.scholar.Homepage}}>{{result.scholar.Homepage}}</a><br>
-                    {% else %}
-                    <i class="icon-globe"></i> <span class="label">Unknown</span><br>
-                    {%endif%}
-                </li>
-            </ul>
-        </address>
+        <h4 class = "media-heading">
+            {{ result.scholar.name|rm_end_num }}
+            {% if result.scholar.native_name %}
+            {{ result.scholar.native_name }}
+            {% endif %}
+        </h4>
+        <span class="glyphicon glyphicon-briefcase"></span>
+        {% if result.scholar.affiliation %}
+        {{result.scholar.affiliation}}
+        {% else %}
+        <span class="label label-default">Unknown</span>
+        {% endif %}
+        <br>
+        <span class="glyphicon glyphicon-envelope"></span>
+        {% if result.scholar.email %}
+        {{result.scholar.email}}
+        {% else %}
+        <span class="label label-default">Unknown</span>
+        {%endif%}
+        <br>
+        <span class="glyphicon glyphicon-link"></span>
+        {% if result.scholar.homepage %}
+        <a href={{result.scholar.homepage}}>{{result.scholar.homepage}}</a>
+        {% else %}
+        <span class="label label-default">Unknown</span>
+        {%endif%}
+        <br>
     </div>
 </div>
 <hr>
 {% if result.papers.paper_all %}
-<div class="progress">
-    <div class="bar bar-danger" style="width: {{result.stat.prop_rank_a}}%;">{{result.stat.prop_rank_a}}%</div>
-    <div class="bar bar-success" style="width: {{result.stat.prop_rank_b}}%;">{{result.stat.prop_rank_b}}%</div>
-    <div class="bar bar-warning" style="width: {{result.stat.prop_rank_c}}%;">{{result.stat.prop_rank_c}}%</div>
-    <div class="bar" style="width: {{result.stat.prop_rank_unknow}}%">{{result.stat.prop_rank_unknow}}%</div>
+<div class="progress progress-striped">
+    <div class="progress-bar progress-bar-danger" style="width: {{result.stat.prop_rank_a}}%;">{{result.stat.prop_rank_a}}%</div>
+    <div class="progress-bar progress-bar-success" style="width: {{result.stat.prop_rank_b}}%;">{{result.stat.prop_rank_b}}%</div>
+    <div class="progress-bar progress-bar-warning" style="width: {{result.stat.prop_rank_c}}%;">{{result.stat.prop_rank_c}}%</div>
+    <div class="progress-bar progress-bar-info" style="width: {{result.stat.prop_rank_unknow}}%">{{result.stat.prop_rank_unknow}}%</div>
 </div>
 <div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab"><span class="badge">All</span> {{result.stat.count_all}}</a></li>
-        <li><a href="#tab2" data-toggle="tab"><span class="badge badge-important">A</span> {{result.stat.count_rank_a}}</a></li>
-        <li><a href="#tab3" data-toggle="tab"><span class="badge badge-success">B</span> {{result.stat.count_rank_b}}</a></li>
-        <li><a href="#tab4" data-toggle="tab"><span class="badge badge-warning">C</span> {{result.stat.count_rank_c}}</a></li>
-        <li><a href="#tab5" data-toggle="tab"><span class="badge badge-info">Others</span> {{result.stat.count_rank_unknow}}</a></li>
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#rank_all" data-toggle="tab"><span class="label label-default">All</span> {{result.stat.count_all}}</a></li>
+        <li><a href="#tab2" data-toggle="tab"><span class="label label-danger">A</span> {{result.stat.count_rank_a}}</a></li>
+        <li><a href="#tab3" data-toggle="tab"><span class="label label-success">B</span> {{result.stat.count_rank_b}}</a></li>
+        <li><a href="#tab4" data-toggle="tab"><span class="label label-warning">C</span> {{result.stat.count_rank_c}}</a></li>
+        <li><a href="#tab5" data-toggle="tab"><span class="label label-info">Others</span> {{result.stat.count_rank_unknow}}</a></li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-            <table class="table table-striped">
+        <div class="tab-pane active" id="rank_all">
+            <table class="table table-hover">
                 {% for paper in result.papers.paper_all %}
-                <tr {% if paper.ccf_rank %}
-                    {% if paper.ccf_rank == 'A' %}
-                    class=""
-                    {% elif paper.ccf_rank == 'B' %}
-                    class=""
-                    {% elif paper.ccf_rank == 'C' %}
-                    class=""
-                    {% elif paper.ccf_rank == 'unknow' %}
-                    class=""
-                    {% endif %}
-                    {% endif %}>
-                    <td>
-                        <div>
-                            {% if paper.ccf_rank %}
-                            {% if paper.ccf_rank == 'A' %}
-                            <span class="badge badge-important">A</span>
-                            {% elif paper.ccf_rank == 'B' %}
-                            <span class="badge badge-success">B</span>
-                            {% elif paper.ccf_rank == 'C' %}
-                            <span class="badge badge-warning">C</span>
-                            {% endif %}
-                            {% endif %}
-                            <strong>{{ paper.title }}</strong></div>
-                        <div>
-                            <span class="label label-info">{{ paper.year }}</span>
-                            <span class="label label-info">{{ paper.booktitle }}</span>
-                            <span class="label label-info">{{ paper.journal }}</span>
-                            {% if paper.pages %}
-                            <span class="label label-info">p {{ paper.pages }}</span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% for Author in paper.authors %}
-                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
+                {% include '_paper_meta.html' %}
                 {% endfor %}
             </table>
         </div>
         <div class="tab-pane" id="tab2">
             <table class="table table-striped">
                 {% for paper in result.papers.paper_rank_a %}
-                <tr>
-                    <td>
-                        <div>
-                            {% if paper.ccf_rank %}
-                            {% if paper.ccf_rank == 'A' %}
-                            <span class="badge badge-important">A</span>
-                            {% endif %}
-                            {% endif %}
-                            <strong>{{ paper.title }}</strong>
-                        </div>
-                        <div>
-                            <span class="label label-info">{{ paper.year }}</span>
-                            <span class="label label-info">{{ paper.booktitle }}</span>
-                            <span class="label label-info">{{ paper.journal }}</span>
-                            {% if paper.pages %}
-                            <span class="label label-info">p {{ paper.pages }}</span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% for Author in paper.authors %}
-                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
+                {% include '_paper_meta.html' %}
                 {% endfor %}
             </table>
         </div>
         <div class="tab-pane" id="tab3">
             <table class="table table-striped">
                 {% for paper in result.papers.paper_rank_b %}
-                <tr>
-                    <td>
-                        <div>
-                            {% if paper.ccf_rank %}
-                            {% if paper.ccf_rank == 'B' %}
-                            <span class="badge badge-success">B</span>
-                            {% endif %}
-                            {% endif %}
-                            <strong>{{ paper.title }}</strong>
-                        </div>
-                        <div>
-                            <span class="label label-info">{{ paper.year }}</span>
-                            <span class="label label-info">{{ paper.booktitle }}</span>
-                            <span class="label label-info">{{ paper.journal }}</span>
-                            {% if paper.pages %}
-                            <span class="label label-info">p {{ paper.pages }}</span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% for Author in paper.authors %}
-                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
+                {% include '_paper_meta.html' %}
                 {% endfor %}
             </table>
         </div>
         <div class="tab-pane" id="tab4">
             <table class="table table-striped">
                 {% for paper in result.papers.paper_rank_c %}
-                <tr>
-                    <td>
-                        <div>
-                            {% if paper.ccf_rank %}
-                            {% if paper.ccf_rank == 'C' %}
-                            <span class="badge badge-warning">C</span>
-                            {% endif %}
-                            {% endif %}
-                            <strong>{{ paper.title }}</strong>
-                        </div>
-                        <div>
-                            <span class="label label-info">{{ paper.year }}</span>
-                            <span class="label label-info">{{ paper.booktitle }}</span>
-                            <span class="label label-info">{{ paper.journal }}</span>
-                            {% if paper.pages %}
-                            <span class="label label-info">p {{ paper.pages }}</span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% for Author in paper.authors %}
-                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
+                {% include '_paper_meta.html' %}
                 {% endfor %}
             </table>
         </div>
         <div class="tab-pane" id="tab5">
             <table class="table table-striped">
                 {% for paper in result.papers.paper_rank_unknow %}
-                <tr>
-                    <td>
-                        <div>
-                            <strong>{{ paper.title }}</strong>
-                        </div>
-                        <div>
-                            <span class="label label-info">{{ paper.year }}</span>
-                            <span class="label label-info">{{ paper.booktitle }}</span>
-                            <span class="label label-info">{{ paper.journal }}</span>
-                            {% if paper.pages %}
-                            <span class="label label-info">p {{ paper.pages }}</span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            {% for Author in paper.authors %}
-                            <a href="/search?theme=scholar&keyword={{ Author }}&offset=0"><span class="label">{{ Author|rm_end_num }}</span></a>
-                            {% endfor %}
-                        </div>
-                    </td>
-                </tr>
+                {% include '_paper_meta.html' %}
                 {% endfor %}
             </table>
         </div>
     </div>
 </div>
 {%else%}
-<div class="row">
-    <div class="offset1 span7 ">
-        <h3 class="offset2"><strong>No Paper Found.</strong></h3>
-    </div>
+<div>
+    <h3 class="offset2"><strong>No Paper Found.</strong></h3>
 </div>
 {%endif%}
 {% endblock %}
