@@ -30,6 +30,12 @@ def index_paper():
     form.theme.data = 'paper'
     return render_template('index_paper.html',theme = 'paper', form = form)
 
+@app.route('/university')
+def index_affiliation():
+    form = SearchForm()
+    form.theme.data = 'affiliation'
+    return render_template('index_affiliation.html',theme = 'affiliation', form = form)
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
