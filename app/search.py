@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from pyes import CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
 from app import es_conn, mongo_conn
-from .models import ScholarMeta, PaperMeta
+from .models import ScholarMeta, PaperMeta, Affiliation
 from translate import trans
 from config import *
 
@@ -73,6 +73,12 @@ class AcademiSearch():
         stat = scholar_stat_papers(papers)
         return dict(scholar = scholar,
                 papers = papers,
+                stat = stat)
+
+    def _affiliation_search(self):
+        papers =  Affiliation.get_papers_by_affi_name(self.keyword)
+        stat = Affiliation.stat_papers(papers)
+        return dict(papers = papers,
                 stat = stat)
 
 ### paper serach pipe line
@@ -219,7 +225,7 @@ def scholar_get_papers(name):
     paper_rank_a = paper_all.filter(ccf_rank = 'A')
     paper_rank_b = paper_all.filter(ccf_rank = 'B')
     paper_rank_c = paper_all.filter(ccf_rank = 'C')
-    paper_rank_unknow = paper_all.filter(ccf_rank = 'Unknown')
+    paper_rank_unknow = paper_all.filter(ccf_rank = 'unknow')
     return dict(paper_all = paper_all,
             paper_rank_a = paper_rank_a,
             paper_rank_b = paper_rank_b,
@@ -245,3 +251,4 @@ def scholar_stat_papers(papers):
             prop_rank_b = prop_rank_b,
             prop_rank_c = prop_rank_c,
             prop_rank_unknow = prop_rank_unknow)
+

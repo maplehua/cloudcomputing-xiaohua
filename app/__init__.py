@@ -1,5 +1,7 @@
 from flask import Flask
+from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.mongoengine import MongoEngine
+from flask.ext.mongoengine.panels import MongoDebugPanel
 from flask.ext.login import LoginManager
 from flask.ext.admin import Admin
 from .admin import config_admin
@@ -10,7 +12,11 @@ from config import *
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+# debug
 app.debug = DEBUG
+app.config['DEBUG_TB_PANELS'] = ('flask.ext.mongoengine.panels.MongoDebugPanel',)
+toolbar = DebugToolbarExtension(app)
 
 # database connection
 mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)
