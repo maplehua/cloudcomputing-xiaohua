@@ -67,18 +67,22 @@ class Affiliation(db.Document):
     def get_papers_by_affi_name(self, aff_name):
         affi = Affiliation.objects(name = aff_name).first()
         if affi:
-            paper_all =  PaperMeta.objects(authors__in = affi.scholars).order_by('-year')
+            paper_all = PaperMeta.objects(authors__in = affi.scholars).order_by('-year')
             paper_rank_a = paper_all.filter(ccf_rank = 'A')
             paper_rank_b = paper_all.filter(ccf_rank = 'B')
             paper_rank_c = paper_all.filter(ccf_rank = 'C')
             paper_rank_unknow = paper_all.filter(ccf_rank = 'unknow')
-            return dict(paper_all = paper_all,
-                paper_rank_a = paper_rank_a,
-                paper_rank_b = paper_rank_b,
-                paper_rank_c = paper_rank_c,
-                paper_rank_unknow = paper_rank_unknow)
         else:
-            return None
+            paper_all = []
+            paper_rank_a = []
+            paper_rank_b = []
+            paper_rank_c = []
+            paper_rank_unknow = []
+        return dict(paper_all = paper_all,
+            paper_rank_a = paper_rank_a,
+            paper_rank_b = paper_rank_b,
+            paper_rank_c = paper_rank_c,
+            paper_rank_unknow = paper_rank_unknow)
 
     @classmethod
     def stat_papers(self, papers):
@@ -87,9 +91,9 @@ class Affiliation(db.Document):
         count_rank_b = len(papers['paper_rank_b'])
         count_rank_c = len(papers['paper_rank_c'])
         count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
-        prop_rank_a = count_rank_a * 100 / count_all
-        prop_rank_b = count_rank_b * 100 / count_all
-        prop_rank_c = count_rank_c * 100 / count_all
+        prop_rank_a = 0 if count_all == 0 else count_rank_a * 100 / count_all
+        prop_rank_b = 0 if count_all == 0 else count_rank_b * 100 / count_all
+        prop_rank_c = 0 if count_all == 0 else count_rank_c * 100 / count_all
         prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
         return dict(count_all = count_all,
             count_rank_a = count_rank_a,
