@@ -16,7 +16,7 @@ app.config.from_object('config')
 # debug
 app.debug = DEBUG
 app.config['DEBUG_TB_PANELS'] = ('flask.ext.mongoengine.panels.MongoDebugPanel',)
-#toolbar = DebugToolbarExtension(app)
+toolbar = DebugToolbarExtension(app)
 
 # database connection
 mongo_conn = MongoClient(host = MONGODB_HOST, port = MONGODB_PORT)

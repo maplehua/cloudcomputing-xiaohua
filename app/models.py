@@ -24,6 +24,10 @@ class PaperMeta(db.Document):
     journal          = db.StringField()
     booktitle        = db.StringField()
 
+    @classmethod
+    def get_papers(self, page = 1):
+        return PaperMeta.objects.paginate(page = page, per_page = 10)
+
 class ScholarMeta(db.Document):
     scholar_id    = db.StringField()
     ban           = db.IntField()
@@ -38,8 +42,35 @@ class ScholarMeta(db.Document):
     def __repr__(self):
         return '<Scholar %r: %r>' % (self.scholar_id, self.name)
 
-    def get_papers(self):
-        return PaperMeta.objects(authors = self.name).order_by('-year')
+    @classmethod
+    def get_papers(self, sch_name, ccf_rank = None, page = 1):
+        papers = PaperMeta.objects(authors_low_case = sch_name.lower()).order_by('-year')
+        if ccf_rank:
+            papers = papers.filter(ccf_rank = ccf_rank)
+        #page = int(page) if page else 1
+        return papers.paginate(page = int(page), per_page = 10)
+
+    @classmethod
+    def stat_papers(self, sch_name):
+        papers = PaperMeta.objects(authors_low_case = sch_name.lower())
+        count_all = len(papers)
+        count_rank_a = len(papers.filter(ccf_rank = 'A'))
+        count_rank_b = len(papers.filter(ccf_rank = 'B'))
+        count_rank_c = len(papers.filter(ccf_rank = 'C'))
+        count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
+        prop_rank_a = (count_rank_a * 100 / count_all) if count_all else 0
+        prop_rank_b = (count_rank_b * 100 / count_all) if count_all else 0
+        prop_rank_c = (count_rank_c * 100 / count_all) if count_all else 0
+        prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
+        return dict(count_all = count_all,
+            count_rank_a = count_rank_a,
+            count_rank_b = count_rank_b,
+            count_rank_c = count_rank_c,
+            count_rank_unknow = count_rank_unknow,
+            prop_rank_a = prop_rank_a,
+            prop_rank_b = prop_rank_b,
+            prop_rank_c = prop_rank_c,
+            prop_rank_unknow = prop_rank_unknow)
 
     def get_scholars_by_name(sch_name):
         scholars =  ScholarMeta.objects(name_low_case = sch_name.lower(), ban = 0)
@@ -64,36 +95,25 @@ class Affiliation(db.Document):
         return '<Affiliation %r>' % (self.name)
 
     @classmethod
-    def get_papers_by_affi_name(self, aff_name):
+    def get_papers(self, aff_name, ccf_rank = None, page = 1):
         affi = Affiliation.objects(name = aff_name).first()
-        if affi:
-            paper_all = PaperMeta.objects(authors__in = affi.scholars).order_by('-year')
-            paper_rank_a = paper_all.filter(ccf_rank = 'A')
-            paper_rank_b = paper_all.filter(ccf_rank = 'B')
-            paper_rank_c = paper_all.filter(ccf_rank = 'C')
-            paper_rank_unknow = paper_all.filter(ccf_rank = 'unknow')
-        else:
-            paper_all = []
-            paper_rank_a = []
-            paper_rank_b = []
-            paper_rank_c = []
-            paper_rank_unknow = []
-        return dict(paper_all = paper_all,
-            paper_rank_a = paper_rank_a,
-            paper_rank_b = paper_rank_b,
-            paper_rank_c = paper_rank_c,
-            paper_rank_unknow = paper_rank_unknow)
+        papers = PaperMeta.objects(authors__in = affi.scholars).order_by('-year') if affi else []
+        if ccf_rank:
+            papers = papers.filter(ccf_rank = ccf_rank)
+        #page = int(page) if page else 1
+        return papers.paginate(page = int(page), per_page = 10) if affi else None
 
     @classmethod
-    def stat_papers(self, papers):
-        count_all = len(papers['paper_all'])
-        count_rank_a = len(papers['paper_rank_a'])
-        count_rank_b = len(papers['paper_rank_b'])
-        count_rank_c = len(papers['paper_rank_c'])
+    def stat_papers(self, aff_name):
+        affi = Affiliation.objects(name = aff_name).first()
+        count_all = PaperMeta.objects(authors__in = affi.scholars).count() if affi else 0
+        count_rank_a = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'A').count() if affi else 0
+        count_rank_b = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'B').count() if affi else 0
+        count_rank_c = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'C').count() if affi else 0
         count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
-        prop_rank_a = 0 if count_all == 0 else count_rank_a * 100 / count_all
-        prop_rank_b = 0 if count_all == 0 else count_rank_b * 100 / count_all
-        prop_rank_c = 0 if count_all == 0 else count_rank_c * 100 / count_all
+        prop_rank_a = (count_rank_a * 100 / count_all) if count_all else 0
+        prop_rank_b = (count_rank_b * 100 / count_all) if count_all else 0
+        prop_rank_c = (count_rank_c * 100 / count_all) if count_all else 0
         prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
         return dict(count_all = count_all,
             count_rank_a = count_rank_a,
@@ -104,4 +124,3 @@ class Affiliation(db.Document):
             prop_rank_b = prop_rank_b,
             prop_rank_c = prop_rank_c,
             prop_rank_unknow = prop_rank_unknow)
-

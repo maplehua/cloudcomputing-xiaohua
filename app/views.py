@@ -38,44 +38,42 @@ def index_affiliation():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    if request.method == 'POST':
+    is_post =  request.method == 'POST'
+    if is_post:
         request_form = SearchForm(request.form)
         if not request_form.validate_on_submit():
-            return redirect(url_for('index'))
-        keyword = request_form.keyword.data
-        theme = request_form.theme.data
-        offset = request_form.offset.data
-    else:
-        keyword = request.args.get('keyword')
-        theme = request.args.get('theme')
-        offset = request.args.get('offset')
+            return redirect(url_for('index_scholar'))
 
-    s = Search(theme = theme, keyword = keyword, offset = offset)
+    keyword = request_form.keyword.data if is_post else request.args.get('keyword')
+    theme = request_form.theme.data if is_post else request.args.get('theme')
+    offset = request_form.offset.data if is_post else request.args.get('offset')
+    page = request_form.page.data if is_post else request.args.get('page')
+
+    s = Search(theme = theme, keyword = keyword, offset = offset, page = page)
     result = s.result()
 
     form = SearchForm()
-    form.theme.data = theme
-
-    # hack fix for scholar search
-    if theme == 'scholar_single':
-        form.theme.data = 'scholar'
+    # hack fix for converting scholar_* to scholar
+    form.theme.data =  theme.split('_')[0]
 
     #deal with the scholar theme separately
     if theme == 'scholar' and len(result) == 1:
         user_id = result[0]['scholar_id']
         theme = 'scholar_single'
         s = Search(theme = theme, keyword = keyword, offset = user_id)
+        offset = user_id
         result = s.result()
 
     meta = {'theme': theme,
             'offset': offset,
-            'keyword': keyword}
+            'keyword': keyword,
+            'page': page}
 
     template = 'result_%s.html' % theme
 
     return render_template(template,
-        meta = meta,
-        form = form,
+        meta   = meta,
+        form   = form,
         result = result)
 
 @app.route('/about')

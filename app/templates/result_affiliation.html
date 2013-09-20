@@ -9,7 +9,23 @@ UNIVERSITY | 高校
 {% block pagination  %}{% endblock %}
 
 {% block result_set %}
-{% if result.papers.paper_all %}
+{% if result.affiliation %}
+<div class="media">
+    <a class="pull-left" href="#">
+        {% if result.affiliation.photo %}
+        <img class="media-object img-thumbnail" src="data:image/gif;base64,{{ result.affiliation.photo }}">
+        {% else %}
+        <img class="media-object img-thumbnail" src="/static/img/default_university_logo.jpg">
+        {% endif %}
+    </a>
+    <div class="media-body">
+        <h4 class = "media-heading">
+            {{ result.affiliation.name|rm_end_num }}
+        </h4>
+    </div>
+</div>
+<hr>
+{% if result.papers %}
 <div class="progress progress-striped">
     <div class="progress-bar progress-bar-danger" style="width: {{result.stat.prop_rank_a}}%;">{{result.stat.prop_rank_a}}%</div>
     <div class="progress-bar progress-bar-success" style="width: {{result.stat.prop_rank_b}}%;">{{result.stat.prop_rank_b}}%</div>
@@ -18,47 +34,41 @@ UNIVERSITY | 高校
 </div>
 <div class="tabbable">
     <ul class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#rank_all" data-toggle="tab"><span class="label label-default">All</span> {{result.stat.count_all}}</a></li>
-        <li><a href="#tab2" data-toggle="tab"><span class="label label-danger">A</span> {{result.stat.count_rank_a}}</a></li>
-        <li><a href="#tab3" data-toggle="tab"><span class="label label-success">B</span> {{result.stat.count_rank_b}}</a></li>
-        <li><a href="#tab4" data-toggle="tab"><span class="label label-warning">C</span> {{result.stat.count_rank_c}}</a></li>
-        <li><a href="#tab5" data-toggle="tab"><span class="label label-info">Others</span> {{result.stat.count_rank_unknow}}</a></li>
+        <li {% if meta.theme == 'affiliation' %}class="active"{% endif %}>
+            <a href="search?theme=affiliation&page=1&keyword={{ meta.keyword }}&offset={{ meta.offset }}">
+                <span class="label label-default">All</span> {{result.stat.count_all}}
+            </a>
+        </li>
+        <li {% if meta.theme == 'affiliation_ccf_a' %}class="active"{% endif %}>
+            <a href="search?theme=affiliation_ccf_a&page=1&keyword={{ meta.keyword }}&offset={{ meta.offset }}">
+                <span class="label label-danger">A</span> {{result.stat.count_rank_a}}
+            </a>
+        </li>
+        <li {% if meta.theme == 'affiliation_ccf_b' %}class="active"{% endif %}>
+            <a href="search?theme=affiliation_ccf_b&page=1&keyword={{ meta.keyword }}&offset={{ meta.offset }}">
+                <span class="label label-success">B</span> {{result.stat.count_rank_b}}
+            </a>
+        </li>
+        <li {% if meta.theme == 'scholar_ccf_c' %}class="active"{% endif %}>
+            <a href="search?theme=affiliation_ccf_c&page=1&keyword={{ meta.keyword }}&offset={{ meta.offset }}">
+                <span class="label label-warning">C</span> {{result.stat.count_rank_c}}
+            </a>
+        </li>
+        <li {% if meta.theme == 'affiliation_ccf_u' %}class="active"{% endif %}>
+            <a href="search?theme=affiliation_ccf_u&page=1&keyword={{ meta.keyword }}&offset={{ meta.offset }}">
+                <span class="label label-info">Others</span> {{result.stat.count_rank_unknow}}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active" id="rank_all">
+        <div class="tab-pane active">
             <table class="table table-hover">
-                {% for paper in result.papers.paper_all %}
+                {% for paper in result.papers.items %}
                 {% include '_paper_meta.html' %}
                 {% endfor %}
             </table>
-        </div>
-        <div class="tab-pane" id="tab2">
-            <table class="table table-striped">
-                {% for paper in result.papers.paper_rank_a %}
-                {% include '_paper_meta.html' %}
-                {% endfor %}
-            </table>
-        </div>
-        <div class="tab-pane" id="tab3">
-            <table class="table table-striped">
-                {% for paper in result.papers.paper_rank_b %}
-                {% include '_paper_meta.html' %}
-                {% endfor %}
-            </table>
-        </div>
-        <div class="tab-pane" id="tab4">
-            <table class="table table-striped">
-                {% for paper in result.papers.paper_rank_c %}
-                {% include '_paper_meta.html' %}
-                {% endfor %}
-            </table>
-        </div>
-        <div class="tab-pane" id="tab5">
-            <table class="table table-striped">
-                {% for paper in result.papers.paper_rank_unknow %}
-                {% include '_paper_meta.html' %}
-                {% endfor %}
-            </table>
+            {% from "_pagination_2.html" import render_pagination %}
+            {{ render_pagination(result.papers, 'search', meta.theme, meta.keyword, meta.offset, meta.page) }}
         </div>
     </div>
 </div>
@@ -67,4 +77,9 @@ UNIVERSITY | 高校
     <h3 class="offset2"><strong>No Paper Found.</strong></h3>
 </div>
 {%endif%}
+{% else %}
+<div>
+    <h3>Not Found</h3>
+</div>
+{% endif %}
 {% endblock %}
