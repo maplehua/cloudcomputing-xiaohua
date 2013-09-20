@@ -6,10 +6,11 @@ from translate import trans
 from config import *
 
 class AcademiSearch():
-    def __init__(self, theme, keyword, offset):
+    def __init__(self, theme = 'scholar', keyword = 'name', offset = 0, page = 1):
         self.theme = theme
         self.keyword = keyword
         self.offset = offset
+        self.page = page
 
     def result(self):
         search_func = getattr(self, '_%s_search' % self.theme)
@@ -65,21 +66,40 @@ class AcademiSearch():
         scholars = scholar_get_scholars(name)
         return scholars
 
-    def _scholar_single_search(self):
+    def _scholar_single_search(self, ccf_rank = None):
         user_id = self.offset
-        name = self.keyword
-        scholar = scholar_fetch_meta(user_id, name)
-        papers = scholar_get_papers(name)
-        stat = scholar_stat_papers(papers)
+        scholar = scholar_fetch_meta(user_id, self.keyword)
+        papers = ScholarMeta.get_papers(sch_name = self.keyword, ccf_rank = ccf_rank, page = self.page)
+        stat = ScholarMeta.stat_papers(sch_name = self.keyword)
         return dict(scholar = scholar,
                 papers = papers,
                 stat = stat)
 
-    def _affiliation_search(self):
-        papers =  Affiliation.get_papers_by_affi_name(self.keyword)
-        stat = Affiliation.stat_papers(papers)
-        return dict(papers = papers,
+    def _scholar_single_ccf_a_search(self):
+        return self._scholar_single_search('A')
+    def _scholar_single_ccf_b_search(self):
+        return self._scholar_single_search('B')
+    def _scholar_single_ccf_c_search(self):
+        return self._scholar_single_search('C')
+    def _scholar_single_ccf_u_search(self):
+        return self._scholar_single_search('unknow')
+
+    def _affiliation_search(self, ccf_rank = None):
+        affi = Affiliation.objects(name = self.keyword).first()
+        papers =  Affiliation.get_papers(aff_name = self.keyword, ccf_rank = ccf_rank, page = self.page)
+        stat = Affiliation.stat_papers(aff_name = self.keyword)
+        return dict(affiliation = affi,
+                papers = papers,
                 stat = stat)
+
+    def _affiliation_ccf_a_search(self):
+        return self._affiliation_search('A')
+    def _affiliation_ccf_b_search(self):
+        return self._affiliation_search('B')
+    def _affiliation_ccf_c_search(self):
+        return self._affiliation_search('C')
+    def _affiliation_ccf_u_search(self):
+        return self._affiliation_search('unknow')
 
 ### paper serach pipe line
 def paper_keyword_expand(keyword):
@@ -220,23 +240,17 @@ def scholar_fetch_meta(scholar_id, name):
         scholar = ScholarMeta.objects(scholar_id = scholar_id).first_or_404()
     return scholar
 
-def scholar_get_papers(name):
-    paper_all = PaperMeta.objects(authors_low_case = name.lower()).order_by('-year')
-    paper_rank_a = paper_all.filter(ccf_rank = 'A')
-    paper_rank_b = paper_all.filter(ccf_rank = 'B')
-    paper_rank_c = paper_all.filter(ccf_rank = 'C')
-    paper_rank_unknow = paper_all.filter(ccf_rank = 'unknow')
-    return dict(paper_all = paper_all,
-            paper_rank_a = paper_rank_a,
-            paper_rank_b = paper_rank_b,
-            paper_rank_c = paper_rank_c,
-            paper_rank_unknow = paper_rank_unknow)
+def scholar_get_papers(name, ccf_rank = None, page = 1):
+    papers = PaperMeta.objects(authors_low_case = name.lower()).order_by('-year')
+    if ccf_rank:
+        papers = papers.filter(ccf_rank = ccf_rank)
+    return papers.paginate(page = page, per_page = 10)
 
 def scholar_stat_papers(papers):
-    count_all = len(papers['paper_all'])
-    count_rank_a = len(papers['paper_rank_a'])
-    count_rank_b = len(papers['paper_rank_b'])
-    count_rank_c = len(papers['paper_rank_c'])
+    count_all = 1#len(papers['paper_all'])
+    count_rank_a = 0#len(papers['paper_rank_a'])
+    count_rank_b = 0#len(papers['paper_rank_b'])
+    count_rank_c = 0#len(papers['paper_rank_c'])
     count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
     prop_rank_a = count_rank_a * 100 / count_all
     prop_rank_b = count_rank_b * 100 / count_all

@@ -6,6 +6,7 @@ class SearchForm(Form):
     keyword = TextField(validators = [validators.Length(max=40)])
     offset = HiddenField(default = 0, validators = [validators.Required()])
     theme = HiddenField(default = 'none', validators = [validators.Required()])
+    page = HiddenField(default = 1)
 
 class LoginForm(Form):
     username = TextField(validators = [validators.Required(), validators.Length(max = 20)])
