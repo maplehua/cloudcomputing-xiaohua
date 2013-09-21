@@ -23,6 +23,7 @@ class PaperMeta(db.Document):
     ccf_rank         = db.StringField()
     journal          = db.StringField()
     booktitle        = db.StringField()
+    pages            = db.StringField()
 
     @classmethod
     def get_papers(self, page = 1):
