@@ -16,10 +16,8 @@
         </div>
         <div class="text-muted">
             <p>
-                <em>{{ paper.year }} {{ paper.booktitle }} {{ paper.journal }}</em>
-                {% if paper.pages %}
-                , p{{ paper.pages }}
-                {% endif %}
+                <em>{{ paper.year }} {% if paper.booktitle %}{{ paper.booktitle }}{% endif %}{% if paper.journal %}{{ paper.journal }}{% endif %}</em>
+                {% if paper.pages %}, p{{ paper.pages }}{% endif %}
             </p>
         </div>
         <div>
