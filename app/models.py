@@ -47,7 +47,7 @@ class ScholarMeta(db.Document):
         papers = PaperMeta.objects(authors_low_case = sch_name.lower()).order_by('-year')
         if ccf_rank:
             papers = papers.filter(ccf_rank = ccf_rank)
-        #page = int(page) if page else 1
+        page = int(page) if page else 1
         return papers.paginate(page = int(page), per_page = 10)
 
     @classmethod
