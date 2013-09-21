@@ -4,11 +4,11 @@
             <p>
                 {% if paper.ccf_rank %}
                 {% if paper.ccf_rank == 'A' %}
-                <span class="badge badge-important">A</span>
+                <span class="label label-danger">A</span>
                 {% elif paper.ccf_rank == 'B' %}
-                <span class="badge badge-success">B</span>
+                <span class="label label-success">B</span>
                 {% elif paper.ccf_rank == 'C' %}
-                <span class="badge badge-warning">C</span>
+                <span class="label label-warning">C</span>
                 {% endif %}
                 {% endif %}
                 <strong>{{ paper.title }}</strong>
