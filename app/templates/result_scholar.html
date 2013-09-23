@@ -26,7 +26,9 @@ SCHOLAR
                 </h4>
                 <span class="glyphicon glyphicon-briefcase"></span>
                 {% if scholar.affiliation %}
-                {{ scholar.affiliation}}
+                    <a href="http://pandasearch.ruc.edu.cn/search?theme=affiliation&page=1&keyword={{scholar.affiliation}}&offset=0">
+                    {{scholar.affiliation}}
+                    </a>
                 {% else %}
                 <span class="label label-default">Unknown</span>
                 {% endif %}
