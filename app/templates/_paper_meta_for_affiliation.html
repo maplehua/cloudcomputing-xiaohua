@@ -1,0 +1,41 @@
+<tr>
+    <td>
+        <div>
+            <p>
+                {% if paper.ccf_rank %}
+                {% if paper.ccf_rank == 'A' %}
+                <span class="label label-danger">A</span>
+                {% elif paper.ccf_rank == 'B' %}
+                <span class="label label-success">B</span>
+                {% elif paper.ccf_rank == 'C' %}
+                <span class="label label-warning">C</span>
+                {% endif %}
+                {% endif %}
+                <strong>{{ paper.title }}</strong>
+            </p>
+        </div>
+        <div class="text-muted">
+            <p>
+                <em>{{ paper.year }} {% if paper.booktitle %}{{ paper.booktitle }}{% endif %}{% if paper.journal %}{{ paper.journal }}{% endif %}</em>
+                {% if paper.pages %}, p{{ paper.pages }}{% endif %}
+            </p>
+        </div>
+        <div>
+            <ul class="list-inline">
+                {% for author in paper.authors %}
+                <li>
+                    <a href="/search?theme=scholar&keyword={{ author }}&offset=0">
+                        {% if author in result.affiliation.scholars %}
+                        <strong class="text-danger">
+                            {{ author|rm_end_num }}
+                        </strong>
+                        {% else %}
+                        {{ author|rm_end_num }}
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </td>
+</tr>

@@ -78,10 +78,6 @@ def search():
 
 @app.route('/about')
 def about():
-    #pages = about_readmongo("about_page")
-    #papers = about_readmongo("about_paper")
-    #weibos = about_readmongo("about_weibo")
-    #return render_template('about.html', pages = pages, papers = papers, weibos = weibos)
     abort(404)
 
 @app.route('/login', methods = ['GET', 'POST'])
