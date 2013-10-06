@@ -78,7 +78,7 @@ def search():
 
 @app.route('/about')
 def about():
-    abort(404)
+    return render_template('about.html')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
