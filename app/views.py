@@ -1,5 +1,6 @@
 from flask import abort, render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
+import json
 from app import app, login_manager
 from app.models import User
 from forms import SearchForm, LoginForm
@@ -97,3 +98,12 @@ def logout():
     logout_user()
     return redirect('/')
 
+@app.route('/ajax')
+def ajax():
+    keyword = request.args.get('query')
+    return json.dumps([
+        {'id':1, 'name': 'Xiangnan Gu'},
+        {'id':2, 'name': 'Nongfu Spring'},
+        {'id':3, 'name': 'Trans Formers'},
+        {'id':4, 'name': 'Renmin University of China'},
+        {'id':5, 'name': 'Datasearch'}])
