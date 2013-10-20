@@ -129,7 +129,7 @@ class Affiliation(db.Document):
 
 
     @classmethod
-    def get_year_papers(self,aff_name)
+    def get_year_papers(self,aff_name):
         affi = Affiliation.objects(name = aff_name).first()
         count_all = PaperMeta.objects(authors__in = affi.scholars).count() if affi else 0
         count_rank_a_2013 = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'A', year = "2013").count() if affi else 0
