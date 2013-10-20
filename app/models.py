@@ -148,20 +148,20 @@ class Affiliation(db.Document):
         count_rank_b_2009 = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'B', year = "2009").count() if affi else 0
         count_rank_c_2009 = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'C', year = "2009").count() if affi else 0
         return dict(count_rank_a_2013=count_rank_a_2013,
-                    count_rank_a_2013=count_rank_a_2013,
-                    count_rank_a_2013=count_rank_a_2013,
-                    count_rank_a_2013=count_rank_a_2012,
-                    count_rank_a_2013=count_rank_a_2012,
-                    count_rank_a_2013=count_rank_a_2012,
-                    count_rank_a_2013=count_rank_a_2011,
-                    count_rank_a_2013=count_rank_a_2011,
-                    count_rank_a_2013=count_rank_a_2011,
-                    count_rank_a_2013=count_rank_a_2010,
-                    count_rank_a_2013=count_rank_a_2010,
-                    count_rank_a_2013=count_rank_a_2010,
-                    count_rank_a_2013=count_rank_a_2009,
-                    count_rank_a_2013=count_rank_a_2009,
-                    count_rank_a_2013=count_rank_a_2009)
+                    count_rank_b_2013=count_rank_b_2013,
+                    count_rank_c_2013=count_rank_c_2013,
+                    count_rank_a_2012=count_rank_a_2012,
+                    count_rank_b_2012=count_rank_b_2012,
+                    count_rank_c_2012=count_rank_c_2012,
+                    count_rank_a_2011=count_rank_a_2011,
+                    count_rank_b_2011=count_rank_b_2011,
+                    count_rank_c_2011=count_rank_c_2011,
+                    count_rank_a_2010=count_rank_a_2010,
+                    count_rank_b_2010=count_rank_b_2010,
+                    count_rank_c_2010=count_rank_c_2010,
+                    count_rank_a_2009=count_rank_a_2009,
+                    count_rank_b_2009=count_rank_b_2009,
+                    count_rank_c_2009=count_rank_c_2009)
          
          
          
