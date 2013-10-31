@@ -12,7 +12,7 @@
         <form role="form" action="/search" method="POST">
             <div class="input-group">
                 {% from "_formhelper.html" import render_search %}
-                {{ render_search(form.keyword, class="form-control", placeholder="Type to search") }}
+                {{ render_search(form.keyword, class="form-control", placeholder="Type to search", id="search_typeahead", autocomplete="off") }}
                 {{ form.hidden_tag() }}
                 <span class="input-group-btn">
                     <button class="btn btn-primary" type="submit">
