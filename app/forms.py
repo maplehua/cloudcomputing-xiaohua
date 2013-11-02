@@ -1,5 +1,6 @@
-from flask.ext.wtf import Form, validators
-from flask.ext.wtf import TextField, HiddenField, PasswordField, SubmitField
+from flask.ext.wtf import Form
+from wtforms import TextField, HiddenField, PasswordField, SubmitField
+from wtforms import validators
 from app.models import User
 
 class SearchForm(Form):

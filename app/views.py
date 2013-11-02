@@ -1,11 +1,12 @@
+import json
+
 from flask import abort, render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-import json
 from app import app, login_manager
 from app.models import User
 from forms import SearchForm, LoginForm
 from search import AcademiSearch as Search
-from about import about_readmongo
+
 from config import *
 from scholar_page import *
 from pymongo import Connection
@@ -107,23 +108,5 @@ def ajax():
     scholar_names=db.scholar_names
 
     keyword='^'+keyword
-    #keyword=keyword+'$'
-    #name_list=list(scholar_names.find({"name":{'$regex':keyword,"$options":'i'}},{"name":1,"id":1,"_id":False}).sort([("a_count",-1)]).limit(15))
     name_list=list(scholar_names.find({"name":{'$regex':keyword,"$options":'i'}},{"name":1,"id":1,"_id":False}).limit(15))
-    #name_list=scholar_meta.find({"name_low_case":'/'+keyword+'/'},{"name_low_case":1,"scholar_id":1}).limit(15)
-    print "HHHHHHHHH"
-    print name_list
-    #names=[
-    #{'id':1, 'name': 'Xiangnan Gu'},
-    #{'id':2, 'name': 'Nongfu Spring'},
-    #{'id':3, 'name': 'Trans Formers'},
-    #{'id':4, 'name': 'Renmin University of China'},
-    #{'id':5, 'name': 'Datasearch'}]
-    #for 
     return json.dumps(name_list)
-    #return json.dumps([
-    #    {'id':1, 'name': 'Xiangnan Gu'},
-    #    {'id':2, 'name': 'Nongfu Spring'},
-    #    {'id':3, 'name': 'Trans Formers'},
-    #    {'id':4, 'name': 'Renmin University of China'},
-    #    {'id':5, 'name': 'Datasearch'}])
