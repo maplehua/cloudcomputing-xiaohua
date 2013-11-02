@@ -1,4 +1,5 @@
-from flask.ext.wtf import Form, TextField, IntegerField, widgets
+from flask.ext.wtf import Form
+from wtforms import TextField, IntegerField
 from flask.ext.admin import Admin, AdminIndexView, BaseView
 from flask.ext.admin.base import MenuLink
 from flask.ext.admin.contrib.mongoengine import ModelView, filters
