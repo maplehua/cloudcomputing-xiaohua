@@ -88,7 +88,12 @@ class ScholarMeta(db.Document):
             scholar = ScholarMeta.objects(scholar_id = scholar_id).first_or_404()
         return scholar
 
+    @classmethod
+    def get_autocomplete_names(self, keyword):
+        return ScholarMeta.objects(name__istartswith = keyword, ban = 0).only('name', 'scholar_id').limit(15).to_json()
+
 class Affiliation(db.Document):
+    #aff_id   = db.IntField()
     name     = db.StringField()
     scholars = db.ListField(db.StringField())
 
@@ -162,9 +167,3 @@ class Affiliation(db.Document):
                     count_rank_a_2009=count_rank_a_2009,
                     count_rank_b_2009=count_rank_b_2009,
                     count_rank_c_2009=count_rank_c_2009)
-         
-         
-         
-         
-         
-
