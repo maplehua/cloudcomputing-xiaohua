@@ -2,8 +2,10 @@ import json
 
 from flask import abort, render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from bson import json_util
+
 from app import app, login_manager
-from app.models import User
+from app.models import User, ScholarMeta
 from forms import SearchForm, LoginForm
 from search import AcademiSearch as Search
 
@@ -100,13 +102,10 @@ def logout():
     logout_user()
     return redirect('/')
 
-@app.route('/ajax')
-def ajax():
+@app.route('/ajax/<theme>')
+def ajax(theme):
     keyword = request.args.get('query')
-    connection=Connection('10.77.20.50',27017)
-    db=connection.academi
-    scholar_names=db.scholar_names
-
-    keyword='^'+keyword
-    name_list=list(scholar_names.find({"name":{'$regex':keyword,"$options":'i'}},{"name":1,"id":1,"_id":False}).limit(15))
-    return json.dumps(name_list)
+    if theme == 'scholar':
+        name_list = ScholarMeta.get_autocomplete_names(keyword)
+        print name_list
+    return name_list
