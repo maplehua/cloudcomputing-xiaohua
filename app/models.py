@@ -25,6 +25,12 @@ class PaperMeta(db.Document):
     booktitle        = db.StringField()
     pages            = db.StringField()
 
+    def __repr__(self):
+        return '<Paper %r: %r>' % (self.paper_id, self.title)
+
+    def __unicode__(self):
+        return self.title
+
     @classmethod
     def get_papers(self, page = 1):
         return PaperMeta.objects.paginate(page = page, per_page = 10)

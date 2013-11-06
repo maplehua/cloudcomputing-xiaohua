@@ -1,8 +1,6 @@
-import json
-
+from bson import json_util
 from flask import abort, render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from bson import json_util
 
 from app import app, login_manager
 from app.models import User, ScholarMeta
@@ -10,8 +8,6 @@ from forms import SearchForm, LoginForm
 from search import AcademiSearch as Search
 
 from config import *
-from scholar_page import *
-from pymongo import Connection
 
 @app.before_request
 def before_request():
