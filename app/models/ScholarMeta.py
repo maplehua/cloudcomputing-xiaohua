@@ -47,7 +47,7 @@ class ScholarMeta(db.Document):
 
     @classmethod
     def get_autocomplete_names(self, keyword):
-        return ScholarMeta.objects(name__istartswith = keyword, ban = 0).only('name', 'scholar_id').limit(15).to_json()
+        return ScholarMeta.objects(name__istartswith = keyword, ban = 0).only('name', 'scholar_id').limit(10).to_json()
 
     def get_scholars_by_name(sch_name):
         scholars =  ScholarMeta.objects(name_low_case = sch_name.lower(), ban = 0)

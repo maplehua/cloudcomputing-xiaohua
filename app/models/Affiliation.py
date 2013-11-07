@@ -1,16 +1,30 @@
 from app import mongo_db as db
 from app.models.PaperMeta import PaperMeta
 
+class Stat(db.EmbeddedDocument):
+    a = db.IntField()
+    b = db.IntField()
+    c = db.IntField()
+    u = db.IntField()
+
+    def total(self):
+        return sum([self.a, self.b, self.c, self.u])
+
 class Affiliation(db.Document):
-    #aff_id   = db.IntField()
+    aff_id   = db.IntField()
     name     = db.StringField()
     scholars = db.ListField(db.StringField())
+    stat     = db.EmbeddedDocumentField(Stat)
 
     def __repr__(self):
         return '<Affiliation %r>' % (self.name)
 
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def get_autocomplete_names(self, keyword):
+        return Affiliation.objects(name__istartswith = keyword).only('name').limit(10).to_json()
 
     @classmethod
     def get_papers(self, aff_name, ccf_rank = None, page = 1):
@@ -25,11 +39,11 @@ class Affiliation(db.Document):
     @classmethod
     def stat_papers(self, aff_name):
         affi = Affiliation.objects(name = aff_name).first()
-        count_all = PaperMeta.objects(authors__in = affi.scholars).count() if affi else 0
-        count_rank_a = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'A').count() if affi else 0
-        count_rank_b = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'B').count() if affi else 0
-        count_rank_c = PaperMeta.objects(authors__in = affi.scholars, ccf_rank = 'C').count() if affi else 0
-        count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
+        count_rank_a = affi.stat.a if affi else 0
+        count_rank_b = affi.stat.b if affi else 0
+        count_rank_c = affi.stat.c if affi else 0
+        count_rank_unknow = affi.stat.u if affi else 0
+        count_all = affi.stat.total()
         prop_rank_a = (count_rank_a * 100 / count_all) if count_all else 0
         prop_rank_b = (count_rank_b * 100 / count_all) if count_all else 0
         prop_rank_c = (count_rank_c * 100 / count_all) if count_all else 0

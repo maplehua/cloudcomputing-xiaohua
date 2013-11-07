@@ -1,12 +1,15 @@
 {% block search_bar %}
-<div >
-    {% from "_formhelper.html" import render_search %}
-    <form class="form-search" action="/search" method="POST">
-        <div class="input-append">
-            {{ render_search(form.keyword, class="input-xxlarge search-query", placeholder="Type to search") }}
-            {{ form.hidden_tag() }}
-            <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i> Search</button>
-        </div>
-    </form>
-</div>
+<form role="form" action="/search" method="POST">
+    <div class="input-group">
+        {% from "_formhelper.html" import render_search %}
+        {% set search_bar_id = "search_typeahead_%s" % (theme if theme else meta.theme) %}
+        {{ render_search(form.keyword, class="form-control", placeholder="Type to search", id=search_bar_id, autocomplete="off") }}
+        {{ form.hidden_tag() }}
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
+    </div>
+</form>
 {% endblock %}
