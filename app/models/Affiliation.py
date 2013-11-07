@@ -10,6 +10,9 @@ class Stat(db.EmbeddedDocument):
     def total(self):
         return sum([self.a, self.b, self.c, self.u])
 
+    def prop(self, n):
+        return n * 100 / self.total()
+
 class Affiliation(db.Document):
     aff_id   = db.IntField()
     name     = db.StringField()
@@ -27,37 +30,29 @@ class Affiliation(db.Document):
         return Affiliation.objects(name__istartswith = keyword).only('name').limit(10).to_json()
 
     @classmethod
-    def get_papers(self, aff_name, ccf_rank = None, page = 1):
-        affi = Affiliation.objects(name = aff_name).first()
-        papers = PaperMeta.objects(authors__in = affi.scholars).order_by('-year') if affi else []
+    def get_affiliation(self, aff_name):
+        return Affiliation.objects(name__iexact = aff_name).first_or_404()
+
+    def get_papers(self, ccf_rank = None, page = 1):
+        papers = PaperMeta.objects(authors__in = self.scholars).order_by('-year')
         if ccf_rank:
             papers = papers.filter(ccf_rank = ccf_rank)
-        #page = int(page) if page else 1
-        return papers.paginate(page = int(page), per_page = 10) if affi else None
+        return papers.paginate(page = int(page), per_page = 10)
 
-
-    @classmethod
-    def stat_papers(self, aff_name):
-        affi = Affiliation.objects(name = aff_name).first()
-        count_rank_a = affi.stat.a if affi else 0
-        count_rank_b = affi.stat.b if affi else 0
-        count_rank_c = affi.stat.c if affi else 0
-        count_rank_unknow = affi.stat.u if affi else 0
-        count_all = affi.stat.total()
-        prop_rank_a = (count_rank_a * 100 / count_all) if count_all else 0
-        prop_rank_b = (count_rank_b * 100 / count_all) if count_all else 0
-        prop_rank_c = (count_rank_c * 100 / count_all) if count_all else 0
-        prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
-        return dict(count_all = count_all,
-            count_rank_a = count_rank_a,
-            count_rank_b = count_rank_b,
-            count_rank_c = count_rank_c,
-            count_rank_unknow = count_rank_unknow,
-            prop_rank_a = prop_rank_a,
-            prop_rank_b = prop_rank_b,
-            prop_rank_c = prop_rank_c,
-            prop_rank_unknow = prop_rank_unknow)
-
+    def stat_papers(self):
+        pa = self.stat.prop(self.stat.a)
+        pb = self.stat.prop(self.stat.b)
+        pc = self.stat.prop(self.stat.c)
+        pu = 100 - pa - pb - pc
+        return dict(count_all = self.stat.total(),
+            count_rank_a = self.stat.a,
+            count_rank_b = self.stat.b,
+            count_rank_c = self.stat.c,
+            count_rank_unknow = self.stat.u,
+            prop_rank_a = pa,
+            prop_rank_b = pb,
+            prop_rank_c = pc,
+            prop_rank_unknow = pu)
 
     @classmethod
     def get_year_papers(self,aff_name):

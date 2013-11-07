@@ -87,14 +87,12 @@ class AcademiSearch():
         return self._scholar_single_search('unknow')
 
     def _affiliation_search(self, ccf_rank = None):
-        affi = Affiliation.objects(name = self.keyword).first()
-        papers =  Affiliation.get_papers(aff_name = self.keyword, ccf_rank = ccf_rank, page = self.page)
-        stat = Affiliation.stat_papers(aff_name = self.keyword)
-        #add by self for test
+        affi = Affiliation.get_affiliation(self.keyword)
+        papers =  affi.get_papers(ccf_rank = ccf_rank, page = self.page)
         count_paper_by_year=Affiliation.get_year_papers(aff_name = self.keyword)
         return dict(affiliation = affi,
                 papers = papers,
-                stat = stat,
+                stat = affi.stat_papers(),
                 count_paper_by_year=count_paper_by_year)
 
     def _affiliation_ccf_a_search(self):
