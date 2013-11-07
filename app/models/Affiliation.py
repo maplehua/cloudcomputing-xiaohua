@@ -9,6 +9,9 @@ class Affiliation(db.Document):
     def __repr__(self):
         return '<Affiliation %r>' % (self.name)
 
+    def __unicode__(self):
+        return self.name
+
     @classmethod
     def get_papers(self, aff_name, ccf_rank = None, page = 1):
         affi = Affiliation.objects(name = aff_name).first()
