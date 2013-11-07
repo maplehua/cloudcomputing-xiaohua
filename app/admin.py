@@ -36,7 +36,10 @@ class ScholarMetaView(ModelView):
         return current_user.is_authenticated()
 
 def config_admin():
-    from .models import User, PaperMeta, ScholarMeta
+    #from app.models import User, PaperMeta, ScholarMeta
+    from app.models.User import User
+    from app.models.PaperMeta import PaperMeta
+    from app.models.ScholarMeta import ScholarMeta
 
     admin = Admin(name='Academi', index_view = AdminView())
 

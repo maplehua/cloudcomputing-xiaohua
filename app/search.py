@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyes import CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
 from app import es_conn, mongo_conn
-from .models import ScholarMeta, PaperMeta, Affiliation
+from app.models.ScholarMeta import ScholarMeta
+from app.models.PaperMeta import PaperMeta
+from app.models.Affiliation import Affiliation
 from translate import trans
 from config import *
 
