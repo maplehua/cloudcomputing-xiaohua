@@ -1,7 +1,7 @@
 from flask.ext.wtf import Form
 from wtforms import TextField, HiddenField, PasswordField, SubmitField
 from wtforms import validators
-from app.models import User
+from app.models.User import User
 
 class SearchForm(Form):
     keyword = TextField(validators = [validators.Length(max=40)])

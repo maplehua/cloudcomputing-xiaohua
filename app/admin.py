@@ -1,5 +1,5 @@
-from flask.ext.wtf import Form
 from wtforms import TextField, IntegerField
+from flask.ext.wtf import Form
 from flask.ext.admin import Admin, AdminIndexView, BaseView
 from flask.ext.admin.base import MenuLink
 from flask.ext.admin.contrib.mongoengine import ModelView, filters
@@ -36,7 +36,6 @@ class ScholarMetaView(ModelView):
         return current_user.is_authenticated()
 
 def config_admin():
-    #from app.models import User, PaperMeta, ScholarMeta
     from app.models.User import User
     from app.models.PaperMeta import PaperMeta
     from app.models.ScholarMeta import ScholarMeta
