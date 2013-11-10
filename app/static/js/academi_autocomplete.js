@@ -15,6 +15,7 @@ $('#search_typeahead_affiliation').typeahead({
           displayField: 'name',     // set this json field to display
           valueField: 'name'  // set this json field to val
       },
+      item: '<li><a href="#"></a></li>',
       display: 'name',
       val: 'id',
       items: '10'

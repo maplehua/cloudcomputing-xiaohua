@@ -89,7 +89,7 @@ class AcademiSearch():
     def _affiliation_search(self, ccf_rank = None):
         affi = Affiliation.get_affiliation(self.keyword)
         papers =  affi.get_papers(ccf_rank = ccf_rank, page = self.page)
-        count_paper_by_year=Affiliation.get_year_papers(aff_name = self.keyword)
+        count_paper_by_year= affi.get_year_papers()
         return dict(affiliation = affi,
                 papers = papers,
                 stat = affi.stat_papers(),
