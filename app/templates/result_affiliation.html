@@ -12,8 +12,8 @@ UNIVERSITY | 高校
 {% if result.affiliation %}
 <div class="media">
     <a class="pull-left" href="#">
-        {% if result.affiliation.photo %}
-        <img class="media-object img-thumbnail" src="data:image/gif;base64,{{ result.affiliation.photo }}">
+        {% if result.affiliation.logo %}
+        <img class="media-object img-thumbnail" src="data:image/gif;base64,{{ result.affiliation.logo }}">
         {% else %}
         <img class="media-object img-thumbnail" src="/static/img/default_university_logo.jpg">
         {% endif %}

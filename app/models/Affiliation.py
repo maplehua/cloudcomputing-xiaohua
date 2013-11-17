@@ -19,6 +19,7 @@ class Affiliation(db.Document):
     name     = db.StringField()
     scholars = db.ListField(db.StringField())
     stat     = db.EmbeddedDocumentField(document_type = Stat)
+    logo     = db.StringField()
 
     def __repr__(self):
         return '<Affiliation %r>' % (self.name)
