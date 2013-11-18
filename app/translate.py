@@ -22,6 +22,3 @@ def yd_trans(src):
     if len(r) > 0:
         r = r[0]
     return r
-
-if __name__ == '__main__':
-    print yd_trans('我的青春不是梦')

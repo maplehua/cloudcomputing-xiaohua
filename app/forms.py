@@ -4,7 +4,7 @@ from wtforms import validators
 from app.models.User import User
 
 class SearchForm(Form):
-    keyword = TextField(validators = [validators.Length(max=40)])
+    keyword = TextField(validators = [validators.Required(), validators.Length(max = 127)])
     offset = HiddenField(default = 0, validators = [validators.Required()])
     theme = HiddenField(default = 'none', validators = [validators.Required()])
     page = HiddenField(default = 1)
