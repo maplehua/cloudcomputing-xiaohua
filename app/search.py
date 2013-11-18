@@ -242,30 +242,3 @@ def scholar_fetch_meta(scholar_id, name):
     else:
         scholar = ScholarMeta.objects(scholar_id = scholar_id).first_or_404()
     return scholar
-
-def scholar_get_papers(name, ccf_rank = None, page = 1):
-    papers = PaperMeta.objects(authors_low_case = name.lower()).order_by('-year')
-    if ccf_rank:
-        papers = papers.filter(ccf_rank = ccf_rank)
-    return papers.paginate(page = page, per_page = 10)
-
-def scholar_stat_papers(papers):
-    count_all = 1#len(papers['paper_all'])
-    count_rank_a = 0#len(papers['paper_rank_a'])
-    count_rank_b = 0#len(papers['paper_rank_b'])
-    count_rank_c = 0#len(papers['paper_rank_c'])
-    count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
-    prop_rank_a = count_rank_a * 100 / count_all
-    prop_rank_b = count_rank_b * 100 / count_all
-    prop_rank_c = count_rank_c * 100 / count_all
-    prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
-    return dict(count_all = count_all,
-            count_rank_a = count_rank_a,
-            count_rank_b = count_rank_b,
-            count_rank_c = count_rank_c,
-            count_rank_unknow = count_rank_unknow,
-            prop_rank_a = prop_rank_a,
-            prop_rank_b = prop_rank_b,
-            prop_rank_c = prop_rank_c,
-            prop_rank_unknow = prop_rank_unknow)
-
