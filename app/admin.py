@@ -48,4 +48,5 @@ def config_admin():
 
     admin.add_link(MenuLink(name = 'Go Back', url = '/'))
     admin.add_link(MenuLink(name = 'Logout', url = '/logout'))
+
     return admin
