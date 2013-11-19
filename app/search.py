@@ -12,7 +12,6 @@ class AcademiSearch():
         self.offset = offset
         self.page = page
 
-
     def result(self):
         search_func = getattr(self, '_%s_search' % self.theme)
         return search_func()
@@ -75,18 +74,6 @@ class AcademiSearch():
         return dict(scholar = scholar,
                 papers = papers,
                 stat = stat)
-
-    #add by xiaohua for url input and mutiple scholars
-    def _scholar_url_search(self):
-        keyword = self.keyword
-        scholars =  ScholarMeta.objects(name_low_case = keyword.lower(), ban = 0)
-        if scholars.count()== 0:
-           if PaperMeta.objects(authors_low_case = keyword.lower()).count() > 0:
-              scholar = ScholarMeta(name = keyword.title(), scholar_id = '0')
-              return [scholar]
-        return scholars
-
-
 
 
     def _scholar_single_ccf_a_search(self):
@@ -246,7 +233,6 @@ def scholar_get_scholars(keyword):
             scholar = ScholarMeta(name = keyword.title(), scholar_id = '0')
             return [scholar]
     return scholars
-
 
 def scholar_fetch_meta(scholar_id, name):
     if scholar_id == '0':
