@@ -7,6 +7,7 @@ from search import AcademiSearch as Search
 from about import about_readmongo
 from config import *
 from scholar_page import *
+from flask import Flask, url_for
 
 @app.before_request
 def before_request():
@@ -21,8 +22,10 @@ def load_user(userid):
 @app.route('/scholar')
 def index_scholar():
     form = SearchForm()
-    form.theme.data = 'scholar'
+    form.theme.data = 'scholar' 
     return render_template('index_scholar.html',theme = 'scholar', form = form)
+    
+    
 
 @app.route('/paper')
 def index_paper():
@@ -37,7 +40,7 @@ def index_affiliation():
     return render_template('index_affiliation.html',theme = 'affiliation', form = form)
 
 @app.route('/search', methods=['GET', 'POST'])
-def search():
+def search(): 
     is_post =  request.method == 'POST'
     if is_post:
         request_form = SearchForm(request.form)
@@ -48,7 +51,11 @@ def search():
     theme = request_form.theme.data if is_post else request.args.get('theme')
     offset = request_form.offset.data if is_post else request.args.get('offset')
     page = request_form.page.data if is_post else request.args.get('page')
+   
+    if theme=='scholar':
+       return redirect('/search_scholar/%s' % (keyword+'.html'))
 
+    
     s = Search(theme = theme, keyword = keyword, offset = offset, page = page)
     result = s.result()
 
@@ -76,6 +83,48 @@ def search():
         form   = form,
         result = result)
 
+@app.route('/search_scholar/<scholar_name>')
+def search_scholar(scholar_name):
+    scholar_name=scholar_name.replace('.html','')
+    #whether has ID
+    if(len(scholar_name.split('_')) == 2 ):
+        scholar_id = scholar_name.split('_')[1]
+        scholar_name = scholar_name.split('_')[0]
+        theme = 'scholar_single'
+        offset = scholar_id
+        s = Search(theme = 'scholar_single', keyword = scholar_name, offset = scholar_id, page = 1)
+
+    else :
+        theme = 'scholar'
+        offset = 0
+        s = Search(theme = 'scholar', keyword = scholar_name, offset = 0, page = 1)
+   
+    result = s.result()
+    form = SearchForm()
+    # hack fix for converting scholar_* to scholar
+    form.theme.data =  theme.split('_')[0]
+ 
+    #deal with the scholar theme separately
+    if theme == 'scholar' and len(result) == 1:
+        user_id = result[0]['scholar_id']
+        theme = 'scholar_single'
+        s = Search(theme = theme, keyword = scholar_name, offset = user_id)
+        offset = user_id
+        result = s.result()
+
+    meta = {'theme': theme,
+            'offset': offset,
+            'keyword': scholar_name,
+            'page': 1}
+
+    template = 'result_%s.html' % theme
+
+    return render_template(template,
+        meta   = meta,
+        form   = form,
+        result = result)
+
+
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -96,4 +145,7 @@ def login():
 def logout():
     logout_user()
     return redirect('/')
+
+
+
 

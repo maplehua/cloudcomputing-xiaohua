@@ -1,4 +1,10 @@
 {% extends "result.html" %}
+
+{% block titlename  %}
+{% for scholar in result %}
+<title>{{scholar.name}} Publication Page in CS Search</title>
+{% endfor %}
+{% endblock  %}
 {% block subtitle %}
 SCHOLAR
 {% endblock %}

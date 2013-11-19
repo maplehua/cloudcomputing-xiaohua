@@ -14,7 +14,8 @@ SECRET_KEY = 'academi'
 
 LANGUAGES = {
     'en': 'English'}
-
+#redirect
+DEBUG_TB_INTERCEPT_REDIRECTS = False
 # Redis
 REDIS_HOST = HOST
 REDIS_PORT = 6379
