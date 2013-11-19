@@ -1,12 +1,15 @@
+from bson import json_util
 from flask import abort, render_template, flash, redirect, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
+
 from app import app, login_manager
-from app.models import User
+from app.models.User import User
+from app.models.ScholarMeta import ScholarMeta
+from app.models.Affiliation import Affiliation
 from forms import SearchForm, LoginForm
 from search import AcademiSearch as Search
-from about import about_readmongo
+
 from config import *
-from scholar_page import *
 
 @app.before_request
 def before_request():
@@ -143,3 +146,14 @@ def login():
 def logout():
     logout_user()
     return redirect('/')
+
+@app.route('/ajax/<theme>')
+def ajax(theme):
+    keyword = request.args.get('query')
+    if theme == 'scholar':
+        name_list = ScholarMeta.get_autocomplete_names(keyword)
+    elif theme == 'affiliation':
+        name_list =  Affiliation.get_autocomplete_names(keyword)
+    else:
+        name_list = []
+    return name_list

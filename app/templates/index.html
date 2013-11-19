@@ -2,25 +2,14 @@
 {% block content %}
 <div class="jumbotron">
     <div class="container">
-        <h1 class="text-center">Academy</h1>
+        <h1 class="text-center">CS Search</h1>
         <h3 class="text-center">863项目 - 海量web数据提取、集成、分析和管理系统平台</h3>
         <p class="text-center">
             {% block headline %}
             Theme
             {% endblock %}
         </p>
-        <form role="form" action="/search" method="POST">
-            <div class="input-group">
-                {% from "_formhelper.html" import render_search %}
-                {{ render_search(form.keyword, class="form-control", placeholder="Type to search") }}
-                {{ form.hidden_tag() }}
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
-        </form>
+        {% include "_search_bar.html" %}
     </div><!-- /.container -->
 </div><!-- /.jumbotron -->
 {% endblock %}

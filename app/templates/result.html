@@ -2,24 +2,16 @@
 {% block content %}
 <div class="jumbotron">
     <div class="container">
-        <h2>Academy <small>{% block subtitle %}theme{% endblock %}</small></h2>
-        <form role="form" action="/search" method="POST">
-            <div class="input-group">
-                {% from "_formhelper.html" import render_search %}
-                {{ render_search(form.keyword, class="form-control", placeholder="Type to search") }}
-                {{ form.hidden_tag() }}
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="submit">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
-            </div>
-        </form>
+        <h2>CS Search <small>{% block subtitle %}theme{% endblock %}</small></h2>
+        {% include "_search_bar.html" %}
     </div>
 </div><!-- /.jumbotron -->
 <div class="container">
     <div class="row">
         <div class="col-xs-6 col-sm-3 col-md-3">
+<div class ="row">
+ <div class="col-xs-12 col-sm-12 col-md-12">
+
             <div class="panel panel-primary" data-spy="">
                 <div class="panel-heading">
                     Navigation
@@ -43,7 +35,7 @@
                         </li>
                         <li>
                             <a href="/login">
-                                <span class="glyphicon glyphicon-cog"></span> Admin
+                               <span class="glyphicon glyphicon-cog"></span> Admin
                             </a>
                         </li>
                         <li>
@@ -51,10 +43,26 @@
                                 <span class="glyphicon glyphicon-info-sign"></span> About
                             </a>
                         </li>
-                    </ul>
-                </div><!-- /.panel-body -->
+
+                    </ul>   
+             </div><!-- /.panel-body -->
             </div><!-- /.panel -->
-        </div>
+</div>
+</div>
+{% if result.affiliation %}
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12">
+{% block result_affiliation_left_showcount%}
+{% include "result_affiliation_left_showcount.html" %}
+{% endblock %}                        
+</div>
+
+
+{% endif %}
+</div>
+
+
+
         <div class="col-xs-12 col-sm-9 col-md-9">
             {% block info %}
             {% endblock  %}

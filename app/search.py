@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from pyes import CustomScoreQuery, BoolQuery, TermQuery, TextQuery, HighLighter, Search
 from app import es_conn, mongo_conn
-from .models import ScholarMeta, PaperMeta, Affiliation
+from app.models.ScholarMeta import ScholarMeta
+from app.models.PaperMeta import PaperMeta
+from app.models.Affiliation import Affiliation
 from translate import trans
 from config import *
 
@@ -85,12 +87,13 @@ class AcademiSearch():
         return self._scholar_single_search('unknow')
 
     def _affiliation_search(self, ccf_rank = None):
-        affi = Affiliation.objects(name = self.keyword).first()
-        papers =  Affiliation.get_papers(aff_name = self.keyword, ccf_rank = ccf_rank, page = self.page)
-        stat = Affiliation.stat_papers(aff_name = self.keyword)
+        affi = Affiliation.get_affiliation(self.keyword)
+        papers =  affi.get_papers(ccf_rank = ccf_rank, page = self.page)
+        count_paper_by_year= affi.get_year_papers()
         return dict(affiliation = affi,
                 papers = papers,
-                stat = stat)
+                stat = affi.stat_papers(),
+                count_paper_by_year=count_paper_by_year)
 
     def _affiliation_ccf_a_search(self):
         return self._affiliation_search('A')
@@ -239,30 +242,3 @@ def scholar_fetch_meta(scholar_id, name):
     else:
         scholar = ScholarMeta.objects(scholar_id = scholar_id).first_or_404()
     return scholar
-
-def scholar_get_papers(name, ccf_rank = None, page = 1):
-    papers = PaperMeta.objects(authors_low_case = name.lower()).order_by('-year')
-    if ccf_rank:
-        papers = papers.filter(ccf_rank = ccf_rank)
-    return papers.paginate(page = page, per_page = 10)
-
-def scholar_stat_papers(papers):
-    count_all = 1#len(papers['paper_all'])
-    count_rank_a = 0#len(papers['paper_rank_a'])
-    count_rank_b = 0#len(papers['paper_rank_b'])
-    count_rank_c = 0#len(papers['paper_rank_c'])
-    count_rank_unknow = count_all - count_rank_a - count_rank_b - count_rank_c
-    prop_rank_a = count_rank_a * 100 / count_all
-    prop_rank_b = count_rank_b * 100 / count_all
-    prop_rank_c = count_rank_c * 100 / count_all
-    prop_rank_unknow = (100 - prop_rank_a - prop_rank_b - prop_rank_c)
-    return dict(count_all = count_all,
-            count_rank_a = count_rank_a,
-            count_rank_b = count_rank_b,
-            count_rank_c = count_rank_c,
-            count_rank_unknow = count_rank_unknow,
-            prop_rank_a = prop_rank_a,
-            prop_rank_b = prop_rank_b,
-            prop_rank_c = prop_rank_c,
-            prop_rank_unknow = prop_rank_unknow)
-
