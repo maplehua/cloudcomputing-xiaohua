@@ -21,7 +21,7 @@ def load_user(userid):
 @app.route('/scholar')
 def index_scholar():
     form = SearchForm()
-    form.theme.data = 'scholar' 
+    form.theme.data = 'scholar'
     return render_template('index_scholar.html',theme = 'scholar', form = form)
     
 @app.route('/paper')

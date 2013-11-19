@@ -75,7 +75,6 @@ class AcademiSearch():
                 papers = papers,
                 stat = stat)
 
-
     def _scholar_single_ccf_a_search(self):
         return self._scholar_single_search('A')
     def _scholar_single_ccf_b_search(self):
