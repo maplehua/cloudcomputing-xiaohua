@@ -50,7 +50,7 @@ def search():
     page = request_form.page.data if is_post else request.args.get('page')
  
     if theme=='scholar':
-       return redirect('/search_scholar/%s' % (keyword+'.html')) 
+       return redirect('/scholar/%s' % (keyword.replace(' ','_')+'.html')) 
     s = Search(theme = theme, keyword = keyword, offset = offset, page = page)
     result = s.result()
 
@@ -78,13 +78,14 @@ def search():
         form   = form,
         result = result)
 
-@app.route('/search_scholar/<scholar_name>')
-def search_scholar(scholar_name):
+@app.route('/scholar/<scholar_name>')
+def scholar(scholar_name):
     scholar_name=scholar_name[:-5]
     #whether has ID
-    if(len(scholar_name.split('_')) == 2 ):
-        scholar_id = scholar_name.split('_')[1]
-        scholar_name = scholar_name.split('_')[0]
+    if(scholar_name.split('_')[-1].isdigit()):
+        scholar_id = scholar_name.split('_')[-1]
+        scholar_name = scholar_name.split('_')[:-1]
+        scholar_name = ' '.join(scholar_name)
         theme = 'scholar_single'
         offset = scholar_id
         s = Search(theme = 'scholar_single', keyword = scholar_name, offset = scholar_id, page = 1)
@@ -92,6 +93,8 @@ def search_scholar(scholar_name):
     else :
         theme = 'scholar'
         offset = 0
+        scholar_name = scholar_name.split('_')
+        scholar_name = ' '.join(scholar_name)
         s = Search(theme = 'scholar', keyword = scholar_name, offset = 0, page = 1)
    
     result = s.result()
