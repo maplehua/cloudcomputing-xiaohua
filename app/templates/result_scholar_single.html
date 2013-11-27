@@ -25,8 +25,8 @@ SCHOLAR | 学者
         </h4>
         <span class="glyphicon glyphicon-briefcase"></span>
         {% if result.scholar.affiliation %}
-            <a href="http://pandasearch.ruc.edu.cn/search?theme=affiliation&page=1&keyword={{result.scholar.affiliation}}&offset=0">
-            {{result.scholar.affiliation}}
+            <a href="http://pandasearch.ruc.edu.cn/search?theme=affiliation&page=1&keyword={{ result.scholar.affiliation|urlencode }}&offset=0">
+            {{ result.scholar.affiliation }}
             </a>
         {% else %}
         <span class="label label-default">Unknown</span>
@@ -59,27 +59,27 @@ SCHOLAR | 学者
 <div class="tabbable">
     <ul class="nav nav-tabs nav-justified">
         <li {% if meta.theme == 'scholar_single' %}class="active"{% endif %}>
-            <a href="search?theme=scholar_single&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
+            <a href="/search?theme=scholar_single&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
                 <span class="label label-default">All</span> {{result.stat.count_all}}
             </a>
         </li>
         <li {% if meta.theme == 'scholar_single_ccf_a' %}class="active"{% endif %}>
-            <a href="search?theme=scholar_single_ccf_a&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
+            <a href="/search?theme=scholar_single_ccf_a&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
                 <span class="label label-danger">A</span> {{result.stat.count_rank_a}}
             </a>
         </li>
         <li {% if meta.theme == 'scholar_single_ccf_b' %}class="active"{% endif %}>
-            <a href="search?theme=scholar_single_ccf_b&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
+            <a href="/search?theme=scholar_single_ccf_b&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
                 <span class="label label-success">B</span> {{result.stat.count_rank_b}}
             </a>
         </li>
         <li {% if meta.theme == 'scholar_single_ccf_c' %}class="active"{% endif %}>
-            <a href="search?theme=scholar_single_ccf_c&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
+            <a href="/search?theme=scholar_single_ccf_c&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
                 <span class="label label-warning">C</span> {{result.stat.count_rank_c}}
             </a>
         </li>
         <li {% if meta.theme == 'scholar_single_ccf_u' %}class="active"{% endif %}>
-            <a href="search?theme=scholar_single_ccf_u&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
+            <a href="/search?theme=scholar_single_ccf_u&keyword={{ meta.keyword }}&offset={{ meta.offset }}&page=1">
                 <span class="label label-info">Others</span> {{result.stat.count_rank_unknow}}
             </a>
         </li>
