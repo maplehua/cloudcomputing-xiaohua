@@ -24,7 +24,7 @@
             <ul class="list-inline">
                 {% for Author in paper.authors %}
                 <li>
-                    <a href="/search?theme=scholar&keyword={{ Author }}&offset=0">{{ Author|rm_end_num }}</a>
+                    <a href="/search?theme=scholar&keyword={{ Author|rm_end_num }}&offset=0">{{ Author|rm_end_num }}</a>
                 </li>
                 {% endfor %}
             </ul>
