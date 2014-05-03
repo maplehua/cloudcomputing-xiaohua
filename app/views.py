@@ -8,8 +8,17 @@ from app.models.ScholarMeta import ScholarMeta
 from app.models.Affiliation import Affiliation
 from forms import SearchForm, LoginForm
 from search import AcademiSearch as Search
+from pymongo import MongoClient
+from bson import ObjectId
 
+import json
 from config import *
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self,o):
+	if isinstance(o,ObjectId):
+	    return str(o)
+	return json.JSONEncoder.default(self,o)
 
 @app.before_request
 def before_request():
@@ -19,6 +28,10 @@ def before_request():
 def load_user(userid):
     return User.objects(id = userid).first()
 
+
+
+
+
 @app.route('/')
 @app.route('/index')
 @app.route('/scholar')
@@ -26,6 +39,20 @@ def index_scholar():
     form = SearchForm()
     form.theme.data = 'scholar'
     return render_template('index_scholar.html',theme = 'scholar', form = form)
+
+@app.route('/key')
+@app.route('/key/<key>')
+def key(key=None):
+    return render_template('page.html',key=key)
+
+@app.route('/require',methods=['GET','POST'])
+def require():
+    if request.method == 'POST':
+        g.client=MongoClient("10.77.20.50")
+        g.db=g.client['extract'];
+        results=g.db.command("text","data",search=request.form['searchKey'],limit=10)['results']
+        ret=JSONEncoder().encode(results)
+    return render_template('page.html',key=request.form['searchKey'],results=results)
     
 @app.route('/paper')
 def index_paper():
