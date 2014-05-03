@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h2>Panda Search <small>{% block subtitle %}Key Element Search{% endblock %}</small></h2>
+       
+    </div>
+</div><!-- /.jumbotron -->
+<div class="container span12">
+    <div class="span12">
+	<h1 class="text-center text-info">Enter The Search Key</h1>
+    </div>
+    <br />
+    <div class="offset5">
+	 <form action="{{url_for('require')}}" method="post">
+		<input class="span7 input-medium search-query" type="text"
+			name="searchKey" value="{{key}}" />
+		<button type="submit" class="btn btn-primary">Search</button>
+	    </form>
+    </div>
+
+
+{% if key %}
+	<table class="table table-striped">
+	    <thead>
+		<tr>
+		    <th>Data Set</th>
+		    <th>Article ID</th>
+		    <th>Type</th>
+		    <th>Content</th>
+		</tr>
+	    </thead>
+	    <tbody>
+
+{%	for post in results:      %}
+
+		<tr>
+		    <td>{{post.obj.set}}</td>
+		    <td>{{post.obj.number}}</td>
+		    <td>{{post.obj.type}}</td>
+		    <td>{{post.obj.text}}</td>
+		</tr>
+		<tr>
+		    <td colspan="4">
+			<img src="{{post.obj.picture}}"/>
+		    </td>
+		</tr>
+
+
+{%     endfor  %}
+
+  	    </tbody>
+	</table>
+{% else %}
+
+{% endif %}
+</div>
+{% endblock %}
