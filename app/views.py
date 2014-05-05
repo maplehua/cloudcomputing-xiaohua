@@ -11,14 +11,8 @@ from search import AcademiSearch as Search
 from pymongo import MongoClient
 from bson import ObjectId
 
-import json
 from config import *
 
-class JSONEncoder(json.JSONEncoder):
-    def default(self,o):
-	if isinstance(o,ObjectId):
-	    return str(o)
-	return json.JSONEncoder.default(self,o)
 
 @app.before_request
 def before_request():
@@ -40,10 +34,19 @@ def index_scholar():
     form.theme.data = 'scholar'
     return render_template('index_scholar.html',theme = 'scholar', form = form)
 
-@app.route('/key')
-@app.route('/key/<key>')
-def key(key=None):
+@app.route('/keyword')
+@app.route('/keyword/<key>')
+def keyword(key=None):
     return render_template('page.html',key=key)
+
+@app.route('/info')
+def info():
+    g.client=MongoClient("10.77.20.50")
+    g.db=g.client['article'] 
+    g.col=g.db['info']
+    results=g.col.find({'set':request.args.get('set'),'number':request.args.get('number')})
+    return render_template("article_info.html",results=results)
+
 
 @app.route('/require',methods=['GET','POST'])
 def require():
@@ -51,7 +54,6 @@ def require():
         g.client=MongoClient("10.77.20.50")
         g.db=g.client['extract'];
         results=g.db.command("text","data",search=request.form['searchKey'],limit=10)['results']
-        ret=JSONEncoder().encode(results)
     return render_template('page.html',key=request.form['searchKey'],results=results)
     
 @app.route('/paper')

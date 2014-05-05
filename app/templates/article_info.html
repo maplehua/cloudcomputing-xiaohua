@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h2>Panda Search <small>{% block subtitle %}Information Of Article{% endblock %}</small></h2>
+       
+    </div>
+</div><!-- /.jumbotron -->
+<div class="container span12">
+	<table class="table table-striped">
+	    <thead>
+		<tr>
+		    <th>Data Set</th>
+		    <th>Article ID</th>
+		    <th>Article Title</th>
+		    <th>Authors</th>
+		</tr>
+	    </thead>
+	    <tbody>
+
+{%	for post in results:      %}
+
+		<tr>
+		    <td>{{post.set}}</td>
+		    <td>{{post.number}}</td>
+		    <td>{{post.title}}</td>
+		    <td>{{post.author}}</td>
+		</tr>
+
+
+{%     endfor  %}
+
+  	    </tbody>
+	</table>
+
+</div>
+{% endblock %}
