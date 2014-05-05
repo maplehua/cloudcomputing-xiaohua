@@ -34,9 +34,9 @@ def index_scholar():
     form.theme.data = 'scholar'
     return render_template('index_scholar.html',theme = 'scholar', form = form)
 
-@app.route('/key')
-@app.route('/key/<key>')
-def key(key=None):
+@app.route('/keyword')
+@app.route('/keyword/<key>')
+def keyword(key=None):
     return render_template('page.html',key=key)
 
 @app.route('/info')
