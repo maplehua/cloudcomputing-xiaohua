@@ -10,6 +10,7 @@ class ScholarMeta(db.Document):
     affiliation   = db.StringField()
     email         = db.StringField()
     homepage      = db.StringField()
+    has_photo     = db.IntField()
     photo         = db.StringField()
 
     def __repr__(self):
