@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 DEV = False
 ADMIN = True
 EXPLAIN = False
