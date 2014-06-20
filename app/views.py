@@ -13,7 +13,6 @@ from bson import ObjectId
 
 from config import *
 
-
 @app.before_request
 def before_request():
     g.user = current_user
@@ -21,10 +20,6 @@ def before_request():
 @login_manager.user_loader
 def load_user(userid):
     return User.objects(id = userid).first()
-
-
-
-
 
 @app.route('/')
 @app.route('/index')
@@ -127,6 +122,7 @@ def scholar(scholar_name):
         offset = 0
         scholar_name = scholar_name.split('_')
         scholar_name = ' '.join(scholar_name)
+        scholar_name = scholar_name.encode("utf-8")
         s = Search(theme = 'scholar', keyword = scholar_name, offset = 0, page = 1)
    
     result = s.result()
