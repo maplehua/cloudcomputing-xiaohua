@@ -65,6 +65,7 @@ class AcademiSearch():
 
     def _scholar_search(self):
         name =  self.keyword
+        name = name.encode("utf-8")
         scholars = scholar_get_scholars(name)
         return scholars
 
