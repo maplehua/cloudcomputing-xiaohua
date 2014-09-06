@@ -23,7 +23,7 @@ SCHOLAR | Search
             {{ result.scholar.native_name }}
             {% endif %}
         </h4>
-        <span class="glyphicon glyphicon-briefcase"></span>
+        <span class="glyphicon glyphicon-globe"></span>
         {% if result.scholar.affiliation %}
         <a href="http://pandasearch.ruc.edu.cn/search?theme=affiliation&page=1&keyword={{ result.scholar.affiliation|urlencode }}&offset=0">
             {{ result.scholar.affiliation }}
@@ -48,6 +48,11 @@ SCHOLAR | Search
         <br>
     </div>
 </div>
+{% if result.scholar.biography %}
+<span class="glyphicon glyphicon-info-sign"></span>
+{{result.scholar.biography}}
+{% else %}
+{% endif%}
 <hr>
 {% if result.papers %}
 <div class="progress progress-striped">
