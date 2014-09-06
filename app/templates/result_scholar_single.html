@@ -46,6 +46,12 @@ SCHOLAR | Search
         <span class="label label-default">Unknown</span>
         {%endif%}
         <br>
+        {% if result.scholar.field %}
+        <span class="glyphicon glyphicon-list-alt"></span>
+        {{result.scholar.field}}
+        {% else %}
+        {%endif%}
+        <br>
     </div>
 </div>
 {% if result.scholar.biography %}
