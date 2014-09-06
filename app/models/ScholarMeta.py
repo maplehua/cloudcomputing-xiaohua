@@ -13,6 +13,7 @@ class ScholarMeta(db.Document):
     has_photo     = db.IntField()
     photo         = db.StringField()
     biography   = db.StringField()
+    field  = db.StringField()
 
     def __repr__(self):
         return '<Scholar %r: %r>' % (self.scholar_id, self.name)
