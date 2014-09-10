@@ -30,7 +30,7 @@ class PaperMetaView(ModelView):
 
 class ScholarMetaView(ModelView):
     column_list = ('ban', 'name', 'native_name', 'affiliation', 'homepage', 'email')
-    column_filters = ('ban', 'name_low_case', 'affiliation', 'homepage', 'email')
+    column_filters = ('ban', 'name', 'name_low_case', 'affiliation', 'homepage', 'email')
 
     def is_accessible(self):
         return current_user.is_authenticated()
